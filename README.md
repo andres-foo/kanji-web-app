@@ -3,6 +3,9 @@
 ## ABOUT
 This is a small app I'm using to study kanjis. It's a locally run php app that uses a sqlite database for keeping track of kanjis being learned and custom stories.
 
+![Screenshot](https://github.com/andres-foo/kanji-web-app/blob/main/data/Screenshot.png?raw=true)
+
+
 ## USAGE
 
 It only requires an apache server to run. It currently holds my progress as I make modifications, to start fresh the table **kanjis_study** should be wiped clean with a sqlite db browser like [this one](https://sqlitebrowser.org/).
