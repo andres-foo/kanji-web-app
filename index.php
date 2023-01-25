@@ -181,7 +181,10 @@ if(isset($_GET['q'])) {
                             ?>
                         <?php endif; ?>
                     </div><!-- readings -->
-                    <div class="edit">
+
+                    <button class="edit-toggle" data-toggle="edit#<?php echo $entry['literal'];?>">toggle edit</button>
+
+                    <div class="edit" id="edit#<?php echo $entry['literal'];?>">
                         <span>Components</span>
                         <form action="index.php?q=<?php echo $query; ?>" method="POST">
                             <input type="hidden" name="action" value="update">
@@ -216,10 +219,7 @@ if(isset($_GET['q'])) {
     <?php endif;?>
 </div><!-- content -->
 
-
-
-
-
+<script src="data/script.js"></script>
 
 </body>
 </html>
