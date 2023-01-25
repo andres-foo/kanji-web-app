@@ -12,13 +12,15 @@ body {
     background:#121212;
     color:#e4e4e4;
     font-family: "NotoSansJP";
+    
 }
+*{box-sizing: border-box;}
 .content {
     max-width: 900px;
     margin: 10px auto;
   }
 /* card */
-.card {
+.card, .header {
     position:relative;
     background:#1e1e1e;
     display:flex;
@@ -26,11 +28,15 @@ body {
     box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.1);
     margin-bottom:20px;
 }
+.header {
+    padding:10px;
+}
 .card .right {
     display: flex;
     flex-direction: column;
-    flex-grow: 1;    
+    flex-grow: 2;    
     align-items: flex-start;
+    padding:10px;
 
 }
 .card .left .kanji {
@@ -51,14 +57,7 @@ body {
     padding:10px 0;
     color:#959595;
 }
-.card .right .story a{
-    text-decoration: none;
-    color:#bb85fe;
-}
-.card .right .story a:hover{
-    text-decoration: none;
-    color:#fff;
-}
+
 .card .right .meta .item {
     margin:0 20px 0 0;
     color:#959595;
@@ -78,18 +77,47 @@ body {
     border-radius: 5px;    
     font-family: "NotoSansJP";
 }
-
-.card .right .components .component a {
-    font-size: 1.4em;
-    text-decoration: none;
-    color:#bb85fe;
-}
-.card .right .components .component a:hover {
-    color:#fff;
-}
-
 .card .action {
     position: absolute;
     top:10px;
     right:10px;
+}
+
+/* FORM STUFF */
+button {
+    cursor:pointer;
+    background-color:#121212;
+    padding:5px 10px;
+    border-radius: 5px;    
+    font-family: "NotoSansJP";
+    text-transform: uppercase;
+    font-size: 0.8em;
+    border:none;
+}
+a, button {
+    text-decoration: none;
+    color:#6d1dce;
+}
+a:hover, button:hover{
+    color:#bb85fe;
+}
+.edit textarea, .edit input {
+    background-color:#121212;
+    color:#e4e4e4;
+    border:none;
+    border-radius: 5px;
+    padding:10px;
+    width:100%;
+    font-size: 1em;    
+    font-family: "NotoSansJP";
+}
+
+.edit {
+    width:100%;
+}
+.edit span {
+    display:block;
+    text-transform: uppercase;
+    color:#959595;
+    font-size: 0.85em;
 }

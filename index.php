@@ -35,10 +35,39 @@ if(isset($_POST['action']) && $_POST['action'] == 'remove') {
         $results = $stmt->execute([$_POST['literal']]);
 }
 
+// add kanji to study
+if(isset($_POST['action']) && $_POST['action'] == 'update') {
+    //components
+    $sql = "UPDATE kanjis SET components = ? WHERE literal = ?";
+    $stmt = $myPDO->prepare($sql);
+    $results = $stmt->execute([$_POST['components'],$_POST['literal']]);
+
+    //story
+    //$id = filter_var($_GET['id'], FILTER_VALIDATE_INT);
+    //check if exists
+    $sql = "SELECT * FROM kanjis_study WHERE literal = ? LIMIT 1";
+    $stmt = $myPDO->prepare($sql);
+    $results = $stmt->execute([$_POST['literal']]);
+    $entry = $stmt->fetch();
+
+    if($entry) {        
+        //exists so must update the story
+        $sql = "UPDATE kanjis_study SET story = ? WHERE literal = ?";
+        $stmt = $myPDO->prepare($sql);
+        $results = $stmt->execute([$_POST['story'],$_POST['literal']]);
+    } else {
+        // does not exists, must be created
+        $sql = "INSERT INTO kanjis_study (literal, score, story, added) VALUES (?,?,?,?)";
+        $stmt = $myPDO->prepare($sql);
+        $results = $stmt->execute([$_POST['literal'],0,$_POST['story'],0]);
+    }
+}
+
 
 // search
 $entries = [];
 if(isset($_GET['q'])) {	
+    $query = $_GET['q'];
     //$id = filter_var($_GET['id'], FILTER_VALIDATE_INT);
     $sql = "SELECT kanjis.*, kanjis_study.story, kanjis_study.score, kanjis_study.added FROM kanjis LEFT JOIN kanjis_study ON kanjis.literal = kanjis_study.literal WHERE kanjis.literal = ? OR kanjis.meanings LIKE ?";
     $stmt = $myPDO->prepare($sql);
@@ -63,10 +92,13 @@ if(isset($_GET['q'])) {
 <body>
 
 <div class="content">
-    <form action="<?php echo $_SERVER['PHP_SELF']; ?>">
-        <input type="search" name=q>
-        <input type="submit" name="submit" value="Search">
-    </form>
+    <div class="header">
+        <form action="<?php echo $_SERVER['PHP_SELF']; ?>">
+            <input type="search" name=q value="<?php if(isset($query)) echo $query;?>">
+            <input type="submit" name="submit" value="Search">
+        </form>
+    </div>
+
 
     <?php if(!$entries): ?>
         "No results."
@@ -150,19 +182,27 @@ if(isset($_GET['q'])) {
                         <?php endif; ?>
                     </div><!-- readings -->
                     <div class="edit">
-                        <textarea><?php echo $entry['story']; ?></textarea>
+                        <span>Components</span>
+                        <form action="index.php?q=<?php echo $query; ?>" method="POST">
+                            <input type="hidden" name="action" value="update">
+                            <input type="hidden" name="literal" value="<?php echo $entry['literal']; ?>">
+                            <input type="text" name="components" value="<?php echo $entry['components']; ?>">
+                            <span>Story</span>
+                            <textarea rows="4" name="story"><?php echo $entry['story']; ?></textarea>
+                            <button type="submit">Save</button>
+                     </form>
                     </div>
                 </div><!-- right -->
             
                 <div class="action">
                     <?php if($entry['added'] == '' || $entry['added'] == 0): ?>
-                        <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+                        <form action="index.php?q=<?php echo $query; ?>" method="POST">
                             <input type="hidden" name="action" value="add">
                             <input type="hidden" name="literal" value="<?php echo $entry['literal'];?>">
                             <button type="submit">add</button>
                         </form>
                     <?php else: ?>
-                        <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+                        <form action="index.php?q=<?php echo $query; ?>" method="POST">
                             <input type="hidden" name="action" value="remove">
                             <input type="hidden" name="literal" value="<?php echo $entry['literal'];?>">
                             <button type="submit">remove</button>
