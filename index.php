@@ -131,8 +131,8 @@ if(isset($_GET['q'])) {
 
     </div>
 
-    <div class="list">
     <?php if(isset($_GET['list'])) :?>
+    <div class="list">
         <?php if(!$entries): ?>
             No entries for this list.
         <?php else: ?>
@@ -142,8 +142,8 @@ if(isset($_GET['q'])) {
                 </a>
             <?php endforeach; ?>
         <?php endif; ?>
-    <?php endif; ?>
     </div>
+    <?php endif; ?>
 
     <?php if(isset($query)) :?>
         <?php if(!$entries): ?>
