@@ -18,7 +18,17 @@ if(isset($_GET['q'])) {
 
 
 ?>
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KanjiApp</title>
+    <link rel="stylesheet" href="data/style.css">
+</head>
+<body>
+    
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>">
     <input type="search" name=q>
     <input type="submit" name="submit" value="Search">
@@ -69,80 +79,6 @@ if(isset($_GET['q'])) {
     </div><!-- right -->
 
 </div>
-<style>
-/* FONTS */
-@font-face {
-    font-family: "KanjiStrokeOrders";
-    src: url("./data/fonts/KanjiStrokeOrders_v4.004.ttf");
-}
-@font-face {
-    font-family: "NotoSansJP";
-    src: url("./data/fonts/NotoSansJP-Regular.otf");
-}
 
-body {
-    background:#121212;
-    color:#e4e4e4;
-    font-family: "NotoSansJP";
-}
-/* card */
-.card {
-    background:#1e1e1e;
-    display:flex;
-    border-radius: 5px;
-    box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.1);
-}
-.card .right {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;    
-    align-items: flex-start;
-
-}
-.card .left .kanji {
-    font-family:"NotoSansJP";
-    font-size:120pt;
-    padding:10px;
-}
-.card .left .kanji:hover {
-    font-family:"KanjiStrokeOrders";
-}
-.card .right .meta, .card .right .readings, .card .right .components {
-    display:flex;
-    flex-direction: row;
-    justify-items: center;
-    padding:10px 0;
-}
-.card .right .story {
-    padding:10px 0;
-    color:#959595;
-}
-.card .right .meta .item {
-    margin:0 20px 0 0;
-    color:#959595;
-    font-size: 0.7em;
-    text-transform: uppercase;
-}
-.card .right .meta .item .ref::after {
-    content:': ';
-}
-.card .right .meanings {
-    font-size: 1.4em;;
-}
-.card .right .readings .reading, .card .right .components .component a {
-    background-color:#121212;
-    margin-right:10px;
-    padding:5px 10px;
-    border-radius: 5px;    
-    font-family: "NotoSansJP";
-}
-
-.card .right .components .component a {
-    font-size: 1.4em;
-    text-decoration: none;
-    color:#bb85fe;
-}
-.card .right .components .component a:hover {
-    color:#fff;
-}
-</style>
+</body>
+</html>
