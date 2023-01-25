@@ -13,8 +13,13 @@ body {
     color:#e4e4e4;
     font-family: "NotoSansJP";
 }
+.content {
+    max-width: 900px;
+    margin: 10px auto;
+  }
 /* card */
 .card {
+    position:relative;
     background:#1e1e1e;
     display:flex;
     border-radius: 5px;
@@ -46,6 +51,14 @@ body {
     padding:10px 0;
     color:#959595;
 }
+.card .right .story a{
+    text-decoration: none;
+    color:#bb85fe;
+}
+.card .right .story a:hover{
+    text-decoration: none;
+    color:#fff;
+}
 .card .right .meta .item {
     margin:0 20px 0 0;
     color:#959595;
@@ -73,4 +86,10 @@ body {
 }
 .card .right .components .component a:hover {
     color:#fff;
+}
+
+.card .action {
+    position: absolute;
+    top:10px;
+    right:10px;
 }
