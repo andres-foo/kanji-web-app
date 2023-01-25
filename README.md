@@ -10,6 +10,16 @@ This is a small app I'm using to study kanjis. It's a locally run php app that u
 
 It only requires an apache server to run. It currently holds my progress as I make modifications, to start fresh the table **kanjis_study** should be wiped clean with a sqlite db browser like [this one](https://sqlitebrowser.org/).
 
+## SCORING SYSTEM
+
+There's a very simple scoring system in place dependent on reviews and selecting **easy** or **hard** and it functions like this:
+
+* All kanjis begin with a score of zero
+* Kanjis are selected for review by the lowest score first
+* Being selected for review adds 1 to the score
+* Being marked as easy adds 2 to the score
+* Being marked as hard substract 2 from the score
+
 ## CREDITS
 
 ### Kanjis

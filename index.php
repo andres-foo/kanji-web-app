@@ -70,6 +70,31 @@ if(isset($_POST['action']) && $_POST['action'] == 'add_word') {
     $results = $stmt->execute(explode(";",$_POST['word']));
 }
 
+// mark as easy
+if(isset($_POST['action']) && $_POST['action'] == 'easy') {
+    // find current score
+    $sql = "SELECT * FROM kanjis_study WHERE literal = ? LIMIT 1";
+    $stmt = $myPDO->prepare($sql);
+    $results = $stmt->execute([$_POST['literal']]);
+    $entry = $stmt->fetch();
+
+    $sql = "UPDATE kanjis_study SET score = ? WHERE literal = ?";
+    $stmt = $myPDO->prepare($sql);
+    $results = $stmt->execute([$entry['score']+2,$_POST['literal']]);
+}
+// mark as hard
+if(isset($_POST['action']) && $_POST['action'] == 'hard') {
+    // find current score
+    $sql = "SELECT * FROM kanjis_study WHERE literal = ? LIMIT 1";
+    $stmt = $myPDO->prepare($sql);
+    $results = $stmt->execute([$_POST['literal']]);
+    $entry = $stmt->fetch();
+
+    $sql = "UPDATE kanjis_study SET score = ? WHERE literal = ?";
+    $stmt = $myPDO->prepare($sql);
+    $results = $stmt->execute([$entry['score']-2,$_POST['literal']]);
+}
+
 
 // search
 $entries = [];
@@ -105,6 +130,40 @@ if(isset($_GET['q'])) {
         $stmt = $myPDO->query($sql);
         $entries = $stmt->fetchAll();
     }
+} elseif( isset($_GET['review'])) {
+    $sql = "SELECT kanjis.*, kanjis_study.story, kanjis_study.score, kanjis_study.added FROM kanjis JOIN kanjis_study ON kanjis.literal = kanjis_study.literal WHERE kanjis_study.added = 1 ORDER BY SCORE ASC";
+    $stmt = $myPDO->query($sql);
+    $entries = $stmt->fetchAll();
+    if(!$entries) {
+        exit("There are no kanjis to study.");
+    } else {
+        session_start();
+        if(!isset($_SESSION['last10'])) {
+            $entries = [$entries[0]];
+            $_SESSION['last10'] = [$entries['literal']];
+        } else {
+            $worst = $entries[0];
+            $found = false;
+            foreach($entries as $entry) {
+                if(!in_array($entry['literal'], $_SESSION['last10'])) {
+                    $found = true;
+                    $entries = [$entry];
+                    break;
+                }  
+            }
+            if(!$found) {
+                $entries = [$worst];
+            }
+            array_unshift($_SESSION['last10'], $entries[0]['literal']);
+            if(count($_SESSION['last10']) > 10) {
+                array_pop($_SESSION['last10']);
+            } 
+        }
+        $sql = "UPDATE kanjis_study SET score = ? WHERE literal = ?";
+        $stmt = $myPDO->prepare($sql);
+        $results = $stmt->execute([$entries[0]['score']+1, $entries[0]['literal']]);
+        $query = $entries[0]['literal'];
+    }
 }
 
 
@@ -123,7 +182,7 @@ if(isset($_GET['q'])) {
 <div class="content">
     <div class="header">
         <div class="header-actions">
-            <a href="My kanjis" class="review">REVIEW</a>
+            <a href="index.php?review" class="review">REVIEW</a>
             <a href="index.php?list=my_list">MY LIST</a>
             <a href="index.php?list=jlpt">JLPT</a>
             <a href="index.php?list=grade">GRADE</a>
@@ -161,6 +220,21 @@ if(isset($_GET['q'])) {
                 <div class="card">
                     <div class="left">
                         <div class="kanji"><?php echo $entry['literal']; ?></div>
+                        <?php if(isset($_GET['review'])): ?>
+                        <div class="rating">
+                            <form action="index.php?q=<?php echo $query; ?>" method="POST">
+                                <input type="hidden" name="action" value="easy">
+                                <input type="hidden" name="literal" value="<?php echo $entry['literal']; ?>">
+                                <button type="submit" class="easy">Easy</button>
+                            </form>
+                            <form action="index.php?q=<?php echo $query; ?>" method="POST">
+                                <input type="hidden" name="action" value="hard">
+                                <input type="hidden" name="literal" value="<?php echo $entry['literal']; ?>">
+                                <button type="submit" class="hard">Hard</button>
+
+                            </form>                              
+                        </div>
+                        <?php endif; ?>
                     </div><!-- left -->
                     <div class="right">
                         <div class="meta">
@@ -226,14 +300,14 @@ if(isset($_GET['q'])) {
                                 echo '</div><!-- components -->';
                             }
                         ?>
+                        <?php if(!empty($entry['story'])): ?>
                         <div class="story">
-                            <?php if(!empty($entry['story'])): ?>
                                 <?php 
                                     $pattern = '/#(.+)#/';
                                     echo preg_replace($pattern, '<a href="index.php?q=$1">$1</a>',$entry['story']); 
                                 ?>
-                            <?php endif; ?>
                         </div><!-- story -->
+                        <?php endif; ?>
 
                         <?php
                             $sql = "SELECT * FROM words WHERE word LIKE ?";

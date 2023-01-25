@@ -189,3 +189,24 @@ hr {
     border:none;
     margin:20px 0;
 }
+
+.rating {
+    display:flex;
+    justify-content: center;
+    margin-bottom:10px;
+
+}
+.rating button {
+    font-size:1.2em;
+    margin:5px;
+    color:#e4e4e4;
+}
+.rating button:hover {
+    color:#fff;
+}
+.rating button.easy {
+    background: rgb(32, 110, 32);
+}
+.rating button.hard {
+    background: rgb(175, 26, 26);
+}
