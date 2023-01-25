@@ -35,7 +35,7 @@ if(isset($_POST['action']) && $_POST['action'] == 'remove') {
         $results = $stmt->execute([$_POST['literal']]);
 }
 
-// add kanji to study
+// update components or story
 if(isset($_POST['action']) && $_POST['action'] == 'update') {
     //components
     $sql = "UPDATE kanjis SET components = ? WHERE literal = ?";
@@ -61,6 +61,13 @@ if(isset($_POST['action']) && $_POST['action'] == 'update') {
         $stmt = $myPDO->prepare($sql);
         $results = $stmt->execute([$_POST['literal'],0,$_POST['story'],0]);
     }
+}
+
+// add word
+if(isset($_POST['action']) && $_POST['action'] == 'add_word') {
+    $sql = "INSERT INTO words (word, hiragana, meaning) VALUES (?,?,?)";
+    $stmt = $myPDO->prepare($sql);
+    $results = $stmt->execute(explode(";",$_POST['word']));
 }
 
 
@@ -226,7 +233,23 @@ if(isset($_GET['q'])) {
                                     echo preg_replace($pattern, '<a href="index.php?q=$1">$1</a>',$entry['story']); 
                                 ?>
                             <?php endif; ?>
-                        </div><!-- readings -->
+                        </div><!-- story -->
+
+                        <?php
+                            $sql = "SELECT * FROM words WHERE word LIKE ?";
+                            $stmt = $myPDO->prepare($sql);
+                            $stmt->execute(['%'.$entry['literal'].'%']);
+                            $words = $stmt->fetchAll();
+                        ?>
+                        <?php if(!empty($words)): ?>
+                        <div class="words">
+                            <?php foreach($words as $word): ?>
+                            <div class="word">
+                                <?php echo $word['word']; ?>[<?php echo $word['hiragana']; ?>]: <?php echo $word['meaning']; ?>
+                            </div>
+                            <?php endforeach; ?>
+                        </div><!-- words -->
+                        <?php endif; ?>
 
                         <button class="edit-toggle" data-toggle="edit#<?php echo $entry['literal'];?>">toggle edit</button>
 
@@ -238,8 +261,15 @@ if(isset($_GET['q'])) {
                                 <input type="text" name="components" value="<?php echo $entry['components']; ?>">
                                 <span>Story</span>
                                 <textarea rows="4" name="story"><?php echo $entry['story']; ?></textarea>
-                                <button type="submit">Save</button>
-                        </form>
+                                <button type="submit">Save changes</button>
+                            </form>
+                            <hr>
+                            <span>Add a word</span>
+                            <form action="index.php?q=<?php echo $query; ?>" method="POST">
+                                <input type="hidden" name="action" value="add_word">
+                                <input type="text" name="word" placeholder="kanji;hiragana;english">
+                                <button type="submit">Add a word</button>
+                            </form>
                         </div>
                     </div><!-- right -->
                 
