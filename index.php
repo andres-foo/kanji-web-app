@@ -115,8 +115,12 @@ if(isset($_GET['q'])) {
         $sql = "SELECT kanjis.literal, kanjis_study.added FROM kanjis LEFT JOIN kanjis_study ON kanjis.literal = kanjis_study.literal WHERE kanjis.heisg6 IS NOT NULL ORDER BY kanjis.heisg6 ASC";
         $stmt = $myPDO->query($sql);
         $entries = $stmt->fetchAll();
-    }  elseif($_GET['list'] == 'grade') {
-        $sql = "SELECT kanjis.literal, kanjis_study.added FROM kanjis LEFT JOIN kanjis_study ON kanjis.literal = kanjis_study.literal WHERE kanjis.grade IS NOT NULL ORDER BY kanjis.grade ASC";
+    }  elseif($_GET['list'] == 'kyouiku') {
+        $sql = "SELECT kanjis.literal, kanjis_study.added FROM kanjis LEFT JOIN kanjis_study ON kanjis.literal = kanjis_study.literal WHERE kanjis.grade IS NOT NULL AND kanjis.grade <= 6 ORDER BY kanjis.grade ASC";
+        $stmt = $myPDO->query($sql);
+        $entries = $stmt->fetchAll();
+    }  elseif($_GET['list'] == 'jouyou') {
+        $sql = "SELECT kanjis.literal, kanjis_study.added FROM kanjis LEFT JOIN kanjis_study ON kanjis.literal = kanjis_study.literal WHERE kanjis.grade IS NOT NULL AND kanjis.grade <= 8 ORDER BY kanjis.grade ASC";
         $stmt = $myPDO->query($sql);
         $entries = $stmt->fetchAll();
     }  elseif($_GET['list'] == 'frequency') {
@@ -127,7 +131,7 @@ if(isset($_GET['q'])) {
         $sql = "SELECT kanjis.literal, kanjis_study.added FROM kanjis JOIN kanjis_study ON kanjis.literal = kanjis_study.literal WHERE kanjis_study.added = 1 ORDER BY kanjis.frequency ASC";
         $stmt = $myPDO->query($sql);
         $entries = $stmt->fetchAll();
-    }
+    }    
 } elseif( isset($_GET['review'])) {
     $sql = "SELECT kanjis.*, kanjis_study.story, kanjis_study.score, kanjis_study.added FROM kanjis JOIN kanjis_study ON kanjis.literal = kanjis_study.literal WHERE kanjis_study.added = 1 ORDER BY SCORE ASC";
     $stmt = $myPDO->query($sql);
@@ -183,7 +187,8 @@ if(isset($_GET['q'])) {
             <a href="index.php?review" class="review">REVIEW</a>
             <a href="index.php?list=my_list"<?php if(isset($_GET['list']) && $_GET['list'] == 'my_list') echo ' class="selected"';?>>MY LIST</a>
             <a href="index.php?list=jlpt"<?php if(isset($_GET['list']) && $_GET['list'] == 'jlpt') echo ' class="selected"';?>>JLPT</a>
-            <a href="index.php?list=grade"<?php if(isset($_GET['list']) && $_GET['list'] == 'grade') echo ' class="selected"';?>>GRADE</a>
+            <a href="index.php?list=kyouiku"<?php if(isset($_GET['list']) && $_GET['list'] == 'kyouiku') echo ' class="selected"';?> title="Elementary School">KYOUIKU</a>
+            <a href="index.php?list=jouyou"<?php if(isset($_GET['list']) && $_GET['list'] == 'jouyou') echo ' class="selected"';?>>JOUYOU</a>
             <a href="index.php?list=heisg6"<?php if(isset($_GET['list']) && $_GET['list'] == 'heisg6') echo ' class="selected"';?>>HEISG6</a>
             <a href="index.php?list=frequency"<?php if(isset($_GET['list']) && $_GET['list'] == 'frequency') echo ' class="selected"';?>>FREQUENCY</a>
         </div>
@@ -200,6 +205,7 @@ if(isset($_GET['q'])) {
         <?php if(!$entries): ?>
             No entries for this list.
         <?php else: ?>
+            <p>Showing <?php echo count($entries); ?> characters:</p>
             <?php foreach($entries as $entry): ?>
                 <a href="index.php?q=<?php echo $entry['literal']; ?>"<?php if($entry['added'] == 1) echo 'class="added"';?>>
                     <?php echo $entry['literal']; ?>
@@ -252,10 +258,22 @@ if(isset($_GET['q'])) {
                                 <span class="number"><?php echo $entry['jlpt']; ?></span>
                             </div>
                             <?php endif; ?>
-                            <?php if(!empty($entry['grade'])): ?>
+                            <?php if(!empty($entry['grade'])): ?>                           
                             <div class="item">
                                 <span class="ref">grade</span>
-                                <span class="number"><?php echo $entry['grade']; ?></span>
+                                <span class="number">
+                                <?php 
+                                    if($entry['grade'] <= 6) {
+                                        echo $entry['grade'];
+                                    } elseif($entry['grade'] == 8) {
+                                        echo "HighSchool(Jouyou)";
+                                    } elseif($entry['grade'] == 9) {
+                                        echo "Jinmeiyou(Names)";
+                                    } else {
+                                        echo "Jinmeiyou(Names extra)";
+                                    }
+                                ?>
+                                </span>
                             </div>
                             <?php endif; ?>
                             <?php if(!empty($entry['heisg6'])): ?>
