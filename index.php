@@ -225,12 +225,12 @@ if(isset($_GET['q'])) {
                             <form action="index.php?q=<?php echo $query; ?>" method="POST">
                                 <input type="hidden" name="action" value="easy">
                                 <input type="hidden" name="literal" value="<?php echo $entry['literal']; ?>">
-                                <button type="submit" class="easy">Easy</button>
+                                <button type="submit">Easy</button>
                             </form>
                             <form action="index.php?q=<?php echo $query; ?>" method="POST">
                                 <input type="hidden" name="action" value="hard">
                                 <input type="hidden" name="literal" value="<?php echo $entry['literal']; ?>">
-                                <button type="submit" class="hard">Hard</button>
+                                <button type="submit">Hard</button>
 
                             </form>                              
                         </div>
