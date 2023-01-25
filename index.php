@@ -211,7 +211,7 @@ if(isset($_GET['q'])) {
 
     <?php if(isset($query)) :?>
         <?php if(!$entries): ?>
-            No results for <b>$query</b>.
+            No results for <b><?php echo $query; ?></b>.
         <?php else: ?>
             <?php foreach($entries as $entry): ?>
 
