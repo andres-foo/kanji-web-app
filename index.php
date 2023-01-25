@@ -95,7 +95,7 @@ if(isset($_GET['q'])) {
     <div class="header">
         <form action="<?php echo $_SERVER['PHP_SELF']; ?>">
             <input type="search" name=q value="<?php if(isset($query)) echo $query;?>">
-            <input type="submit" name="submit" value="Search">
+            <button type="submit">Search</button>
         </form>
     </div>
 

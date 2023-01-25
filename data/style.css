@@ -96,10 +96,10 @@ button {
 }
 a, button {
     text-decoration: none;
-    color:#6d1dce;
+    color:#b173fd;
 }
 a:hover, button:hover{
-    color:#bb85fe;
+    color:#d7b7fd;
 }
 .edit textarea, .edit input {
     background-color:#121212;
