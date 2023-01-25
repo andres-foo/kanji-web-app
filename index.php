@@ -183,11 +183,11 @@ if(isset($_GET['q'])) {
     <div class="header">
         <div class="header-actions">
             <a href="index.php?review" class="review">REVIEW</a>
-            <a href="index.php?list=my_list">MY LIST</a>
-            <a href="index.php?list=jlpt">JLPT</a>
-            <a href="index.php?list=grade">GRADE</a>
-            <a href="index.php?list=heisg6">HEISG6</a>
-            <a href="index.php?list=frequency">FREQUENCY</a>
+            <a href="index.php?list=my_list"<?php if(isset($_GET['list']) && $_GET['list'] == 'my_list') echo ' class="selected"';?>>MY LIST</a>
+            <a href="index.php?list=jlpt"<?php if(isset($_GET['list']) && $_GET['list'] == 'jlpt') echo ' class="selected"';?>>JLPT</a>
+            <a href="index.php?list=grade"<?php if(isset($_GET['list']) && $_GET['list'] == 'grade') echo ' class="selected"';?>>GRADE</a>
+            <a href="index.php?list=heisg6"<?php if(isset($_GET['list']) && $_GET['list'] == 'heisg6') echo ' class="selected"';?>>HEISG6</a>
+            <a href="index.php?list=frequency"<?php if(isset($_GET['list']) && $_GET['list'] == 'frequency') echo ' class="selected"';?>>FREQUENCY</a>
         </div>
         <div class="header-form">
             <form action="<?php echo $_SERVER['PHP_SELF']; ?>">

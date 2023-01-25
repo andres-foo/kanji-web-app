@@ -210,3 +210,6 @@ hr {
 .rating button.hard {
     background: rgb(175, 26, 26);
 }
+.selected {
+    border-bottom:2px solid #ffffff;
+}
