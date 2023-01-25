@@ -37,48 +37,88 @@ if(isset($_GET['q'])) {
 <?php if(!$entries): ?>
        "No results."
 <?php else: ?>
-    <?php foreach($entries as $entry): ?> {
-        <?php echo $entry['meanings'];?>
-    <?php endforeach; ?>
-<?php endif;?>
-
+    <?php foreach($entries as $entry): ?>
 
 <div class="card">
     <div class="left">
-        <div class="kanji">名</div>
+        <div class="kanji"><?php echo $entry['literal']; ?></div>
     </div><!-- left -->
     <div class="right">
         <div class="meta">
-            <div class="item"><span class="ref">strokes</span><span class="number">6</span></div>
-            <div class="item"><span class="ref">frequency</span><span class="number">6</span></div>
-            <div class="item"><span class="ref">jlpt</span><span class="number">6</span></div>
-            <div class="item"><span class="ref">grade</span><span class="number">6</span></div>
-            <div class="item"><span class="ref">heisg6</span><span class="number">6</span></div>
+            <div class="item">
+                <span class="ref">strokes</span>
+                <span class="number"><?php echo $entry['strokes']; ?></span>
+            </div>
+            <?php if(!empty($entry['frequency'])): ?>
+            <div class="item">
+                <span class="ref">frequency</span>
+                <span class="number"><?php echo $entry['frequency']; ?></span>
+            </div>
+            <?php endif; ?>
+            <?php if(!empty($entry['jlpt'])): ?>
+            <div class="item">
+                <span class="ref">jlpt</span>
+                <span class="number"><?php echo $entry['jlpt']; ?></span>
+            </div>
+            <?php endif; ?>
+            <?php if(!empty($entry['grade'])): ?>
+            <div class="item">
+                <span class="ref">grade</span>
+                <span class="number"><?php echo $entry['grade']; ?></span>
+            </div>
+            <?php endif; ?>
+            <?php if(!empty($entry['heisg6'])): ?>
+            <div class="item">
+                <span class="ref">heisg6</span>
+                <span class="number"><?php echo $entry['heisg6']; ?></span>
+            </div>
+            <?php endif; ?>
         </div><!-- meta -->
         <div class="meanings">
-            Asia, rank next, come after, -ous
+            <?php echo str_replace(";", ", ", $entry['meanings']); ?>
         </div><!-- meanings -->
-        <div class="readings">
-            <div class="reading">ア</div>
-            <div class="reading">アイ</div>
-            <div class="reading">ワ</div>
-        </div><!-- readings -->
-        <div class="readings">
-            <div class="reading">あわ.れ</div>
-            <div class="reading">あわ.れむ</div>
-            <div class="reading">かな.しい</div>
-        </div><!-- readings -->
-        <div class="components">
-            <div class="component"><a href="">爫</a></div>
-            <div class="component"><a href="">冖</a></div>
-            <div class="component"><a href="">𢖻</a></div>
-        </div><!-- readings -->
+        <?php 
+            if(!empty($entry['onReadings'])) { 
+                echo '<div class="readings">';
+                $onReadingsArray = explode(";", $entry['onReadings']);
+                foreach($onReadingsArray as $onReading) {
+                    echo '<div class="reading">'.$onReading.'</div>';
+                }
+                echo '</div><!-- readings -->';
+            }
+        ?>
+        <?php 
+            if(!empty($entry['kunReadings'])) { 
+                echo '<div class="readings">';
+                $kunReadingsArray = explode(";", $entry['kunReadings']);
+                foreach($kunReadingsArray as $kunReading) {
+                    echo '<div class="reading">'.$kunReading.'</div>';
+                }
+                echo '</div><!-- readings -->';
+            }
+        ?>
+        <?php 
+            if(!empty($entry['components'])) { 
+                echo '<div class="components">';
+                $componentsArray = explode(";", $entry['components']);
+                foreach($componentsArray as $component) {
+                    echo '<div class="component"><a href="index.php?q='.$component.'">'.$component.'</a></div>';
+                }
+                echo '</div><!-- components -->';
+            }
+        ?>
         <div class="story">
             Some text that represents the story
         </div><!-- readings -->
     </div><!-- right -->
+</div><!-- card -->
 
-</div>
+
+    <?php endforeach; ?>
+<?php endif;?>
+
+
+
 
 </body>
 </html>
