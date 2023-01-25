@@ -3,8 +3,6 @@
 // db connection
 $myPDO = new PDO('sqlite:data/kanjis.db');
 
-
-
 // add kanji to study
 if(isset($_POST['action']) && $_POST['action'] == 'add') {
     //$id = filter_var($_GET['id'], FILTER_VALIDATE_INT);

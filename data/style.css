@@ -49,6 +49,7 @@ body {
 }
 .card .right .meta, .card .right .readings, .card .right .components {
     display:flex;
+    flex-wrap: wrap;
     flex-direction: row;
     justify-items: center;
     padding:10px 0;
@@ -72,7 +73,7 @@ body {
 }
 .card .right .readings .reading, .card .right .components .component a {
     background-color:#121212;
-    margin-right:10px;
+    margin:0 10px 5px 0;
     padding:5px 10px;
     border-radius: 5px;    
     font-family: "NotoSansJP";
