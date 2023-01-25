@@ -93,10 +93,20 @@ if(isset($_GET['q'])) {
 
 <div class="content">
     <div class="header">
-        <form action="<?php echo $_SERVER['PHP_SELF']; ?>">
-            <input type="search" name=q value="<?php if(isset($query)) echo $query;?>">
-            <button type="submit">Search</button>
-        </form>
+        <div class="header-actions">
+            <a href="My kanjis" class="review">REVIEW</a>
+            <a href="My kanjis">MY LIST</a>
+            <a href="My kanjis">JLPT</a>
+            <a href="My kanjis">GRADE</a>
+            <a href="My kanjis">HEISG6</a>
+            <a href="My kanjis">FREQUENCY</a>
+        </div>
+        <div class="header-form">
+            <form action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                <input type="search" placeholder="Search by literal, readings or meanings" name=q value="<?php if(isset($query)) echo $query;?>">
+            </form>
+        </div>
+
     </div>
 
 
