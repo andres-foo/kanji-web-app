@@ -20,7 +20,7 @@ body {
     margin: 10px auto;
   }
 /* card */
-.card, .header {
+.card, .header, .list {
     position:relative;
     background:#1e1e1e;
     display:flex;
@@ -154,4 +154,18 @@ a:hover, button:hover{
 .review:hover{
     color:#6ff882;
 
+}
+
+.list {
+    display:block;
+    padding:10px 20px;
+}
+.list a{
+    font-size: 2em;
+}
+.list a.added {
+    color:#16cc2e;
+}
+.list a.added:hover {
+    color:#6ff882;
 }
