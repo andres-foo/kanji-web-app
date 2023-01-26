@@ -128,7 +128,7 @@ if(isset($_GET['q'])) {
         $stmt = $myPDO->query($sql);
         $entries = $stmt->fetchAll();
     }  elseif($_GET['list'] == 'my_list') {
-        $sql = "SELECT kanjis.literal, kanjis_study.added FROM kanjis JOIN kanjis_study ON kanjis.literal = kanjis_study.literal WHERE kanjis_study.added = 1 ORDER BY kanjis.frequency ASC";
+        $sql = "SELECT kanjis.literal, kanjis_study.added FROM kanjis JOIN kanjis_study ON kanjis.literal = kanjis_study.literal WHERE kanjis_study.added = 1";
         $stmt = $myPDO->query($sql);
         $entries = $stmt->fetchAll();
     }    
