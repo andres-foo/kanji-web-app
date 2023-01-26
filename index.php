@@ -16,40 +16,59 @@ if(isset($_POST['action']) && $_POST['action'] == 'add_word') {
 // search
 $entries = [];
 if(isset($_GET['query'])) {	
-    //if japanese
-    if(itHasJapanese($_GET['query'])) {
-        if(itHasKanji($_GET['query'])) {
-            $kanjis = obtainKanjis($_GET['query'])[0];
-            $qty = count($kanjis);
-            $i = 0;
-            $str = '';
-            foreach($kanjis as $kanji) {
-                $i++;
-                $str .= " kanjis.literal = ?";
-                if($i != $qty) $str .= " OR";
-            }
-            $sql = "SELECT kanjis.*, kanjis_study.story, kanjis_study.score, kanjis_study.added FROM kanjis LEFT JOIN kanjis_study ON kanjis.literal = kanjis_study.literal WHERE " . $str;
-            $stmt = $myPDO->prepare($sql);
-            $results = $stmt->execute($kanjis);
-        } else {
-            $sql = "SELECT kanjis.*, kanjis_study.story, kanjis_study.score, kanjis_study.added FROM kanjis LEFT JOIN kanjis_study ON kanjis.literal = kanjis_study.literal WHERE kanjis.onReadings LIKE ? OR kanjis.kunReadings LIKE ?";
-            $stmt = $myPDO->prepare($sql);
-            $results = $stmt->execute(['%'.$_GET['query'].'%','%'.$_GET['query'].'%']);
-        }
+    if(empty($_GET['query'])) {
+        $error = "Don't leave the search empty.";
     } else {
-        $sql = "SELECT kanjis.*, kanjis_study.story, kanjis_study.score, kanjis_study.added FROM kanjis LEFT JOIN kanjis_study ON kanjis.literal = kanjis_study.literal WHERE kanjis.meanings LIKE ?";
-        $stmt = $myPDO->prepare($sql);
-        $results = $stmt->execute(['%'.$_GET['query'].'%']);
+        //if japanese
+        if(itHasJapanese($_GET['query'])) {
+            if(itHasKanji($_GET['query'])) {
+                $kanjis = obtainKanjis($_GET['query'])[0];
+                $qty = count($kanjis);
+                $i = 0;
+                $str = '';
+                foreach($kanjis as $kanji) {
+                    $i++;
+                    $str .= " kanjis.literal = ?";
+                    if($i != $qty) $str .= " OR";
+                }
+                $sql = "SELECT kanjis.*, kanjis_study.story, kanjis_study.score, kanjis_study.added FROM kanjis LEFT JOIN kanjis_study ON kanjis.literal = kanjis_study.literal WHERE " . $str;
+                $stmt = $myPDO->prepare($sql);
+                $results = $stmt->execute($kanjis);
+            } else {
+                $sql = "SELECT kanjis.*, kanjis_study.story, kanjis_study.score, kanjis_study.added FROM kanjis LEFT JOIN kanjis_study ON kanjis.literal = kanjis_study.literal WHERE kanjis.onReadings LIKE ? OR kanjis.kunReadings LIKE ?";
+                $stmt = $myPDO->prepare($sql);
+                $results = $stmt->execute(['%'.$_GET['query'].'%','%'.$_GET['query'].'%']);
+            }
+            $entries = $stmt->fetchAll();  
+        } else {
+            if(strlen($_GET['query']) <= 2) {
+                $error = "The query must be 3 characters minimum for English.";
+            } else {
+                $sql = "SELECT kanjis.*, kanjis_study.story, kanjis_study.score, kanjis_study.added FROM kanjis LEFT JOIN kanjis_study ON kanjis.literal = kanjis_study.literal WHERE kanjis.meanings LIKE ?";
+                $stmt = $myPDO->prepare($sql);
+                $results = $stmt->execute(['%'.$_GET['query'].'%']);
+                $entries = $stmt->fetchAll();  
+            }
+        }
+        
     }
-    $entries = $stmt->fetchAll();
+
 }
 
 ?>
 <?php require './parts/header.php'; ?>
 
-<?php if(isset($_GET['query'])) :?>
+<?php if(!empty($error)): ?>
+
+     <div class="error">
+        <?php echo $error;?>
+    </div>
+
+<?php elseif(isset($_GET['query'])) :?>
     <?php if(!$entries): ?>
-        No results.
+        <div class="card empty">
+            No results.
+        </div>
     <?php else: ?>
         <?php foreach($entries as $entry): ?>
 

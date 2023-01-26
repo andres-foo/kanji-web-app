@@ -31,6 +31,12 @@ body {
 .card.added {
     border-left:3px solid #16cc2e;
 }
+.error {
+    padding:20px;
+    border-radius: 5px;
+    background-color: #1e1e1e;
+    border-left:3px solid red;
+}
 .header {
     padding:10px;
 }
@@ -91,6 +97,9 @@ body {
 }
 .card .action form {
     display:inline-block;
+}
+.card.empty {
+    padding:20px;
 }
 
 /* FORM STUFF */
