@@ -28,6 +28,9 @@ body {
     box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.1);
     margin-bottom:20px;
 }
+.card.added {
+    border-left:3px solid #16cc2e;
+}
 .header {
     padding:10px;
 }
@@ -85,6 +88,9 @@ body {
     position: absolute;
     top:10px;
     right:10px;
+}
+.card .action form {
+    display:inline-block;
 }
 
 /* FORM STUFF */
@@ -145,12 +151,16 @@ a:hover, button:hover{
     display: flex;
     flex-direction: column;
 }
-.header a {
+.header a, .header button {
     background:#121212;
     padding:10px 15px;
     margin:10px 10px 10px 0;
     display:inline-block;
     border-radius: 5px;
+    font-size:1em;
+}
+.header form {
+    display:inline;
 }
 .review {
     color:#16cc2e;
@@ -165,7 +175,7 @@ a:hover, button:hover{
     padding:10px 20px;
 }
 .list a{
-    font-size: 2em;
+    font-size: 2.2em;
 }
 .list a.added {
     color:#16cc2e;
@@ -174,14 +184,12 @@ a:hover, button:hover{
     color:#6ff882;
 }
 
-.words {
-    margin-bottom:20px;
-    background:#121212;
-    padding:10px;
-    border-radius: 5px;
-}
 .words .word {
-    padding:5px;
+    border-radius: 5px;
+    padding:10px;    
+    background:#121212;
+    margin-bottom:10px;
+    display: inline-block;
 }
 hr {
     display:block;
