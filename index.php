@@ -1,5 +1,7 @@
 <?php define('home', true); ?>
 
+<?php require 'helper.php'; ?>
+
 <?php
 // db connection
 $myPDO = new PDO('sqlite:data/kanjis.db');
@@ -15,10 +17,25 @@ if(isset($_POST['action']) && $_POST['action'] == 'add_word') {
 $entries = [];
 if(isset($_GET['query'])) {	
     //if japanese
-    if(preg_match('/[\x{4E00}-\x{9FBF}\x{3040}-\x{309F}\x{30A0}-\x{30FF}]/u', $_GET['query'])) {
-        $sql = "SELECT kanjis.*, kanjis_study.story, kanjis_study.score, kanjis_study.added FROM kanjis LEFT JOIN kanjis_study ON kanjis.literal = kanjis_study.literal WHERE kanjis.literal = ?";
-        $stmt = $myPDO->prepare($sql);
-        $results = $stmt->execute([$_GET['query']]);
+    if(itHasJapanese($_GET['query'])) {
+        if(itHasKanji($_GET['query'])) {
+            $kanjis = obtainKanjis($_GET['query'])[0];
+            $qty = count($kanjis);
+            $i = 0;
+            $str = '';
+            foreach($kanjis as $kanji) {
+                $i++;
+                $str .= " kanjis.literal = ?";
+                if($i != $qty) $str .= " OR";
+            }
+            $sql = "SELECT kanjis.*, kanjis_study.story, kanjis_study.score, kanjis_study.added FROM kanjis LEFT JOIN kanjis_study ON kanjis.literal = kanjis_study.literal WHERE " . $str;
+            $stmt = $myPDO->prepare($sql);
+            $results = $stmt->execute($kanjis);
+        } else {
+            $sql = "SELECT kanjis.*, kanjis_study.story, kanjis_study.score, kanjis_study.added FROM kanjis LEFT JOIN kanjis_study ON kanjis.literal = kanjis_study.literal WHERE kanjis.onReadings LIKE ? OR kanjis.kunReadings LIKE ?";
+            $stmt = $myPDO->prepare($sql);
+            $results = $stmt->execute(['%'.$_GET['query'].'%','%'.$_GET['query'].'%']);
+        }
     } else {
         $sql = "SELECT kanjis.*, kanjis_study.story, kanjis_study.score, kanjis_study.added FROM kanjis LEFT JOIN kanjis_study ON kanjis.literal = kanjis_study.literal WHERE kanjis.meanings LIKE ?";
         $stmt = $myPDO->prepare($sql);
