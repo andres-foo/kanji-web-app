@@ -137,7 +137,7 @@ button {
     border:none;
     width:100%;
     font-size: 1.4em;
-
+    margin-bottom:10px;
 }
 .header form {
     width:100%;
@@ -175,7 +175,7 @@ a:hover, button:hover{
     display: flex;
     flex-direction: column;
 }
-.header a, .header button {
+.header .header-actions a, .header button {
     background:#121212;
     padding:10px 15px;
     margin:10px 10px 10px 0;
@@ -238,4 +238,7 @@ hr {
 }
 .card .right .components .component a{
     font-family:"NotoSansJP", "BabelStoneHan";
+}
+.rules {
+    display:block;
 }

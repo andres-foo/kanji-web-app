@@ -21,6 +21,7 @@ if (!defined('home')) {
             <form action="actions/review.php" method="POST">
                 <button type="submit" class="review">REVIEW</button>
             </form>
+            <a href="index.php">HOME</a>
             <a href="list.php?list=my_list"<?php if(isset($_GET['list']) && $_GET['list'] == 'my_list') echo ' class="selected"';?>>MY LIST</a>
             <a href="list.php?list=jlpt"<?php if(isset($_GET['list']) && $_GET['list'] == 'jlpt') echo ' class="selected"';?>>JLPT</a>
             <a href="list.php?list=kyouiku"<?php if(isset($_GET['list']) && $_GET['list'] == 'kyouiku') echo ' class="selected"';?> title="Elementary School">KYOUIKU</a>
@@ -32,6 +33,15 @@ if (!defined('home')) {
             <form action="index.php" method="GET">
                 <input type="search" placeholder="Search by literal, readings or meanings" name="query" value="<?php if(isset($_GET['query'])) echo $_GET['query'];?>">
             </form>
+            <?php
+                if(isset($_GET['query']) && !empty($_GET['query']) && !itHasJapanese($_GET['query'])) {
+                    require_once 'helper.php';
+                    $hiragana = toHiragana($_GET['query']);
+                    if(isOnlyHiragana($hiragana)) {
+                        echo '<div class="alternative">Search for <a href="index.php?query='.$hiragana.'">'.$hiragana.'</a> instead?</div>'; 
+                    }
+                }
+            ?>
         </div>
 
     </div>
