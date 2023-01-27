@@ -34,4 +34,5 @@ Componets for each kanji were extracted from the Ideographic Description Sequenc
 ### Kanji stroke orders
 For the stroke orders the font KanjiStrokeOrders was used, it can be found at: [https://www.nihilist.org.uk/](https://www.nihilist.org.uk/)
 
-
+### Font support for certain unicode character
+The font BabelStoneHan was added to correctly display some literals, it can be found at: [https://www.babelstone.co.uk/Fonts/PUA.html](https://www.babelstone.co.uk/Fonts/PUA.html)

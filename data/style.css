@@ -8,6 +8,11 @@
     src: url("./fonts/NotoSansJP-Regular.otf");
 }
 
+@font-face {
+    font-family: "BabelStoneHan";
+    src: url("./fonts/BabelStoneHan.ttf");
+}
+
 body {
     background:#121212;
     color:#e4e4e4;
@@ -49,12 +54,12 @@ body {
 
 }
 .card .left .kanji {
-    font-family:"NotoSansJP";
+    font-family:"NotoSansJP", "BabelStoneHan";
     font-size:120pt;
     padding:10px;
 }
 .card .left .kanji:hover {
-    font-family:"KanjiStrokeOrders";
+    font-family:"KanjiStrokeOrders", "BabelStoneHan";
 }
 .card .right .meta, .card .right .components {
     display:flex;
@@ -127,7 +132,7 @@ button {
     background-color:#121212;
     padding:10px 20px;
     border-radius: 5px;  
-    font-family: "NotoSansJP";
+    font-family: "NotoSansJP","BabelStoneHan";
     color:#e4e4e4;
     border:none;
     width:100%;
@@ -230,4 +235,7 @@ hr {
 }
 .selected {
     border-bottom:2px solid #ffffff;
+}
+.card .right .components .component a{
+    font-family:"NotoSansJP", "BabelStoneHan";
 }
