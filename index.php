@@ -190,10 +190,14 @@ if(isset($_GET['query'])) {
                 ?>
                 <?php if(!empty($entry['story'])): ?>
                 <div class="story">
-                        <?php 
-                            $pattern = '/#(.+)#/';
-                            echo preg_replace($pattern, '<a href="index.php?query=$1">$1</a>',$entry['story']); 
-                        ?>
+                    <?php 
+                        // links
+                        $pattern = '/#(.+?)#/';
+                        $story = preg_replace($pattern, '<a href="index.php?query=$1">$1</a>',$entry['story']);
+                        // emphasis
+                        $pattern = '/\_(.+?)\_/';
+                        echo preg_replace($pattern, '<span>$1</span>',$story); 
+                    ?>
                 </div><!-- story -->
                 <?php endif; ?>
 
@@ -221,7 +225,7 @@ if(isset($_GET['query'])) {
                         <input type="text" name="components" value="<?php echo $entry['components']; ?>" placeholder="𠂇;口">
                         <span>Other forms</span>
                         <input type="text" name="otherForms" value="<?php echo $entry['other_forms']; ?>" placeholder="亻;人">
-                        <span>Story (Use #日# to create links)</span>
+                        <span>Story (Use #日# to create links or _day_ for emphasis)</span>
                         <textarea rows="4" name="story"><?php echo $entry['story']; ?></textarea>
                         <button type="submit">Save changes</button>
                     </form>
