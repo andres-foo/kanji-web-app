@@ -11,10 +11,10 @@ if(!isset($_POST['literal'])) exit('No literal provided');
 // db connection
 $myPDO = new PDO('sqlite:../data/kanjis.db');
 
-//components
-$sql = "UPDATE kanjis SET components = ? WHERE literal = ?";
+//components & other forms
+$sql = "UPDATE kanjis SET components = ?, other_forms = ? WHERE literal = ?";
 $stmt = $myPDO->prepare($sql);
-$results = $stmt->execute([$_POST['components'],$_POST['literal']]);
+$results = $stmt->execute([$_POST['components'],$_POST['otherForms'],$_POST['literal']]);
 if(!$results) exit('Unable to update components');
 
 //story

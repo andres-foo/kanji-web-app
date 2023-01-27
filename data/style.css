@@ -56,12 +56,18 @@ body {
 .card .left .kanji:hover {
     font-family:"KanjiStrokeOrders";
 }
-.card .right .meta, .card .right .readings, .card .right .components {
+.card .right .meta, .card .right .components {
     display:flex;
     flex-wrap: wrap;
     flex-direction: row;
     justify-items: center;
     padding:10px 0;
+}
+.card .right .readings {
+    display:flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-items: center; 
 }
 .card .right .story {
     padding:10px 0;
@@ -78,7 +84,11 @@ body {
     content:': ';
 }
 .card .right .meanings {
-    font-size: 1.4em;;
+    font-size: 1.4em;
+    margin:15px 0 25px 0;
+}
+.card .right .other_forms {
+    color:#959595;
 }
 .card .right .readings .reading, .card .right .components .component a {
     background-color:#121212;

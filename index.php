@@ -136,6 +136,17 @@ if(isset($_GET['query'])) {
                     </div>
                     <?php endif; ?>
                 </div><!-- meta -->
+                <?php if(!empty($entry['other_forms'])): ?>
+                <div class="other_forms">
+                    ALSO 
+                    <?php 
+                        $other_forms = explode(";",$entry['other_forms']); 
+                        foreach($other_forms as $other_form) {
+                            echo '<a href="index.php?query='.$other_form.'">'.$other_form.'</a>';
+                        }
+                    ?>
+                </div>
+                <?php endif; ?>
                 <div class="meanings">
                     <?php echo str_replace(";", ", ", $entry['meanings']); ?>
                 </div><!-- meanings -->
@@ -195,11 +206,13 @@ if(isset($_GET['query'])) {
                 <?php endif; ?>
 
                 <div class="edit" id="edit#<?php echo $entry['literal'];?>">
-                    <span>Components</span>
                     <form action="actions/update_kanji.php" method="POST">
+                        <span>Components</span>
                         <input type="hidden" name="literal" value="<?php echo $entry['literal']; ?>">
                         <input type="hidden" name="query" value="<?php echo $_GET['query']; ?>">
-                        <input type="text" name="components" value="<?php echo $entry['components']; ?>">
+                        <input type="text" name="components" value="<?php echo $entry['components']; ?>" placeholder="𠂇;口">
+                        <span>Other forms</span>
+                        <input type="text" name="otherForms" value="<?php echo $entry['other_forms']; ?>" placeholder="亻;人">
                         <span>Story (Use #日# to create links)</span>
                         <textarea rows="4" name="story"><?php echo $entry['story']; ?></textarea>
                         <button type="submit">Save changes</button>
