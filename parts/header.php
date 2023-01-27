@@ -18,10 +18,10 @@ if (!defined('home')) {
 <div class="content">
     <div class="header">
         <div class="header-actions">
+            <a href="index.php">HOME</a>
             <form action="actions/review.php" method="POST">
                 <button type="submit" class="review">REVIEW</button>
             </form>
-            <a href="index.php">HOME</a>
             <a href="list.php?list=my_list"<?php if(isset($_GET['list']) && $_GET['list'] == 'my_list') echo ' class="selected"';?>>MY LIST</a>
             <a href="list.php?list=jlpt"<?php if(isset($_GET['list']) && $_GET['list'] == 'jlpt') echo ' class="selected"';?>>JLPT</a>
             <a href="list.php?list=kyouiku"<?php if(isset($_GET['list']) && $_GET['list'] == 'kyouiku') echo ' class="selected"';?> title="Elementary School">KYOUIKU</a>
