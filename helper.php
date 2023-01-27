@@ -169,7 +169,6 @@ function toHiragana($text = '') {
         'e' => 'え',
         'o' => 'お',
         'n' => 'ん',
-        'm' => 'ん',
     ];
     $text =  mb_strtolower($text);
     foreach ($decision_table as $key => $value) {
