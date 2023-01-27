@@ -44,11 +44,11 @@ foreach($all_components as $component) {
 }
 
 //
-// echo "Missing components: " . count($missing_components) . "<br>";
+echo "Missing components: " . count($missing_components) . "<br>";
 foreach($missing_components as $component) {
     echo $component[0] ." unicode ". $component[1] . "<br>";
     $sql = "INSERT INTO kanjis (literal, meanings) VALUES ('".$component[0]."', 'unicode ".$component[1]."')";
-    $myPDO->query($sql);
+    //$myPDO->query($sql);
 }
 
 ?>
