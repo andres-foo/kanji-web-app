@@ -164,7 +164,7 @@ if(isset($_GET['query'])) {
                         echo '<div class="components">';
                         $componentsArray = explode(";", $entry['components']);
                         foreach($componentsArray as $component) {
-                            echo '<div class="component"><a href="index.php?q='.$component.'">'.$component.'</a></div>';
+                            echo '<div class="component"><a href="index.php?query='.$component.'">'.$component.'</a></div>';
                         }
                         echo '</div><!-- components -->';
                     }
