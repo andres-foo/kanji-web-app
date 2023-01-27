@@ -6,13 +6,6 @@
 // db connection
 $myPDO = new PDO('sqlite:data/kanjis.db');
 
-// add word
-if(isset($_POST['action']) && $_POST['action'] == 'add_word') {
-    $sql = "INSERT INTO words (word, hiragana, meaning) VALUES (?,?,?)";
-    $stmt = $myPDO->prepare($sql);
-    $results = $stmt->execute(explode(";",$_POST['word']));
-}
-
 // search
 $entries = [];
 if(isset($_GET['query'])) {	
@@ -219,8 +212,8 @@ if(isset($_GET['query'])) {
                     </form>
                     <hr>
                     <span>Add an example</span>
-                    <form action="index.php?q=<?php echo $query; ?>" method="POST">
-                        <input type="hidden" name="action" value="add_word">
+                    <form action="actions/add_example.php" method="POST">                     
+                        <input type="hidden" name="query" value="<?php echo $_GET['query']; ?>">
                         <p><input type="text" name="word" placeholder="kanji;hiragana;english"><p>
                         <button type="submit">Add</button>
                     </form>
