@@ -14,10 +14,6 @@ if($_GET['list'] == 'jlpt') {
     $sql = "SELECT kanjis.literal, kanjis_study.added FROM kanjis LEFT JOIN kanjis_study ON kanjis.literal = kanjis_study.literal WHERE kanjis.heisg6 IS NOT NULL ORDER BY kanjis.heisg6 ASC";
     $stmt = $myPDO->query($sql);
     $entries = $stmt->fetchAll();
-}  elseif($_GET['list'] == 'kyouiku') {
-    $sql = "SELECT kanjis.literal, kanjis_study.added FROM kanjis LEFT JOIN kanjis_study ON kanjis.literal = kanjis_study.literal WHERE kanjis.grade IS NOT NULL AND kanjis.grade <= 6 ORDER BY kanjis.grade ASC";
-    $stmt = $myPDO->query($sql);
-    $entries = $stmt->fetchAll();
 }  elseif($_GET['list'] == 'jouyou') {
     $sql = "SELECT kanjis.literal, kanjis_study.added FROM kanjis LEFT JOIN kanjis_study ON kanjis.literal = kanjis_study.literal WHERE kanjis.grade IS NOT NULL AND kanjis.grade <= 8 ORDER BY kanjis.grade ASC";
     $stmt = $myPDO->query($sql);

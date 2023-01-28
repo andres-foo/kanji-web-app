@@ -102,48 +102,50 @@ if(isset($_GET['query'])) {
                 <?php endif; ?>
             </div><!-- left -->
             <div class="right">
-                <div class="meta">
-                    <div class="item">
-                        <span class="ref">strokes</span>
-                        <span class="number"><?php echo $entry['strokes']; ?></span>
-                    </div>
-                    <?php if(!empty($entry['frequency'])): ?>
-                    <div class="item">
-                        <span class="ref">frequency</span>
-                        <span class="number"><?php echo $entry['frequency']; ?></span>
-                    </div>
-                    <?php endif; ?>
-                    <?php if(!empty($entry['jlpt'])): ?>
-                    <div class="item">
-                        <span class="ref">jlpt</span>
-                        <span class="number"><?php echo $entry['jlpt']; ?></span>
-                    </div>
-                    <?php endif; ?>
-                    <?php if(!empty($entry['grade'])): ?>                           
-                    <div class="item">
-                        <span class="ref">grade</span>
-                        <span class="number">
-                        <?php 
-                            if($entry['grade'] <= 6) {
-                                echo $entry['grade'];
-                            } elseif($entry['grade'] == 8) {
-                                echo "HighSchool(Jouyou)";
-                            } elseif($entry['grade'] == 9) {
-                                echo "Jinmeiyou(Names)";
-                            } else {
-                                echo "Jinmeiyou(Names extra)";
-                            }
-                        ?>
-                        </span>
-                    </div>
-                    <?php endif; ?>
-                    <?php if(!empty($entry['heisg6'])): ?>
-                    <div class="item">
-                        <span class="ref">heisg6</span>
-                        <span class="number"><?php echo $entry['heisg6']; ?></span>
-                    </div>
-                    <?php endif; ?>
-                </div><!-- meta -->
+                <?php if(!isset($_SESSION['simple']) || $_SESSION['simple'] == 'off'): ?>
+                    <div class="meta">
+                        <div class="item">
+                            <span class="ref">strokes</span>
+                            <span class="number"><?php echo $entry['strokes']; ?></span>
+                        </div>
+                        <?php if(!empty($entry['frequency'])): ?>
+                        <div class="item">
+                            <span class="ref">frequency</span>
+                            <span class="number"><?php echo $entry['frequency']; ?></span>
+                        </div>
+                        <?php endif; ?>
+                        <?php if(!empty($entry['jlpt'])): ?>
+                        <div class="item">
+                            <span class="ref">jlpt</span>
+                            <span class="number"><?php echo $entry['jlpt']; ?></span>
+                        </div>
+                        <?php endif; ?>
+                        <?php if(!empty($entry['grade'])): ?>                           
+                        <div class="item">
+                            <span class="ref">grade</span>
+                            <span class="number">
+                            <?php 
+                                if($entry['grade'] <= 6) {
+                                    echo $entry['grade'];
+                                } elseif($entry['grade'] == 8) {
+                                    echo "HighSchool(Jouyou)";
+                                } elseif($entry['grade'] == 9) {
+                                    echo "Jinmeiyou(Names)";
+                                } else {
+                                    echo "Jinmeiyou(Names extra)";
+                                }
+                            ?>
+                            </span>
+                        </div>
+                        <?php endif; ?>
+                        <?php if(!empty($entry['heisg6'])): ?>
+                        <div class="item">
+                            <span class="ref">heisg6</span>
+                            <span class="number"><?php echo $entry['heisg6']; ?></span>
+                        </div>
+                        <?php endif; ?>
+                    </div><!-- meta -->
+                <?php endif; ?>
                 <?php if(!empty($entry['other_forms'])): ?>
                 <div class="other_forms">
                     ALSO 
@@ -158,6 +160,7 @@ if(isset($_GET['query'])) {
                 <div class="meanings">
                     <?php echo str_replace(";", ", ", $entry['meanings']); ?>
                 </div><!-- meanings -->
+                <?php if(!isset($_SESSION['simple']) || $_SESSION['simple'] == 'off'): ?>
                 <?php 
                     if(!empty($entry['onReadings'])) { 
                         echo '<div class="readings">';
@@ -178,6 +181,7 @@ if(isset($_GET['query'])) {
                         echo '</div><!-- readings -->';
                     }
                 ?>
+                <?php endif; //session for readings ?>
                 <?php 
                     if(!empty($entry['components'])) { 
                         echo '<div class="components">';
@@ -211,7 +215,10 @@ if(isset($_GET['query'])) {
                 <div class="words">
                     <?php foreach($words as $word): ?>
                     <div class="word">
-                        <?php echo $word['word']; ?>[<?php echo $word['hiragana']; ?>]: <?php echo $word['meaning']; ?>
+                        <?php echo $word['word']; ?>
+                        <?php if(!isset($_SESSION['simple']) || $_SESSION['simple'] == 'off'): ?>
+                            [<?php echo $word['hiragana']; ?>]: <?php echo $word['meaning']; ?>
+                        <?php endif; ?>
                     </div>
                     <?php endforeach; ?>
                 </div><!-- words -->
