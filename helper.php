@@ -15,11 +15,11 @@ function isOnlyKanji($str) {
 }
 
 function itHasKanji($str) {
-    return preg_match('/[\p{Han}]+/u', $str) > 0;
+    return preg_match('/[\p{Han}㇒]+/u', $str) > 0;
 }
 
 function itHasJapanese($str) {
-    return preg_match('/[\p{Katakana}\p{Hiragana}\p{Han}「」]+/u', $str) > 0;
+    return preg_match('/[\p{Katakana}\p{Hiragana}\p{Han}「」㇒]+/u', $str) > 0;
 }
 
 function isOnlyJapanese($str) {
@@ -35,7 +35,7 @@ function isOnlyKatakana($str) {
 }
 
 function obtainKanjis($str) {
-    preg_match_all('/[p\p{Han}]/u', $str, $matches);
+    preg_match_all('/[p\p{Han}㇒]/u', $str, $matches);
     return $matches;
 }
 
