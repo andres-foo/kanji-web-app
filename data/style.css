@@ -157,7 +157,7 @@ a:hover, button:hover{
     padding:10px;
     width:100%;
     font-size: 1em;    
-    font-family: "NotoSansJP";
+    font-family: "NotoSansJP", "BabelStoneHan";
 }
 
 .edit {
