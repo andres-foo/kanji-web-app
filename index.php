@@ -52,9 +52,42 @@ if(isset($_GET['query'])) {
             if(strlen($_GET['query']) <= 2) {
                 $error = "The query must be 3 characters minimum for English.";
             } else {
-                $sql = "SELECT kanjis.*, kanjis_study.story, kanjis_study.score, kanjis_study.added FROM kanjis LEFT JOIN kanjis_study ON kanjis.literal = kanjis_study.literal WHERE kanjis.meanings LIKE ?";
+                $sql = <<<SQL
+                SELECT 
+                    kanjis.*,
+                    kanjis_study.story,
+                    kanjis_study.score,
+                    kanjis_study.added
+                FROM kanjis
+                LEFT JOIN kanjis_study 
+                ON kanjis.literal = kanjis_study.literal
+                WHERE
+                    meanings = ? OR
+                    meanings LIKE ? OR 
+                    meanings LIKE ? OR 
+                    meanings LIKE ? OR
+                    meanings LIKE ?
+                ORDER BY CASE
+                    WHEN meanings = ? THEN 1
+                    WHEN meanings LIKE ? THEN 2
+                    WHEN meanings LIKE ? THEN 3
+                    WHEN meanings LIKE ? THEN 4
+                    WHEN meanings LIKE ? THEN 5
+                END
+                SQL;
                 $stmt = $myPDO->prepare($sql);
-                $results = $stmt->execute(['%'.$_GET['query'].'%']);
+                $results = $stmt->execute([
+                    $_GET['query'],
+                    $_GET['query'].';%',
+                    '%;'.$_GET['query'],
+                    '%;'.$_GET['query'].';%',
+                    '%'.$_GET['query'].'%',
+                    $_GET['query'],
+                    $_GET['query'].';%',
+                    '%;'.$_GET['query'],
+                    '%;'.$_GET['query'].';%',
+                    '%'.$_GET['query'].'%'
+                ]);
                 $entries = $stmt->fetchAll();  
             }
         }
