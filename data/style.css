@@ -16,8 +16,7 @@
 body {
     background:#121212;
     color:#e4e4e4;
-    font-family: "NotoSansJP";
-    
+    font-family: "NotoSansJP";    
 }
 *{box-sizing: border-box;}
 .content {
@@ -248,4 +247,35 @@ hr {
 button.options {
     background:none;
     text-transform: none;
+}
+
+/* PRINT */
+.print-body {
+    color:#000;
+    background-color:#FFF;
+}
+.print {
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+.print .print-row {
+    border:1px solid #EFEFEF;
+    display:flex;
+    width:48%;
+    margin-bottom:10px;
+    page-break-inside: avoid;
+}
+.print .print-literal {
+    font-size:2.5em;
+    padding:10px;
+}
+.print .print-meanings {
+    font-size:1.2em;
+}
+.print .print-extras {
+    display: flex;
+    flex-direction: column;
+    width:100%;
+    padding:10px;
 }

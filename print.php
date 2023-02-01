@@ -13,45 +13,17 @@ $results = $stmt->execute();
 $entries = $stmt->fetchAll();
 
 ?>
-        
-        
-<style>
-@font-face {
-    font-family: "NotoSansJP";
-    src: url("./fonts/NotoSansJP-Regular.otf");
-}
-* {
-    box-sizing: border-box;
-}
-
-.print {
-    display:flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-}
-.print-row {
-    border:1px solid #EFEFEF;
-    display:flex;
-    font-family: "NotoSansJP";
-    width:48%;
-    margin-bottom:10px;
-    page-break-inside: avoid;
-}
-.print-literal {
-    font-size:2.5em;
-    padding:10px;
-}
-.print-meanings {
-    font-size:1.2em;
-}
-.print-extras {
-    display: flex;
-    flex-direction: column;
-    width:100%;
-    padding:10px;
-}
-</style>
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My List</title>
+    <link rel="stylesheet" href="data/style.css">    
+</head>
+<body class="print-body">
+    
 <?php if(!$entries): ?>
         No results.
 <?php else: ?>
@@ -97,3 +69,6 @@ $entries = $stmt->fetchAll();
     <?php endforeach; ?>    
     </div>
 <?php endif;?>
+
+</body>
+</html>
