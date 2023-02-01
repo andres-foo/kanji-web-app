@@ -6,7 +6,5 @@ if (!defined('home')) {
 ?>
 </div><!-- content -->
 
-<script src="data/script.js"></script>
-
 </body>
 </html>
