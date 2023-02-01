@@ -37,5 +37,5 @@ if($entry) {
 }
 if(!$results) exit('Unable to update story');
 
-header("Location: ../index.php?query=" . $_POST['query']);
+header("Location: ../kanji.php?literal=" . $_POST['literal']);
 exit;

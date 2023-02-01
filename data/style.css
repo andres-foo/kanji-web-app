@@ -50,14 +50,13 @@ body {
     flex-grow: 2;    
     align-items: flex-start;
     padding:10px;
-
 }
 .card .left .kanji {
     font-family:"NotoSansJP", "BabelStoneHan";
     font-size:120pt;
     padding:10px;
 }
-.card .left .kanji:hover {
+.card .left .big-kanji:hover {
     font-family:"KanjiStrokeOrders", "BabelStoneHan";
 }
 .card .right .meta, .card .right .components {
@@ -74,7 +73,7 @@ body {
     justify-items: center; 
 }
 .card .right .story {
-    padding:10px 0;
+    padding:5px 0;
     color:#959595;
 }
 
@@ -89,7 +88,7 @@ body {
 }
 .card .right .meanings {
     font-size: 1.4em;
-    margin:15px 0 25px 0;
+    margin:10px 0 ;
 }
 .card .right .other_forms {
     color:#959595;
@@ -114,6 +113,15 @@ body {
 }
 .card.empty {
     padding:20px;
+}
+
+/* SEARCH */
+.card.search .kanji {
+    font-size:4em;
+}
+.card.search .meanings {
+    font-size: 1.2em;
+    margin:7px 0;
 }
 
 /* FORM STUFF */
@@ -213,6 +221,8 @@ a:hover, button:hover{
     background:#121212;
     margin-bottom:10px;
     display: inline-block;
+    position:relative;
+    cursor:default;
 }
 hr {
     display:block;
@@ -278,4 +288,24 @@ button.options {
     flex-direction: column;
     width:100%;
     padding:10px;
+}
+
+
+/* EXAMPLE HOVER */
+.example-text {
+    position:absolute;
+    left:0;
+    top:-100%;
+    display:inline-block;
+    white-space: nowrap;
+    background:rgba(0, 0, 0, 0.9);
+    z-index:10;
+    padding:10px;
+    visibility:hidden;
+}
+.word {
+    overflow: visible;
+}
+.word:hover .example-text {
+    visibility: visible;
 }

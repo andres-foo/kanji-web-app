@@ -31,5 +31,5 @@ $results = $stmt->execute([$new_score,$_POST['literal']]);
 
 if(!$results) exit("Error marking kanji ". $_POST['literal'] . " as " . $_POST['difficulty'] . ".");
 
-header("Location: ../index.php?query=" . $_POST['query']);
+header("Location: ../kanji.php?literal=" . $_POST['literal']);
 exit;

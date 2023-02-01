@@ -35,5 +35,5 @@ if($entry) {
 }
 if(!$results) exit("Error adding kanji ". $_POST['literal']);
 
-header("Location: ../index.php?query=" . $_POST['query']);
+header("Location: ../kanji.php?literal=" . $_POST['literal']);
 exit;

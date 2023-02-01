@@ -17,5 +17,5 @@ $results = $stmt->execute(explode(";",$_POST['word']));
 
 if(!$results) exit("Error adding example");
 
-header("Location: ../index.php?query=" . $_POST['query']);
+header("Location: ../kanji.php?literal=" . $_POST['literal']);
 exit;

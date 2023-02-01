@@ -39,7 +39,7 @@ if(!$entries) {
     $sql = "UPDATE kanjis_study SET score = ? WHERE literal = ?";
     $stmt = $myPDO->prepare($sql);
     $results = $stmt->execute([$entries[0]['score']+1, $entries[0]['literal']]);
-    $query = $entries[0]['literal'];
-    header("Location: ../index.php?query=" . $query . "&ref=review");
+    $literal = $entries[0]['literal'];
+    header("Location: ../kanji.php?literal=" . $literal . "&ref=review");
     exit;
 }

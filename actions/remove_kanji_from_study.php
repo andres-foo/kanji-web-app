@@ -18,5 +18,5 @@ $results = $stmt->execute([$_POST['literal']]);
 
 if(!$results) exit("Error removing kanji ". $_POST['literal']);
 
-header("Location: ../index.php?query=" . $_POST['query']);
+header("Location: ../kanji.php?literal=" . $_POST['literal']);
 exit;
