@@ -152,7 +152,7 @@ if(isset($_GET['query'])) {
         <h2>Searching</h2>
         The easiest way is to just type the kanji you're looking for, there're no radicals lookups or drawing since that's not the purpose of the app, but you can do the following:
         <ul>
-            <li>You can pick a kanji from any list and select it (eg. <a href="index.php?query=日">日</a>)</li>
+            <li>You can pick a kanji from any list and select it (eg. <a href="kanji.php?literal=日">日</a>)</li>
             <li>You can type in English and it will look within the meanings of the kanji (eg. <a href="index.php?query=sound">sound</a>)</li>
             <li>You can type a string that contains several kanjis (eg. <a href="index.php?query=日本語は...">日本語は...</a>) and it will look up all of them</li>
             <li>You can type in hiragana and it will look within the readings (both on and kun)(eg. <a href="index.php?query=なな.つ">なな.つ</a>)</li>
