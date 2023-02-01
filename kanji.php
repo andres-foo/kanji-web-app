@@ -1,7 +1,5 @@
 <?php define('home', true); ?>
 
-<?php require_once 'helper.php'; ?>
-
 <?php
 // db connection
 $myPDO = new PDO('sqlite:data/kanjis.db');
@@ -216,5 +214,7 @@ if(isset($_GET['literal'])) {
         No kanji selected.
     </div>
 <?php endif;?><!-- isset literal -->
+
+<script src="data/script.js"></script>
 
 <?php require './parts/footer.php'; ?>
