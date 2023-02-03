@@ -51,7 +51,7 @@ $entries = $stmt->fetchAll();
                 <?php endif; //story ?>
 
                 <?php
-                    $sql = "SELECT * FROM words WHERE word LIKE ?";
+                    $sql = "SELECT examples.*, examples_study.added FROM examples JOIN examples_study ON examples.id = examples_study.examples_id WHERE added = 1 AND kanji LIKE ?";
                     $stmt = $myPDO->prepare($sql);
                     $stmt->execute(['%'.$entry['literal'].'%']);
                     $words = $stmt->fetchAll();
@@ -59,7 +59,7 @@ $entries = $stmt->fetchAll();
                 <?php if(!empty($words)): ?>
                 <div class="print-examples">
                     <?php foreach($words as $word): ?>
-                    <?php echo $word['word'].'['.$word['hiragana'].']'; ?>
+                    <?php echo $word['kanji'].'「'.$word['kana'].'」'; ?>
                     <?php endforeach; ?>
                 </div><!-- print-examples -->
                 <?php endif; ?>
