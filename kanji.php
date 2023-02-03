@@ -178,7 +178,7 @@ if(isset($_GET['literal'])) {
                     <div class="word">
                         <input type="hidden" name="id" value="<?php echo $example['id'];?>">
                         <input type="hidden" name="literal" value="<?php echo $_GET['literal'];?>">
-                        <button type="submit"><span class="example-kanji"><?php echo $example['kanji']; ?></span></button><span class="example-text">(JLPT <?php echo $example['jlpt'];?>)[<?php echo $example['kana']; ?>] <?php echo $example['meanings']; ?></span>                                  
+                        <button type="submit"><span class="example-kanji"><?php echo $example['kanji']; ?></span></button><span class="example-text">「<?php echo $example['kana']; ?>」(jlpt<?php echo $example['jlpt'];?>) <?php echo $example['meanings']; ?></span>                                  
                     </div>
                     </form>
                     <?php endforeach; ?>
@@ -192,7 +192,7 @@ if(isset($_GET['literal'])) {
                     <div class="word">
                         <input type="hidden" name="id" value="<?php echo $example['id'];?>">
                         <input type="hidden" name="literal" value="<?php echo $_GET['literal'];?>">
-                        <button type="submit"><span class="example-kanji"><?php echo $example['kanji']; ?></span></button><span class="example-text">(JLPT <?php echo $example['jlpt'];?>)[<?php echo $example['kana']; ?>] <?php echo $example['meanings']; ?></span>                                  
+                        <button type="submit"><span class="example-kanji"><?php echo $example['kanji']; ?></span></button><span class="example-text">「<?php echo $example['kana']; ?>」(jlpt<?php echo $example['jlpt'];?>) <?php echo $example['meanings']; ?></span>                                    
                     </div>
                     </form>
                     <?php endforeach; ?>
