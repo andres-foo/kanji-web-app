@@ -155,17 +155,43 @@ if(isset($_GET['literal'])) {
                 <?php endif; ?>
 
                 <?php
-                    $sql = "SELECT * FROM examples WHERE kanji != '' AND kanji LIKE ? ORDER BY jlpt DESC";
+                    // my examples
+                    $sql = "SELECT examples.*, examples_study.added FROM examples LEFT JOIN examples_study ON examples.id = examples_study.examples_id WHERE examples_study.added = 1 AND examples.kanji != '' AND kanji LIKE ? ORDER BY jlpt DESC";
+                    $stmt = $myPDO->prepare($sql);
+                    $stmt->execute(['%'.$entry['literal'].'%']);
+                    $my_examples = $stmt->fetchAll();
+
+                    // the rest
+                    $sql = "SELECT examples.*, examples_study.added FROM examples LEFT JOIN examples_study ON examples.id = examples_study.examples_id WHERE (examples_study.added = 0 OR examples_study.added IS NULL) AND examples.kanji != '' AND kanji LIKE ? ORDER BY jlpt DESC";
                     $stmt = $myPDO->prepare($sql);
                     $stmt->execute(['%'.$entry['literal'].'%']);
                     $examples = $stmt->fetchAll();
                 ?>
-                <?php if(!empty($examples)): ?>
-                <div class="words">
-                    <?php foreach($examples as $example): ?>
-                    <div class="word" title="(JLPT <?php echo $example['jlpt'];?>)[<?php echo $example['kana']; ?>]: <?php echo $example['meanings']; ?>">
-                        <span class="example-kanji"><?php echo $example['kanji']; ?></span><span class="example-text">(JLPT <?php echo $example['jlpt'];?>)[<?php echo $example['kana']; ?>]: <?php echo $example['meanings']; ?></span>                     
+                <?php if(!empty($my_examples)): ?>                
+                    <div class="words">
+                    <div class="title">Added examples</div>
+                    <?php foreach($my_examples as $example): ?>
+                    <form action="actions/remove_example_from_study.php" method="POST">
+                    <div class="word">
+                        <input type="hidden" name="id" value="<?php echo $example['id'];?>">
+                        <input type="hidden" name="literal" value="<?php echo $_GET['literal'];?>">
+                        <button type="submit"><span class="example-kanji"><?php echo $example['kanji']; ?></span></button><span class="example-text">(JLPT <?php echo $example['jlpt'];?>)[<?php echo $example['kana']; ?>] <?php echo $example['meanings']; ?></span>                                  
                     </div>
+                    </form>
+                    <?php endforeach; ?>
+                </div><!-- words -->
+                <?php endif; ?>
+                <?php if(!empty($examples)): ?>                
+                <div class="words">
+                    <div class="title">More examples</div>
+                    <?php foreach($examples as $example): ?>
+                    <form action="actions/add_example_to_study.php" method="POST">
+                    <div class="word">
+                        <input type="hidden" name="id" value="<?php echo $example['id'];?>">
+                        <input type="hidden" name="literal" value="<?php echo $_GET['literal'];?>">
+                        <button type="submit"><span class="example-kanji"><?php echo $example['kanji']; ?></span></button><span class="example-text">(JLPT <?php echo $example['jlpt'];?>)[<?php echo $example['kana']; ?>] <?php echo $example['meanings']; ?></span>                                  
+                    </div>
+                    </form>
                     <?php endforeach; ?>
                 </div><!-- words -->
                 <?php endif; ?>
