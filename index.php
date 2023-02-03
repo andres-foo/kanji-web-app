@@ -131,11 +131,12 @@ if(isset($_GET['query'])) {
 <?php elseif(isset($_GET['query'])) :?>
     <?php if(!$kanjis): ?>
         <div class="card empty">
-            No results.
+            No kanjis found.
         </div>
     <?php else: ?>
 
-        <div class="title"><?php echo count($kanjis);?> kanjis found</div>
+        <div class="title"><?php echo count($kanjis);?> kanjis found<?php if(!empty($examples)) echo ' <a href="#examples">↓ see '.count($examples).' examples</a>'; ?></div>
+        
         <?php foreach($kanjis as $entry): ?>
 
         <div class="card search<?php if($entry['added'] == 1) echo ' added'; ?>">
@@ -173,10 +174,10 @@ if(isset($_GET['query'])) {
     <?php endif;?>
 
     <?php if(!empty($examples)): ?>
-        <div class="title"><?php echo count($examples);?> examples found</div>
+        <div class="title" id="examples"><?php echo count($examples);?> examples found</div>
         <?php foreach($examples as $example): ?>
             <div class="card search search-word<?php if($example['added'] == 1) echo ' added'; ?>">
-                <?php echo '<a href="index.php?query='.$example['kanji'].'">'.$example['kanji'].'</a>['. $example['kana'].']'; ?> (JLPT <?php echo $example['jlpt']; ?>):
+                <?php echo '<a href="index.php?query='.$example['kanji'].'">'.$example['kanji'].'</a> · '. $example['kana']; ?> (jlpt <?php echo $example['jlpt']; ?>)
                 <?php echo $example['meanings']; ?>            
             </div>
         <?php endforeach; ?>    
