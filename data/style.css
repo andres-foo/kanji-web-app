@@ -20,7 +20,7 @@ body {
 }
 *{box-sizing: border-box;}
 .content {
-    max-width: 900px;
+    max-width: 1200px;
     margin: 10px auto;
   }
 /* card */
@@ -126,6 +126,11 @@ body {
 .card.search .meanings {
     font-size: 1.2em;
     margin:7px 0;
+}
+.search-word {
+    padding:15px;
+    vertical-align: middle;
+    font-size:1.3em;
 }
 
 /* FORM STUFF */

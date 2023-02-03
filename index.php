@@ -7,7 +7,8 @@
 $myPDO = new PDO('sqlite:data/kanjis.db');
 
 // search
-$entries = [];
+$kanjis = [];
+$examples = [];
 if(isset($_GET['query'])) {	
     if(empty($_GET['query'])) {
         $error = "Don't leave the search empty.";
@@ -26,9 +27,14 @@ if(isset($_GET['query'])) {
                 }
                 $sql = "SELECT kanjis.*, kanjis_study.story, kanjis_study.score, kanjis_study.added FROM kanjis LEFT JOIN kanjis_study ON kanjis.literal = kanjis_study.literal WHERE " . $str;
                 $stmt = $myPDO->prepare($sql);
-                $results = $stmt->execute($kanjis);
-                
-            $entries = $stmt->fetchAll(); 
+                $results = $stmt->execute($kanjis);               
+                $kanjis = $stmt->fetchAll(); 
+
+                // examples
+                $sql = "SELECT examples.*, examples_study.added FROM examples LEFT JOIN examples_study ON examples.id = examples_study.examples_id WHERE kanji LIKE ?";
+                $stmt = $myPDO->prepare($sql);
+                $results = $stmt->execute(['%'.$_GET['query'].'%']);               
+                $examples = $stmt->fetchAll(); 
             } else {
                 if(isOnlyHiragana($_GET['query']) ) {
                     $hiragana = $_GET['query'];
@@ -36,14 +42,25 @@ if(isset($_GET['query'])) {
                     $sql = "SELECT kanjis.*, kanjis_study.story, kanjis_study.score, kanjis_study.added FROM kanjis LEFT JOIN kanjis_study ON kanjis.literal = kanjis_study.literal WHERE kanjis.onReadings LIKE ? OR kanjis.kunReadings LIKE ?";
                     $stmt = $myPDO->prepare($sql);
                     $results = $stmt->execute(['%'.$katakana.'%','%'.$hiragana.'%']);                     
-                    $entries = $stmt->fetchAll(); 
+                    $kanjis = $stmt->fetchAll(); 
+
+                    // examples
+                    $sql = "SELECT examples.*, examples_study.added FROM examples LEFT JOIN examples_study ON examples.id = examples_study.examples_id WHERE kana LIKE ?";
+                    $stmt = $myPDO->prepare($sql);
+                    $results = $stmt->execute(['%'.$_GET['query'].'%']);               
+                    $examples = $stmt->fetchAll(); 
                 } elseif(isOnlyKatakana($_GET['query'])) {
                     $hiragana = toHiragana($_GET['query']);
                     $katakana = $_GET['query'];
                     $sql = "SELECT kanjis.*, kanjis_study.story, kanjis_study.score, kanjis_study.added FROM kanjis LEFT JOIN kanjis_study ON kanjis.literal = kanjis_study.literal WHERE kanjis.onReadings LIKE ? OR kanjis.kunReadings LIKE ?";
                     $stmt = $myPDO->prepare($sql);
                     $results = $stmt->execute(['%'.$katakana.'%','%'.$hiragana.'%']);                    
-                    $entries = $stmt->fetchAll(); 
+                    $kanjis = $stmt->fetchAll(); 
+                    // examples
+                    $sql = "SELECT examples.*, examples_study.added FROM examples LEFT JOIN examples_study ON examples.id = examples_study.examples_id WHERE kana LIKE ?";
+                    $stmt = $myPDO->prepare($sql);
+                    $results = $stmt->execute(['%'.$_GET['query'].'%']);               
+                    $examples = $stmt->fetchAll(); 
                 } else {
                     $error = "When using kana only, use either hiragana or katakana but not both.";
                 } 
@@ -88,7 +105,13 @@ if(isset($_GET['query'])) {
                     '%;'.$_GET['query'].';%',
                     '%'.$_GET['query'].'%'
                 ]);
-                $entries = $stmt->fetchAll();  
+                $kanjis = $stmt->fetchAll();  
+
+                // examples
+                $sql = "SELECT examples.*, examples_study.added FROM examples LEFT JOIN examples_study ON examples.id = examples_study.examples_id WHERE meanings LIKE ?";
+                $stmt = $myPDO->prepare($sql);
+                $results = $stmt->execute(['%'.$_GET['query'].'%']);               
+                $examples = $stmt->fetchAll(); 
             }
         }
         
@@ -106,14 +129,16 @@ if(isset($_GET['query'])) {
     </div>
 
 <?php elseif(isset($_GET['query'])) :?>
-    <?php if(!$entries): ?>
+    <?php if(!$kanjis): ?>
         <div class="card empty">
             No results.
         </div>
     <?php else: ?>
-        <?php foreach($entries as $entry): ?>
 
-        <div class="card search <?php if($entry['added'] == 1) echo ' added'; ?>">
+        <div class="title"><?php echo count($kanjis);?> kanjis found</div>
+        <?php foreach($kanjis as $entry): ?>
+
+        <div class="card search<?php if($entry['added'] == 1) echo ' added'; ?>">
             <div class="left">
                 <div class="kanji"><a href="kanji.php?literal=<?php echo $entry['literal']; ?>"><?php echo $entry['literal']; ?></a></div>
             </div><!-- left -->
@@ -146,6 +171,16 @@ if(isset($_GET['query'])) {
         </div><!-- card -->
         <?php endforeach; ?>
     <?php endif;?>
+
+    <?php if(!empty($examples)): ?>
+        <div class="title"><?php echo count($examples);?> examples found</div>
+        <?php foreach($examples as $example): ?>
+            <div class="card search search-word<?php if($example['added'] == 1) echo ' added'; ?>">
+                <?php echo '<a href="index.php?query='.$example['kanji'].'">'.$example['kanji'].'</a>['. $example['kana'].']'; ?> (JLPT <?php echo $example['jlpt']; ?>):
+                <?php echo $example['meanings']; ?>            
+            </div>
+        <?php endforeach; ?>    
+    <?php endif; ?>
 <?php else: ?>
     <div class="card empty rules">
         This is a simple app for studying kanjis and here are the rules:
