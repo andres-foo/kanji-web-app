@@ -133,6 +133,7 @@ if(isset($_GET['literal'])) {
                 <?php endif; //session for readings ?>
                 <?php 
                     if(!empty($entry['components'])) { 
+                        echo '<div class="title">Components</div>';
                         echo '<div class="components">';
                         $componentsArray = explode(";", $entry['components']);
                         foreach($componentsArray as $component) {
@@ -142,7 +143,9 @@ if(isset($_GET['literal'])) {
                     }
                 ?>
                 <?php if(!empty($entry['story'])): ?>
+
                 <div class="story">
+                    <div class="title">Story</div>
                     <?php 
                         // links
                         $pattern = '/#(.+?)#/';
@@ -183,7 +186,7 @@ if(isset($_GET['literal'])) {
                 <?php endif; ?>
                 <?php if(!empty($examples)): ?>                
                 <div class="words">
-                    <div class="title">More examples</div>
+                    <div class="title">Examples</div>
                     <?php foreach($examples as $example): ?>
                     <form action="actions/add_example_to_study.php" method="POST">
                     <div class="word">
