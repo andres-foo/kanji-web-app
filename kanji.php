@@ -155,16 +155,16 @@ if(isset($_GET['literal'])) {
                 <?php endif; ?>
 
                 <?php
-                    $sql = "SELECT * FROM words WHERE word LIKE ?";
+                    $sql = "SELECT * FROM examples WHERE kanji != '' AND kanji LIKE ? ORDER BY jlpt DESC";
                     $stmt = $myPDO->prepare($sql);
                     $stmt->execute(['%'.$entry['literal'].'%']);
-                    $words = $stmt->fetchAll();
+                    $examples = $stmt->fetchAll();
                 ?>
-                <?php if(!empty($words)): ?>
+                <?php if(!empty($examples)): ?>
                 <div class="words">
-                    <?php foreach($words as $word): ?>
-                    <div class="word" title="[<?php echo $word['hiragana']; ?>]: <?php echo $word['meaning']; ?>">
-                        <span class="example-kanji"><?php echo $word['word']; ?></span><span class="example-text">[<?php echo $word['hiragana']; ?>]: <?php echo $word['meaning']; ?></span>                     
+                    <?php foreach($examples as $example): ?>
+                    <div class="word" title="(JLPT <?php echo $example['jlpt'];?>)[<?php echo $example['kana']; ?>]: <?php echo $example['meanings']; ?>">
+                        <span class="example-kanji"><?php echo $example['kanji']; ?></span><span class="example-text">(JLPT <?php echo $example['jlpt'];?>)[<?php echo $example['kana']; ?>]: <?php echo $example['meanings']; ?></span>                     
                     </div>
                     <?php endforeach; ?>
                 </div><!-- words -->
