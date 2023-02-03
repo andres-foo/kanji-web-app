@@ -35,7 +35,7 @@ if($_GET['list'] == 'jlpt') {
     <?php if(!$entries): ?>
     No entries for this list.
     <?php else: ?>
-        <p>Showing <?php echo count($entries); ?> characters:</p>
+        <div class="title">Showing <?php echo count($entries); ?> characters:</div>
         <?php foreach($entries as $entry): ?>
             <a href="kanji.php?literal=<?php echo $entry['literal']; ?>"<?php if($entry['added'] == 1) echo 'class="added"';?>>
                 <?php echo $entry['literal']; ?>
