@@ -175,7 +175,7 @@ if(isset($_GET['literal'])) {
                     <div class="title">Added examples</div>
                     <?php foreach($my_examples as $example): ?>
                     <div class="word">
-                        <a href="index.php?query=<?php echo $example['kanji'];?>" class="example-kanji"><?php echo $example['kanji']; ?></a><span class="example-text">「<?php echo $example['kana']; ?>」(jlpt<?php echo $example['jlpt'];?>) <?php echo $example['meanings']; ?>
+                        <a href="search.php?query=<?php echo $example['kanji'];?>" class="example-kanji"><?php echo $example['kanji']; ?></a><span class="example-text">「<?php echo $example['kana']; ?>」(jlpt<?php echo $example['jlpt'];?>) <?php echo $example['meanings']; ?>
                         <form action="../actions/remove_example_from_study.php" method="POST">
                             <input type="hidden" name="id" value="<?php echo $example['id'];?>">
                             <input type="hidden" name="literal" value="<?php echo $_GET['literal'];?>">
@@ -191,7 +191,7 @@ if(isset($_GET['literal'])) {
                     <div class="title">Examples</div>
                     <?php foreach($examples as $example): ?>
                     <div class="word">
-                        <a href="index.php?query=<?php echo $example['kanji'];?>" class="example-kanji"><?php echo $example['kanji']; ?></a><span class="example-text">「<?php echo $example['kana']; ?>」(jlpt<?php echo $example['jlpt'];?>) <?php echo $example['meanings']; ?>
+                        <a href="search.php?query=<?php echo $example['kanji'];?>" class="example-kanji"><?php echo $example['kanji']; ?></a><span class="example-text">「<?php echo $example['kana']; ?>」(jlpt<?php echo $example['jlpt'];?>) <?php echo $example['meanings']; ?>
                         <br><form action="../actions/add_example_to_study.php" method="POST">
                             <input type="hidden" name="id" value="<?php echo $example['id'];?>">
                             <input type="hidden" name="literal" value="<?php echo $_GET['literal'];?>">
