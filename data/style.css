@@ -64,6 +64,7 @@ body {
     flex-wrap: wrap;
     flex-direction: row;
     justify-items: center;
+    margin-top:10px;
 }
 .card .right .readings {
     display:flex;
@@ -92,7 +93,7 @@ body {
 .card .right .other_forms {
     color:#959595;
 }
-.card .right .readings .reading {
+.card .right .readings .reading, .card .right .component a {
     background-color:#121212;
     margin:0 10px 5px 0;
     padding:5px 10px;
@@ -101,11 +102,6 @@ body {
 }
 .card .right .component {
     font-size: 1.6em;
-    padding:5px 10px;
-    font-family: "NotoSansJP";
-}
-.card .right .components .component a {
-    background:none;
 }
 .card .action {
     position: absolute;
@@ -326,12 +322,18 @@ button.options {
 .word {
     overflow: visible;
 }
-.word button {
+.word a {
+    display: inline-block;
     font-size: 1.6em;
+    padding:10px;
 }
 .word:hover .example-text {
     visibility: visible;
 }
 .words form {
     display:inline-block;
+}
+.example-text form {
+    display: block;
+    margin-top:10px;
 }

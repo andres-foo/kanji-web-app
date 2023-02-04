@@ -171,16 +171,18 @@ if(isset($_GET['literal'])) {
                     $examples = $stmt->fetchAll();
                 ?>
                 <?php if(!empty($my_examples)): ?>                
-                    <div class="words">
+                <div class="words">
                     <div class="title">Added examples</div>
                     <?php foreach($my_examples as $example): ?>
-                    <form action="actions/remove_example_from_study.php" method="POST">
                     <div class="word">
-                        <input type="hidden" name="id" value="<?php echo $example['id'];?>">
-                        <input type="hidden" name="literal" value="<?php echo $_GET['literal'];?>">
-                        <button type="submit"><span class="example-kanji"><?php echo $example['kanji']; ?></span></button><span class="example-text">「<?php echo $example['kana']; ?>」(jlpt<?php echo $example['jlpt'];?>) <?php echo $example['meanings']; ?></span>                                  
+                        <a href="index.php?query=<?php echo $example['kanji'];?>" class="example-kanji"><?php echo $example['kanji']; ?></a><span class="example-text">「<?php echo $example['kana']; ?>」(jlpt<?php echo $example['jlpt'];?>) <?php echo $example['meanings']; ?>
+                        <form action="actions/remove_example_from_study.php" method="POST">
+                            <input type="hidden" name="id" value="<?php echo $example['id'];?>">
+                            <input type="hidden" name="literal" value="<?php echo $_GET['literal'];?>">
+                            <button type="submit">remove</button>
+                        </form>
+                    </span>                                    
                     </div>
-                    </form>
                     <?php endforeach; ?>
                 </div><!-- words -->
                 <?php endif; ?>
@@ -188,13 +190,15 @@ if(isset($_GET['literal'])) {
                 <div class="words">
                     <div class="title">Examples</div>
                     <?php foreach($examples as $example): ?>
-                    <form action="actions/add_example_to_study.php" method="POST">
                     <div class="word">
-                        <input type="hidden" name="id" value="<?php echo $example['id'];?>">
-                        <input type="hidden" name="literal" value="<?php echo $_GET['literal'];?>">
-                        <button type="submit"><span class="example-kanji"><?php echo $example['kanji']; ?></span></button><span class="example-text">「<?php echo $example['kana']; ?>」(jlpt<?php echo $example['jlpt'];?>) <?php echo $example['meanings']; ?></span>                                    
+                        <a href="index.php?query=<?php echo $example['kanji'];?>" class="example-kanji"><?php echo $example['kanji']; ?></a><span class="example-text">「<?php echo $example['kana']; ?>」(jlpt<?php echo $example['jlpt'];?>) <?php echo $example['meanings']; ?>
+                        <br><form action="actions/add_example_to_study.php" method="POST">
+                            <input type="hidden" name="id" value="<?php echo $example['id'];?>">
+                            <input type="hidden" name="literal" value="<?php echo $_GET['literal'];?>">
+                            <button type="submit">add</button>
+                        </form>
+                    </span>                                    
                     </div>
-                    </form>
                     <?php endforeach; ?>
                 </div><!-- words -->
                 <?php endif; ?>
