@@ -33,7 +33,7 @@ body {
     margin-bottom:20px;
 }
 .card.added {
-    border-left:3px solid #16cc2e;
+    border:2px solid #16cc2e;
 }
 .error {
     padding:20px;
