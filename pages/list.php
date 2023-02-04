@@ -87,7 +87,7 @@ function text_grade($PDO, $grade) {
             $stmt = $myPDO->query($sql);
             $entries = $stmt->fetchAll();
         ?>
-        <div class="title">MY STUDY LIST (<?php echo count($entries); ?> characters):</div>
+        <div class="title">HEISG6 (<?php echo count($entries); ?> characters):</div>
         <?php echo loop_entries($entries); ?>
 
     <?php elseif($_GET['list'] == 'frequency'): ?>
@@ -96,7 +96,7 @@ function text_grade($PDO, $grade) {
             $stmt = $myPDO->query($sql);
             $entries = $stmt->fetchAll();
         ?>
-        <div class="title">MY STUDY LIST (<?php echo count($entries); ?> characters):</div>
+        <div class="title">BY FREQUENCY (<?php echo count($entries); ?> characters):</div>
         <?php echo loop_entries($entries); ?>
 
 
