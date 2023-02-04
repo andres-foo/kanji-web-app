@@ -30,7 +30,7 @@ session_start();
             <a href="list.php?list=frequency"<?php if(isset($_GET['list']) && $_GET['list'] == 'frequency') echo ' class="selected"';?>>FREQUENCY</a>
         </div>
         <div class="header-form">
-            <form action="./pages/search.php" method="GET">
+            <form action="search.php" method="GET">
                 <input type="search" placeholder="Search by literal, readings or meanings" name="query" value="<?php if(isset($_GET['query'])) echo $_GET['query'];?>">
             </form>
             <?php
@@ -38,7 +38,7 @@ session_start();
                     require_once 'helper.php';
                     $hiragana = toHiragana($_GET['query']);
                     if(isOnlyHiragana($hiragana)) {
-                        echo '<div class="alternative">Search for <a href="index.php?query='.$hiragana.'">'.$hiragana.'</a> instead?</div>'; 
+                        echo '<div class="alternative">Search for <a href="search.php?query='.$hiragana.'">'.$hiragana.'</a> instead?</div>'; 
                     }
                 }
             ?>
