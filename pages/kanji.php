@@ -2,7 +2,7 @@
 
 <?php
 // db connection
-$myPDO = new PDO('sqlite:data/kanjis.db');
+$myPDO = new PDO('sqlite:../data/kanjis.db');
 
 // search
 $entries = [];
@@ -17,7 +17,7 @@ if(isset($_GET['literal'])) {
     }        
 }
 ?>
-<?php require './parts/header.php'; ?>
+<?php require '../parts/header.php'; ?>
 
 <?php if(!empty($error)): ?>
 
@@ -37,12 +37,12 @@ if(isset($_GET['literal'])) {
                 <div class="kanji big-kanji"><?php echo $entry['literal']; ?></div>
                 <?php if(isset($_GET['ref']) && $_GET['ref'] == 'review'): ?>
                 <div class="rating">
-                    <form action="actions/mark_difficulty.php" method="POST">
+                    <form action="../actions/mark_difficulty.php" method="POST">
                         <input type="hidden" name="difficulty" value="easy">
                         <input type="hidden" name="literal" value="<?php echo $entry['literal']; ?>">
                         <button type="submit">Easy</button>
                     </form>
-                    <form action="actions/mark_difficulty.php" method="POST">
+                    <form action="../actions/mark_difficulty.php" method="POST">
                         <input type="hidden" name="difficulty" value="hard">
                         <input type="hidden" name="literal" value="<?php echo $entry['literal']; ?>">
                         <button type="submit">Hard</button>
@@ -176,7 +176,7 @@ if(isset($_GET['literal'])) {
                     <?php foreach($my_examples as $example): ?>
                     <div class="word">
                         <a href="index.php?query=<?php echo $example['kanji'];?>" class="example-kanji"><?php echo $example['kanji']; ?></a><span class="example-text">「<?php echo $example['kana']; ?>」(jlpt<?php echo $example['jlpt'];?>) <?php echo $example['meanings']; ?>
-                        <form action="actions/remove_example_from_study.php" method="POST">
+                        <form action="../actions/remove_example_from_study.php" method="POST">
                             <input type="hidden" name="id" value="<?php echo $example['id'];?>">
                             <input type="hidden" name="literal" value="<?php echo $_GET['literal'];?>">
                             <button type="submit">remove</button>
@@ -192,7 +192,7 @@ if(isset($_GET['literal'])) {
                     <?php foreach($examples as $example): ?>
                     <div class="word">
                         <a href="index.php?query=<?php echo $example['kanji'];?>" class="example-kanji"><?php echo $example['kanji']; ?></a><span class="example-text">「<?php echo $example['kana']; ?>」(jlpt<?php echo $example['jlpt'];?>) <?php echo $example['meanings']; ?>
-                        <br><form action="actions/add_example_to_study.php" method="POST">
+                        <br><form action="../actions/add_example_to_study.php" method="POST">
                             <input type="hidden" name="id" value="<?php echo $example['id'];?>">
                             <input type="hidden" name="literal" value="<?php echo $_GET['literal'];?>">
                             <button type="submit">add</button>
@@ -204,7 +204,7 @@ if(isset($_GET['literal'])) {
                 <?php endif; ?>
 
                 <div class="edit" id="edit-area">
-                    <form action="actions/update_kanji.php" method="POST">
+                    <form action="../actions/update_kanji.php" method="POST">
                         <span>Components</span>
                         <input type="hidden" name="literal" value="<?php echo $entry['literal']; ?>">
                         <input type="text" name="components" value="<?php echo $entry['components']; ?>" placeholder="𠂇;口">
@@ -214,24 +214,17 @@ if(isset($_GET['literal'])) {
                         <textarea rows="4" name="story"><?php echo $entry['story']; ?></textarea>
                         <button type="submit">Save changes</button>
                     </form>
-                    <hr>
-                    <span>Add an example</span>
-                    <form action="actions/add_example.php" method="POST">                     
-                        <input type="hidden" name="literal" value="<?php echo $_GET['literal']; ?>">
-                        <p><input type="text" name="word" placeholder="kanji;hiragana;english"><p>
-                        <button type="submit">Add</button>
-                    </form>
                 </div>
             </div><!-- right -->
         
             <div class="action">
                 <?php if($entry['added'] == '' || $entry['added'] == 0): ?>
-                    <form action="actions/add_kanji_to_study.php" method="POST">
+                    <form action="../actions/add_kanji_to_study.php" method="POST">
                         <input type="hidden" name="literal" value="<?php echo $entry['literal'];?>">
                         <button type="submit">add</button>
                     </form>
                 <?php else: ?>
-                    <form action="actions/remove_kanji_from_study.php" method="POST">
+                    <form action="../actions/remove_kanji_from_study.php" method="POST">
                         <input type="hidden" name="literal" value="<?php echo $entry['literal'];?>">
                         <button type="submit">remove</button>
                     </form>
@@ -248,6 +241,6 @@ if(isset($_GET['literal'])) {
     </div>
 <?php endif;?><!-- isset literal -->
 
-<script src="data/script.js"></script>
+<script src="../data/script.js"></script>
 
-<?php require './parts/footer.php'; ?>
+<?php require '../parts/footer.php'; ?>

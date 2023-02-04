@@ -35,5 +35,5 @@ if($entry) {
 }
 if(!$results) exit("Error adding example ". $_POST['id']);
 
-header("Location: ../kanji.php?literal=" . $_POST['literal']);
+header("Location: ../pages/kanji.php?literal=" . $_POST['literal']);
 exit;

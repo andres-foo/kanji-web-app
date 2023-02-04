@@ -1,10 +1,10 @@
 <?php define('home', true); ?>
-<?php require './parts/header.php'; ?>
+<?php require '../parts/header.php'; ?>
 
 <?php if (isset($_GET['list'])): ?>
 <?php
 // db connection
-$myPDO = new PDO('sqlite:data/kanjis.db');
+$myPDO = new PDO('sqlite:../data/kanjis.db');
 
 if($_GET['list'] == 'jlpt') {
     $sql = "SELECT kanjis.literal, kanjis_study.added FROM kanjis LEFT JOIN kanjis_study ON kanjis.literal = kanjis_study.literal WHERE kanjis.jlpt IS NOT NULL ORDER BY kanjis.jlpt DESC";
@@ -50,4 +50,4 @@ if($_GET['list'] == 'jlpt') {
     </div>
 <?php endif; ?>
                 
-<?php require './parts/footer.php'; ?>
+<?php require '../parts/footer.php'; ?>

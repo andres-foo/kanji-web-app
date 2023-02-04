@@ -8,7 +8,12 @@ This is a small app I'm using to study kanjis. It's a locally run php app that u
 
 ## USAGE
 
-It only requires an apache server to run. It currently holds my progress as I make modifications, to start fresh the table **kanjis_study** should be wiped clean with a sqlite db browser like [this one](https://sqlitebrowser.org/).
+It only requires an apache server to run. It currently holds my progress as I make modifications, to start fresh the table **kanjis_study** and **examples_study** should be wiped clean with a sqlite db browser like [this one](https://sqlitebrowser.org/).
+
+The starting page is:
+```
+/kanjiapp/pages/index.php
+```
 
 ## SCORING SYSTEM
 

@@ -18,5 +18,5 @@ $results = $stmt->execute([$_POST['id']]);
 
 if(!$results) exit("Error removing example ". $_POST['id']);
 
-header("Location: ../kanji.php?literal=" . $_POST['literal']);
+header("Location: ../pages/kanji.php?literal=" . $_POST['literal']);
 exit;

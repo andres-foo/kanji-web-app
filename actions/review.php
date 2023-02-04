@@ -40,6 +40,6 @@ if(!$entries) {
     $stmt = $myPDO->prepare($sql);
     $results = $stmt->execute([$entries[0]['score']+1, $entries[0]['literal']]);
     $literal = $entries[0]['literal'];
-    header("Location: ../kanji.php?literal=" . $literal . "&ref=review");
+    header("Location: ../pages/kanji.php?literal=" . $literal . "&ref=review");
     exit;
 }
