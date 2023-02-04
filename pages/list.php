@@ -56,6 +56,7 @@ function text_grade($PDO, $grade) {
 <div class="list">
     <?php if($_GET['list'] == 'jlpt'): ?> 
         <?php 
+            echo text_jlpt($myPDO, 5);
             echo text_jlpt($myPDO, 4);
             echo text_jlpt($myPDO, 3);
             echo text_jlpt($myPDO, 2);

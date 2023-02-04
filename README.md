@@ -41,3 +41,9 @@ For the stroke orders the font KanjiStrokeOrders was used, it can be found at: [
 
 ### Font support for certain unicode character
 The font BabelStoneHan was added to correctly display some literals, it can be found at: [https://www.babelstone.co.uk/Fonts/PUA.html](https://www.babelstone.co.uk/Fonts/PUA.html)
+
+### Example words by jlpt
+The words used as example for each kanji were originally taken from [https://en.wiktionary.org/wiki/Appendix:JLPT](https://en.wiktionary.org/wiki/Appendix:JLPT)
+
+### JLPT for kanjis
+The JLPT that corresponds to each Kanji was modified from the original obtained from KANJIDIC project to include jlpt level 5. The new values were added from [https://www.nihongo-pro.com/kanji-pal/list/jlpt](https://www.nihongo-pro.com/kanji-pal/list/jlpt)
