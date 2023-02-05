@@ -1,10 +1,10 @@
 <?php define('home', true); ?>
 
-<?php require_once 'helper.php'; ?>
+<?php require_once '../parts/helper.php'; ?>
 
 <?php
 // db connection
-$myPDO = new PDO('sqlite:data/kanjis.db');
+$myPDO = new PDO('sqlite:../data/kanjis.db');
 
 // search
 $sql = "SELECT kanjis.*, kanjis_study.story, kanjis_study.score, kanjis_study.added FROM kanjis JOIN kanjis_study ON kanjis.literal = kanjis_study.literal WHERE kanjis_study.added = 1";
@@ -20,7 +20,7 @@ $entries = $stmt->fetchAll();
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My List</title>
-    <link rel="stylesheet" href="data/style.css">    
+    <link rel="stylesheet" href="../data/style.css">    
 </head>
 <body class="print-body">
     
