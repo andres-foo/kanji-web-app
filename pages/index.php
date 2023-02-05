@@ -51,4 +51,4 @@
 
 </div>
 
-<?php require './parts/footer.php'; ?>
+<?php require '../parts/footer.php'; ?>
