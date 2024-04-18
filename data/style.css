@@ -197,6 +197,10 @@ a:hover, button:hover{
     border-radius: 5px;
     font-size:1em;
 }
+.header .header-actions .export {
+    background:none;
+    padding:10px 0;
+}
 .header form {
     display:inline;
 }
