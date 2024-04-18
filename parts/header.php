@@ -28,6 +28,7 @@ session_start();
             <a href="list.php?list=jouyou"<?php if(isset($_GET['list']) && $_GET['list'] == 'jouyou') echo ' class="selected"';?>>JOUYOU</a>
             <a href="list.php?list=heisg6"<?php if(isset($_GET['list']) && $_GET['list'] == 'heisg6') echo ' class="selected"';?>>HEISG6</a>
             <a href="list.php?list=frequency"<?php if(isset($_GET['list']) && $_GET['list'] == 'frequency') echo ' class="selected"';?>>FREQUENCY</a>
+            <a href="list.php?list=kanken"<?php if(isset($_GET['list']) && $_GET['list'] == 'kanken') echo ' class="selected"';?>>KANKEN</a>
             <a href="../actions/export.php">EXPORT</a>
         </div>
         <div class="header-form">

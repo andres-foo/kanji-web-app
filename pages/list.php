@@ -49,6 +49,23 @@ function text_grade($PDO, $grade) {
     $text .= loop_entries($entries);
     return $text;
 }
+
+function text_kanken($PDO, $grade) {
+    $sql = "SELECT kanjis.literal, kanjis_study.added FROM kanjis LEFT JOIN kanjis_study ON kanjis.literal = kanjis_study.literal WHERE kanjis.kanken = ?";
+    $stmt = $PDO->prepare($sql);
+    $result = $stmt->execute([$grade]);
+    $entries = $stmt->fetchAll();
+    if($grade == 1.5) {
+        $text = '<div class="title">KANKEN LEVEL PRE 1 ('.count($entries).' characters):</div>';
+    } elseif($grade == 2.5) {
+        $text = '<div class="title">KANKEN LEVEL PRE 2 ('.count($entries).' characters):</div>';
+    } else {
+        $text = '<div class="title">KANKEN LEVEL '.$grade.' ('.count($entries).' characters):</div>';
+    }
+    $text .= loop_entries($entries);
+    return $text;
+}
+
 ?>
 
 
@@ -100,6 +117,21 @@ function text_grade($PDO, $grade) {
         <div class="title">BY FREQUENCY (<?php echo count($entries); ?> characters):</div>
         <?php echo loop_entries($entries); ?>
 
+    <?php elseif($_GET['list'] == 'kanken'): ?>
+        <?php 
+            echo text_kanken($myPDO, 10);
+            echo text_kanken($myPDO, 9);
+            echo text_kanken($myPDO, 8);
+            echo text_kanken($myPDO, 7);
+            echo text_kanken($myPDO, 6);
+            echo text_kanken($myPDO, 5);
+            echo text_kanken($myPDO, 4);
+            echo text_kanken($myPDO, 3);
+            echo text_kanken($myPDO, 2.5);
+            echo text_kanken($myPDO, 2);
+            echo text_kanken($myPDO, 1.5);
+            echo text_kanken($myPDO, 1);
+        ?>
 
     <?php else: ?>
             No such list.
