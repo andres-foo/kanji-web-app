@@ -56,8 +56,10 @@ body {
     font-size:120pt;
     padding:10px;
 }
-.card .left .big-kanji:hover {
+.card .left .big-kanji {
     font-family:"KanjiStrokeOrders", "BabelStoneHan";
+    font-size:120pt;
+    padding:10px;
 }
 .card .right .meta, .card .right .components {
     display:flex;

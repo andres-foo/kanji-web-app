@@ -34,7 +34,8 @@ if(isset($_GET['literal'])) {
 
         <div class="card <?php if($entry['added'] == 1) echo ' added'; ?>">
             <div class="left">
-                <div class="kanji big-kanji"><?php echo $entry['literal']; ?></div>
+                <div class="kanji"><?php echo $entry['literal']; ?></div>
+                <div class="big-kanji"><?php echo $entry['literal']; ?></div>
                 <?php if(isset($_GET['ref']) && $_GET['ref'] == 'review'): ?>
                 <div class="rating">
                     <form action="../actions/mark_difficulty.php" method="POST">
