@@ -93,6 +93,22 @@ if(isset($_GET['literal'])) {
                             <span class="ref">heisg6</span>
                             <span class="number"><?php echo $entry['heisg6']; ?></span>
                         </div>
+                        <?php if(!empty($entry['kanken'])): ?>                           
+                        <div class="item">
+                            <span class="ref">kanken</span>
+                            <span class="number">
+                            <?php 
+                                if($entry['kanken'] == 1.5) {
+                                    echo "pre 1";
+                                } elseif($entry['kanken'] == 2.5) {
+                                    echo "pre 2";
+                                } else {
+                                    echo $entry['kanken'];
+                                }
+                            ?>
+                            </span>
+                        </div>
+                        <?php endif; ?>
                         <?php endif; ?>
                     </div><!-- meta -->
            
