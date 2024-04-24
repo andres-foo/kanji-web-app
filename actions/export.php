@@ -18,8 +18,8 @@ $doc = "";
 foreach($entries as $kanji) {
     // basics
     $doc .= $kanji['literal'].";";
-    $doc .= str_replace(";", ",", $kanji['meanings']).";"; 
-    $doc .= str_replace(";", ",", $kanji['components']).";"; 
+    $doc .= str_replace(";", ", ", $kanji['meanings']).";"; 
+    $doc .= str_replace(";", ", ", $kanji['components']).";"; 
     $doc .= $kanji['story'].";";
 
     // examples
