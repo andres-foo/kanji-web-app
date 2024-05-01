@@ -51,6 +51,10 @@ body {
     align-items: flex-start;
     padding:10px;
 }
+.card .right img {
+    max-width: 100%;
+    max-height: 250px;
+}
 .card .left .kanji {
     font-family:"NotoSansJP", "BabelStoneHan";
     font-size:120pt;

@@ -174,6 +174,14 @@ if(isset($_GET['literal'])) {
                 </div><!-- story -->
                 <?php endif; ?>
 
+                <!-- image -->
+                <?php
+                    $img = "../data/images/" . $entry['literal'] . ".jpg";
+                    if(file_exists($img)) {
+                        echo "<img src='" . $img . "'>";   
+                    }
+                ?>
+
                 <?php
                     // my examples
                     $sql = "SELECT examples.*, examples_study.added FROM examples LEFT JOIN examples_study ON examples.id = examples_study.examples_id WHERE examples_study.added = 1 AND examples.kanji != '' AND kanji LIKE ? ORDER BY jlpt DESC";
