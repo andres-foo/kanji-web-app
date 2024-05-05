@@ -178,7 +178,7 @@ if(isset($_GET['literal'])) {
                 <?php
                     $img = "../data/images/" . $entry['literal'] . ".jpg";
                     if(file_exists($img)) {
-                        echo "<img src='" . $img . "'>";   
+                        echo "<a href='../data/images/落.jpg' target='_blank'><img src='" . $img . "'></a>";   
                     }
                 ?>
 
