@@ -194,12 +194,18 @@ if(isset($_GET['literal'])) {
                     $stmt = $myPDO->prepare($sql);
                     $stmt->execute(['%'.$entry['literal'].'%']);
                     $examples = $stmt->fetchAll();
+
+                    // kanjis that contain this kanji as a component
+                    $sql = "SELECT kanjis.literal, kanjis.components, kanjis_study.added FROM kanjis LEFT JOIN kanjis_study ON kanjis.literal = kanjis_study.literal WHERE kanjis.components LIKE ?";
+                    $stmt = $myPDO->prepare($sql);
+                    $stmt->execute(['%'.$entry['literal'].'%']);
+                    $contained_in_kanjis = $stmt->fetchAll();
                 ?>
                 <?php if(!empty($my_examples)): ?>                
                 <div class="words">
                     <div class="title">Added examples</div>
                     <?php foreach($my_examples as $example): ?>
-                    <div class="word">
+                    <div class="word added">
                         <a href="search.php?query=<?php echo $example['kanji'];?>" class="example-kanji"><?php echo $example['kanji']; ?></a><span class="example-text">「<?php echo $example['kana']; ?>」(jlpt<?php echo $example['jlpt'];?>) <?php echo $example['meanings']; ?>
                         <form action="../actions/remove_example_from_study.php" method="POST">
                             <input type="hidden" name="id" value="<?php echo $example['id'];?>">
@@ -226,6 +232,21 @@ if(isset($_GET['literal'])) {
                     </div>
                     <?php endforeach; ?>
                 </div><!-- words -->
+                <?php endif; ?>
+
+                <?php if(!empty($contained_in_kanjis)): ?>                
+                <div class="words">
+                    <div class="title">Kanjis that contain this component</div>
+                    <?php foreach($contained_in_kanjis as $example): ?>
+                        <?php if($example['added'] == 1): ?>
+                            <div class="word added">
+                        <?php else: ?>
+                            <div class="word">
+                        <?php endif; ?>
+                        <a href="search.php?query=<?php echo $example['literal'];?>" class="example-kanji"><?php echo $example['literal']; ?></a>         
+                    </div>
+                    <?php endforeach; ?>
+                </div><!-- contained_in_kanjis -->
                 <?php endif; ?>
 
                 <div class="edit" id="edit-area">
