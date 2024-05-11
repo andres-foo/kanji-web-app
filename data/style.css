@@ -277,6 +277,7 @@ hr {
 }
 .story span {
     color:#e4e4e4;
+    border-bottom: 2px solid #16cc2e;
 }
 button.options {
     background:none;
