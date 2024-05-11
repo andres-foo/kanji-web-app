@@ -196,7 +196,7 @@ if(isset($_GET['literal'])) {
                     $examples = $stmt->fetchAll();
 
                     // kanjis that contain this kanji as a component
-                    $sql = "SELECT kanjis.literal, kanjis.components, kanjis_study.added FROM kanjis LEFT JOIN kanjis_study ON kanjis.literal = kanjis_study.literal WHERE kanjis.components LIKE ?";
+                    $sql = "SELECT kanjis.literal, kanjis.components, kanjis_study.added FROM kanjis LEFT JOIN kanjis_study ON kanjis.literal = kanjis_study.literal WHERE kanjis.components LIKE ? ORDER BY added DESC";
                     $stmt = $myPDO->prepare($sql);
                     $stmt->execute(['%'.$entry['literal'].'%']);
                     $contained_in_kanjis = $stmt->fetchAll();
