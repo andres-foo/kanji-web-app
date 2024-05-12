@@ -238,7 +238,7 @@ if(isset($_GET['literal'])) {
                         <?php else: ?>
                             <div class="word">
                         <?php endif; ?>
-                        <a href="search.php?query=<?php echo $example['literal'];?>" class="example-kanji"><?php echo $example['literal']; ?></a>         
+                        <a href="kanji.php?literal=<?php echo $example['literal'];?>" class="example-kanji"><?php echo $example['literal']; ?></a>         
                     </div>
                     <?php endforeach; ?>
                 </div><!-- contained_in_kanjis -->
