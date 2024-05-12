@@ -53,6 +53,22 @@ if(isset($_GET['literal'])) {
                 <?php endif; ?>
             </div><!-- left -->
             <div class="right">
+            
+                <?php if(!empty($entry['other_forms'])): ?>
+                <div class="other_forms">
+                    ALSO 
+                    <?php 
+                        $other_forms = explode(";",$entry['other_forms']); 
+                        foreach($other_forms as $other_form) {
+                            echo '<a href="kanji.php?literal='.$other_form.'">'.$other_form.'</a>';
+                        }
+                    ?>
+                </div>
+                <?php endif; ?>
+                <div class="meanings">
+                    <?php echo str_replace(";", ", ", $entry['meanings']); ?>
+                </div><!-- meanings -->
+                <?php if(!isset($_SESSION['simple']) || $_SESSION['simple'] == 'off'): ?>
                     <div class="meta">
                         <div class="item">
                             <span class="ref">strokes</span>
@@ -111,38 +127,14 @@ if(isset($_GET['literal'])) {
                         <?php endif; ?>
                         <?php endif; ?>
                     </div><!-- meta -->
-           
-                <?php if(!empty($entry['other_forms'])): ?>
-                <div class="other_forms">
-                    ALSO 
-                    <?php 
-                        $other_forms = explode(";",$entry['other_forms']); 
-                        foreach($other_forms as $other_form) {
-                            echo '<a href="kanji.php?literal='.$other_form.'">'.$other_form.'</a>';
-                        }
-                    ?>
-                </div>
-                <?php endif; ?>
-                <div class="meanings">
-                    <?php echo str_replace(";", ", ", $entry['meanings']); ?>
-                </div><!-- meanings -->
-                <?php if(!isset($_SESSION['simple']) || $_SESSION['simple'] == 'off'): ?>
                 <?php 
-                    if(!empty($entry['onReadings'])) { 
+                    if(!empty($entry['onReadings']) OR !empty($entry['kunReadings'])) { 
                         echo '<div class="readings">';
-                        $onReadingsArray = explode(";", $entry['onReadings']);
-                        foreach($onReadingsArray as $onReading) {
-                            echo '<div class="reading">'.$onReading.'</div>';
-                        }
-                        echo '</div><!-- readings -->';
-                    }
-                ?>
-                <?php 
-                    if(!empty($entry['kunReadings'])) { 
-                        echo '<div class="readings">';
-                        $kunReadingsArray = explode(";", $entry['kunReadings']);
-                        foreach($kunReadingsArray as $kunReading) {
-                            echo '<div class="reading">'.$kunReading.'</div>';
+                        echo str_replace(";", "&nbsp;&nbsp;/&nbsp;&nbsp;",$entry['onReadings']);
+                        
+                        if(!empty($entry['kunReadings'])) {
+                            echo '&nbsp;&nbsp;•&nbsp;&nbsp;';
+                            echo str_replace(";", "&nbsp;&nbsp;/&nbsp;&nbsp;",$entry['kunReadings']);
                         }
                         echo '</div><!-- readings -->';
                     }
@@ -150,7 +142,7 @@ if(isset($_GET['literal'])) {
                 <?php endif; //session for readings ?>
                 <?php 
                     if(!empty($entry['components'])) { 
-                        echo '<div class="title">Components</div>';
+                        echo '<div class="title briem-hand-normal">Components</div>';
                         echo '<div class="components">';
                         $componentsArray = explode(";", $entry['components']);
                         foreach($componentsArray as $component) {
@@ -161,6 +153,7 @@ if(isset($_GET['literal'])) {
                 ?>
                 <?php if(!empty($entry['story'])): ?>
 
+                <div class="title">Story</div>
                 <div class="story">
                     <?php 
                         // links
