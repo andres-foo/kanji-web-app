@@ -270,7 +270,7 @@ if(isset($_GET['literal'])) {
                         <button type="submit">remove</button>
                     </form>
                 <?php endif; ?>
-                <button id="edit-toggle">edit</button>
+                <a id="edit-toggle" href="#edit-area">edit</a>
             </div><!-- action -->
 
 
