@@ -81,8 +81,12 @@ body {
     justify-items: center; 
 }
 .card .right .story {
-    padding:5px 0;
-    color:#959595;
+    padding: 5px 0;
+    color: #959595;
+    background: #111;
+    padding: 15px;
+    margin-top: 15px;
+    border-radius: 5px;
 }
 
 .card .right .meta .item {
