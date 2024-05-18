@@ -23,7 +23,7 @@ function loop_entries($entries) {
 }
 
 function text_jlpt($PDO, $level) {
-    $sql = "SELECT kanjis.literal, kanjis_study.added FROM kanjis LEFT JOIN kanjis_study ON kanjis.literal = kanjis_study.literal WHERE kanjis.jlpt = ?";
+    $sql = "SELECT literal, added FROM kanjis WHERE jlpt = ?";
     $stmt = $PDO->prepare($sql);
     $result = $stmt->execute([$level]);
     $entries = $stmt->fetchAll();
@@ -37,7 +37,7 @@ function text_jlpt($PDO, $level) {
 }
 
 function text_grade($PDO, $grade) {
-    $sql = "SELECT kanjis.literal, kanjis_study.added FROM kanjis LEFT JOIN kanjis_study ON kanjis.literal = kanjis_study.literal WHERE kanjis.grade = ?";
+    $sql = "SELECT literal, added FROM kanjis WHERE grade = ?";
     $stmt = $PDO->prepare($sql);
     $result = $stmt->execute([$grade]);
     $entries = $stmt->fetchAll();
@@ -51,7 +51,7 @@ function text_grade($PDO, $grade) {
 }
 
 function text_kanken($PDO, $grade) {
-    $sql = "SELECT kanjis.literal, kanjis_study.added FROM kanjis LEFT JOIN kanjis_study ON kanjis.literal = kanjis_study.literal WHERE kanjis.kanken = ?";
+    $sql = "SELECT literal, added FROM kanjis WHERE kanken = ?";
     $stmt = $PDO->prepare($sql);
     $result = $stmt->execute([$grade]);
     $entries = $stmt->fetchAll();
@@ -92,7 +92,7 @@ function text_kanken($PDO, $grade) {
        
     <?php elseif($_GET['list'] == 'my_list'): ?>
         <?php
-            $sql = "SELECT kanjis.literal, kanjis_study.added FROM kanjis JOIN kanjis_study ON kanjis.literal = kanjis_study.literal WHERE kanjis_study.added = 1";
+            $sql = "SELECT literal, added FROM kanjis WHERE added = 1";
             $stmt = $myPDO->query($sql);
             $entries = $stmt->fetchAll();
         ?>
@@ -101,7 +101,7 @@ function text_kanken($PDO, $grade) {
 
     <?php elseif($_GET['list'] == 'heisg6'): ?>
         <?php
-            $sql = "SELECT kanjis.literal, kanjis_study.added FROM kanjis LEFT JOIN kanjis_study ON kanjis.literal = kanjis_study.literal WHERE kanjis.heisg6 IS NOT NULL ORDER BY kanjis.heisg6 ASC";
+            $sql = "SELECT literal, added FROM kanjis WHERE heisg6 IS NOT NULL ORDER BY heisg6 ASC";
             $stmt = $myPDO->query($sql);
             $entries = $stmt->fetchAll();
         ?>
@@ -110,7 +110,7 @@ function text_kanken($PDO, $grade) {
 
     <?php elseif($_GET['list'] == 'frequency'): ?>
         <?php
-            $sql = "SELECT kanjis.literal, kanjis_study.added FROM kanjis LEFT JOIN kanjis_study ON kanjis.literal = kanjis_study.literal WHERE kanjis.frequency IS NOT NULL ORDER BY kanjis.frequency ASC";
+            $sql = "SELECT literal, added FROM kanjis WHERE frequency IS NOT NULL ORDER BY frequency ASC";
             $stmt = $myPDO->query($sql);
             $entries = $stmt->fetchAll();
         ?>

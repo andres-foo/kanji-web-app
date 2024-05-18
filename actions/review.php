@@ -8,7 +8,7 @@ if($_SERVER['REQUEST_METHOD'] != 'POST') {
 // db connection
 $myPDO = new PDO('sqlite:../data/kanjis.db');
 
-$sql = "SELECT kanjis.*, kanjis_study.story, kanjis_study.score, kanjis_study.added FROM kanjis JOIN kanjis_study ON kanjis.literal = kanjis_study.literal WHERE kanjis_study.added = 1 ORDER BY SCORE ASC";
+$sql = "SELECT * FROM kanjis WHERE added = 1 ORDER BY SCORE ASC";
 $stmt = $myPDO->query($sql);
 $entries = $stmt->fetchAll();
 if(!$entries) {
@@ -36,9 +36,9 @@ if(!$entries) {
             array_pop($_SESSION['last10']);
         } 
     }
-    $sql = "UPDATE kanjis_study SET score = ? WHERE literal = ?";
+    $sql = "UPDATE kanjis SET score = score + 1 WHERE literal = ?";
     $stmt = $myPDO->prepare($sql);
-    $results = $stmt->execute([$entries[0]['score']+1, $entries[0]['literal']]);
+    $results = $stmt->execute([$entries[0]['literal']]);
     $literal = $entries[0]['literal'];
     header("Location: ../pages/kanji.php?literal=" . $literal . "&ref=review");
     exit;

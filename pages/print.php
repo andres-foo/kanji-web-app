@@ -7,7 +7,7 @@
 $myPDO = new PDO('sqlite:../data/kanjis.db');
 
 // search
-$sql = "SELECT kanjis.*, kanjis_study.story, kanjis_study.score, kanjis_study.added FROM kanjis JOIN kanjis_study ON kanjis.literal = kanjis_study.literal WHERE kanjis_study.added = 1";
+$sql = "SELECT * FROM kanjis WHERE added = 1";
 $stmt = $myPDO->prepare($sql);
 $results = $stmt->execute();
 $entries = $stmt->fetchAll();
@@ -51,7 +51,7 @@ $entries = $stmt->fetchAll();
                 <?php endif; //story ?>
 
                 <?php
-                    $sql = "SELECT examples.*, examples_study.added FROM examples JOIN examples_study ON examples.id = examples_study.examples_id WHERE added = 1 AND kanji LIKE ?";
+                    $sql = "SELECT * FROM examples WHERE added = 1 AND kanji LIKE ?";
                     $stmt = $myPDO->prepare($sql);
                     $stmt->execute(['%'.$entry['literal'].'%']);
                     $words = $stmt->fetchAll();

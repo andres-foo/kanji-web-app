@@ -30,6 +30,7 @@ session_start();
             <a href="list.php?list=frequency"<?php if(isset($_GET['list']) && $_GET['list'] == 'frequency') echo ' class="selected"';?>>FREQUENCY</a>
             <a href="list.php?list=kanken"<?php if(isset($_GET['list']) && $_GET['list'] == 'kanken') echo ' class="selected"';?>>KANKEN</a>
             <a href="../actions/export.php" class="export">&#8595; EXPORT .CSV</a>
+            <a href="../pages/print.php" target="_blank" class="export">TO PRINT</a>
         </div>
         <div class="header-form">
             <form action="search.php" method="GET">

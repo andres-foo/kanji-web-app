@@ -12,14 +12,12 @@ if(!isset($_POST['literal'])) exit('No literal provided');
 $myPDO = new PDO('sqlite:../data/kanjis.db');
 
 // find current score
-$sql = "SELECT * FROM kanjis_study WHERE literal = ? LIMIT 1";
+$sql = "SELECT * FROM kanjis WHERE literal = ? LIMIT 1";
 $stmt = $myPDO->prepare($sql);
 $results = $stmt->execute([$_POST['literal']]);
 $entry = $stmt->fetch();
 
-$sql = "UPDATE kanjis_study SET score = ? WHERE literal = ?";
-$stmt = $myPDO->prepare($sql);
-
+// define new score
 if($_POST['difficulty'] == "hard") {
     $new_score = $entry['score']-2;
 } elseif($_POST['difficulty'] == "easy") {
@@ -27,6 +25,10 @@ if($_POST['difficulty'] == "hard") {
 } else {
     exit('Wrong difficulty provided.');
 }
+
+// update value
+$sql = "UPDATE kanjis SET score = ? WHERE literal = ?";
+$stmt = $myPDO->prepare($sql);
 $results = $stmt->execute([$new_score,$_POST['literal']]);
 
 if(!$results) exit("Error marking kanji ". $_POST['literal'] . " as " . $_POST['difficulty'] . ".");

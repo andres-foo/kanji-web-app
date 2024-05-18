@@ -7,7 +7,7 @@ header('Content-Disposition: attachment; filename="my_kanjis.csv"');
 $myPDO = new PDO('sqlite:../data/kanjis.db');
 
 //check if exists as a kanji
-$sql = "SELECT * FROM kanjis JOIN kanjis_study ON kanjis.literal = kanjis_study.literal WHERE kanjis_study.added = 1";
+$sql = "SELECT * FROM kanjis WHERE added = 1";
 $stmt = $myPDO->prepare($sql);
 $results = $stmt->execute();
 $entries = $stmt->fetchAll();
@@ -23,7 +23,7 @@ foreach($entries as $kanji) {
     $doc .= $kanji['story'].";";
 
     // examples
-    $sql = "SELECT examples.*, examples_study.added FROM examples LEFT JOIN examples_study ON examples.id = examples_study.examples_id WHERE examples_study.added = 1 AND examples.kanji != '' AND kanji LIKE ? ORDER BY jlpt DESC";
+    $sql = "SELECT * FROM examples WHERE added = 1 AND kanji != '' AND kanji LIKE ? ORDER BY jlpt DESC";
     $stmt = $myPDO->prepare($sql);
     $stmt->execute(['%'.$kanji['literal'].'%']);
     $my_examples = $stmt->fetchAll();

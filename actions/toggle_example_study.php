@@ -17,23 +17,16 @@ $results = $stmt->execute([$_POST['id']]);
 $entry = $stmt->fetch();
 if(!$entry) exit('No such example found.');
 
-// check if it was previously added to study list
-$sql = "SELECT * FROM examples_study WHERE examples_id = ? LIMIT 1";
-$stmt = $myPDO->prepare($sql);
-$results = $stmt->execute([$_POST['id']]);
-$entry = $stmt->fetch();
-if($entry) {
-    //exists so must update
-    $sql = "UPDATE examples_study SET added = 1 WHERE examples_id = ?";
+if($entry['added'] == 1) {
+    $sql = "UPDATE examples SET added = 0 WHERE id = ?";
     $stmt = $myPDO->prepare($sql);
     $results = $stmt->execute([$_POST['id']]);
 } else {
-    // does not exists, must be created
-    $sql = "INSERT INTO examples_study (examples_id, added) VALUES (?,?)";
+    $sql = "UPDATE examples SET added = 1 WHERE id = ?";
     $stmt = $myPDO->prepare($sql);
-    $results = $stmt->execute([$_POST['id'],1]);
+    $results = $stmt->execute([$_POST['id']]);
 }
-if(!$results) exit("Error adding example ". $_POST['id']);
+if(!$results) exit("Error toggling example ". $_POST['id']);
 
 header("Location: ../pages/kanji.php?literal=" . $_POST['literal']);
 exit;

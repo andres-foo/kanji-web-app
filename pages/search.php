@@ -22,16 +22,16 @@ if(isset($_GET['query'])) {
                 $str = '';
                 foreach($kanjis as $kanji) {
                     $i++;
-                    $str .= " kanjis.literal = ?";
+                    $str .= " literal = ?";
                     if($i != $qty) $str .= " OR";
                 }
-                $sql = "SELECT kanjis.*, kanjis_study.story, kanjis_study.score, kanjis_study.added FROM kanjis LEFT JOIN kanjis_study ON kanjis.literal = kanjis_study.literal WHERE " . $str;
+                $sql = "SELECT * FROM kanjis WHERE " . $str;
                 $stmt = $myPDO->prepare($sql);
                 $results = $stmt->execute($kanjis);               
                 $kanjis = $stmt->fetchAll(); 
 
                 // examples
-                $sql = "SELECT examples.*, examples_study.added FROM examples LEFT JOIN examples_study ON examples.id = examples_study.examples_id WHERE kanji LIKE ?";
+                $sql = "SELECT * FROM examples WHERE kanji LIKE ?";
                 $stmt = $myPDO->prepare($sql);
                 $results = $stmt->execute(['%'.$_GET['query'].'%']);               
                 $examples = $stmt->fetchAll(); 
@@ -39,25 +39,25 @@ if(isset($_GET['query'])) {
                 if(isOnlyHiragana($_GET['query']) ) {
                     $hiragana = $_GET['query'];
                     $katakana = toKatakana($_GET['query']);
-                    $sql = "SELECT kanjis.*, kanjis_study.story, kanjis_study.score, kanjis_study.added FROM kanjis LEFT JOIN kanjis_study ON kanjis.literal = kanjis_study.literal WHERE kanjis.onReadings LIKE ? OR kanjis.kunReadings LIKE ?";
+                    $sql = "SELECT * FROM kanjis WHERE onReadings LIKE ? OR kunReadings LIKE ?";
                     $stmt = $myPDO->prepare($sql);
                     $results = $stmt->execute(['%'.$katakana.'%','%'.$hiragana.'%']);                     
                     $kanjis = $stmt->fetchAll(); 
 
                     // examples
-                    $sql = "SELECT examples.*, examples_study.added FROM examples LEFT JOIN examples_study ON examples.id = examples_study.examples_id WHERE kana LIKE ?";
+                    $sql = "SELECT * FROM examples WHERE kana LIKE ?";
                     $stmt = $myPDO->prepare($sql);
                     $results = $stmt->execute(['%'.$_GET['query'].'%']);               
                     $examples = $stmt->fetchAll(); 
                 } elseif(isOnlyKatakana($_GET['query'])) {
                     $hiragana = toHiragana($_GET['query']);
                     $katakana = $_GET['query'];
-                    $sql = "SELECT kanjis.*, kanjis_study.story, kanjis_study.score, kanjis_study.added FROM kanjis LEFT JOIN kanjis_study ON kanjis.literal = kanjis_study.literal WHERE kanjis.onReadings LIKE ? OR kanjis.kunReadings LIKE ?";
+                    $sql = "SELECT * FROM kanjis WHERE onReadings LIKE ? OR kunReadings LIKE ?";
                     $stmt = $myPDO->prepare($sql);
                     $results = $stmt->execute(['%'.$katakana.'%','%'.$hiragana.'%']);                    
                     $kanjis = $stmt->fetchAll(); 
                     // examples
-                    $sql = "SELECT examples.*, examples_study.added FROM examples LEFT JOIN examples_study ON examples.id = examples_study.examples_id WHERE kana LIKE ?";
+                    $sql = "SELECT * FROM examples WHERE kana LIKE ?";
                     $stmt = $myPDO->prepare($sql);
                     $results = $stmt->execute(['%'.$_GET['query'].'%']);               
                     $examples = $stmt->fetchAll(); 
@@ -71,13 +71,8 @@ if(isset($_GET['query'])) {
             } else {
                 $sql = <<<SQL
                 SELECT 
-                    kanjis.*,
-                    kanjis_study.story,
-                    kanjis_study.score,
-                    kanjis_study.added
+                    *
                 FROM kanjis
-                LEFT JOIN kanjis_study 
-                ON kanjis.literal = kanjis_study.literal
                 WHERE
                     meanings = ? OR
                     meanings LIKE ? OR 
@@ -108,7 +103,7 @@ if(isset($_GET['query'])) {
                 $kanjis = $stmt->fetchAll();  
 
                 // examples
-                $sql = "SELECT examples.*, examples_study.added FROM examples LEFT JOIN examples_study ON examples.id = examples_study.examples_id WHERE meanings LIKE ?";
+                $sql = "SELECT * FROM examples WHERE meanings LIKE ?";
                 $stmt = $myPDO->prepare($sql);
                 $results = $stmt->execute(['%'.$_GET['query'].'%']);               
                 $examples = $stmt->fetchAll(); 

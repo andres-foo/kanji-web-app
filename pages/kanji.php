@@ -10,7 +10,7 @@ if(isset($_GET['literal'])) {
     if(empty($_GET['literal'])) {
         $error = "No selected kanji.";
     } else {
-        $sql = "SELECT kanjis.*, kanjis_study.story, kanjis_study.score, kanjis_study.added FROM kanjis LEFT JOIN kanjis_study ON kanjis.literal = kanjis_study.literal WHERE kanjis.literal = ?";
+        $sql = "SELECT * FROM kanjis WHERE literal = ?";
         $stmt = $myPDO->prepare($sql);
         $results = $stmt->execute([$_GET['literal']]); 
         $entry = $stmt->fetch();          
@@ -175,57 +175,45 @@ if(isset($_GET['literal'])) {
                 ?>
 
                 <?php
-                    // my examples
-                    $sql = "SELECT examples.*, examples_study.added FROM examples LEFT JOIN examples_study ON examples.id = examples_study.examples_id WHERE examples_study.added = 1 AND examples.kanji != '' AND kanji LIKE ? ORDER BY jlpt DESC";
-                    $stmt = $myPDO->prepare($sql);
-                    $stmt->execute(['%'.$entry['literal'].'%']);
-                    $my_examples = $stmt->fetchAll();
-
-                    // the rest
-                    $sql = "SELECT examples.*, examples_study.added FROM examples LEFT JOIN examples_study ON examples.id = examples_study.examples_id WHERE (examples_study.added = 0 OR examples_study.added IS NULL) AND examples.kanji != '' AND kanji LIKE ? ORDER BY jlpt DESC";
+                    // examples
+                    $sql = "SELECT * FROM examples WHERE kanji != '' AND kanji LIKE ? ORDER BY jlpt DESC";
                     $stmt = $myPDO->prepare($sql);
                     $stmt->execute(['%'.$entry['literal'].'%']);
                     $examples = $stmt->fetchAll();
 
+
                     // kanjis that contain this kanji as a component
-                    $sql = "SELECT kanjis.literal, kanjis.components, kanjis_study.added FROM kanjis LEFT JOIN kanjis_study ON kanjis.literal = kanjis_study.literal WHERE kanjis.components LIKE ? ORDER BY added DESC";
+                    $sql = "SELECT * FROM kanjis WHERE components LIKE ? ORDER BY added DESC";
                     $stmt = $myPDO->prepare($sql);
                     $stmt->execute(['%'.$entry['literal'].'%']);
                     $contained_in_kanjis = $stmt->fetchAll();
                 ?>
-                <?php if(!empty($my_examples) && !empty($examples)): ?>                
+                <?php if(!empty($examples)): ?>                
                 <div class="words">
                     <div class="title">Examples</div>
 
                         <!-- my examples -->
-                        <?php if(!empty($my_examples)) : ?>
-                        <?php foreach($my_examples as $example): ?>
-                        <div class="word added">
+                        <?php foreach($examples as $example): ?>
+                            <?php if($example['added'] == 1): ?>
+                            <div class="word added">
+                            <?php else: ?>
+                            <div class="word">
+                            <?php endif; ?>
                             <a href="search.php?query=<?php echo $example['kanji'];?>" class="example-kanji"><?php echo $example['kanji']; ?></a><span class="example-text">「<?php echo $example['kana']; ?>」(jlpt<?php echo $example['jlpt'];?>) <?php echo $example['meanings']; ?>
-                            <form action="../actions/remove_example_from_study.php" method="POST">
+                            <form action="../actions/toggle_example_study.php" method="POST">
                                 <input type="hidden" name="id" value="<?php echo $example['id'];?>">
                                 <input type="hidden" name="literal" value="<?php echo $_GET['literal'];?>">
-                                <button type="submit">remove</button>
+                                <button type="submit">
+                                <?php if($example['added'] == 1): ?>
+                                    remove
+                                <?php else: ?>
+                                    add
+                                <?php endif; ?>
+                                </button>
                             </form>
                         </span>                                    
                         </div>
                         <?php endforeach; ?>
-                        <?php endif; ?>
-
-                        <!-- rest of examples -->
-                        <?php if(!empty($examples)): ?>
-                            <?php foreach($examples as $example): ?>
-                        <div class="word">
-                            <a href="search.php?query=<?php echo $example['kanji'];?>" class="example-kanji"><?php echo $example['kanji']; ?></a><span class="example-text">「<?php echo $example['kana']; ?>」(jlpt<?php echo $example['jlpt'];?>) <?php echo $example['meanings']; ?>
-                            <br><form action="../actions/add_example_to_study.php" method="POST">
-                                <input type="hidden" name="id" value="<?php echo $example['id'];?>">
-                                <input type="hidden" name="literal" value="<?php echo $_GET['literal'];?>">
-                                <button type="submit">add</button>
-                            </form>
-                        </span>                                    
-                        </div>
-                        <?php endforeach; ?>
-                        <?php endif; ?>
                 </div><!-- words -->
                 <?php endif; ?>
 
@@ -260,12 +248,12 @@ if(isset($_GET['literal'])) {
         
             <div class="action">
                 <?php if($entry['added'] == '' || $entry['added'] == 0): ?>
-                    <form action="../actions/add_kanji_to_study.php" method="POST">
+                    <form action="../actions/toggle_kanji_study.php" method="POST">
                         <input type="hidden" name="literal" value="<?php echo $entry['literal'];?>">
                         <button type="submit">add</button>
                     </form>
                 <?php else: ?>
-                    <form action="../actions/remove_kanji_from_study.php" method="POST">
+                    <form action="../actions/toggle_kanji_study.php" method="POST">
                         <input type="hidden" name="literal" value="<?php echo $entry['literal'];?>">
                         <button type="submit">remove</button>
                     </form>

@@ -12,30 +12,12 @@ if(!isset($_POST['literal'])) exit('No literal provided');
 $myPDO = new PDO('sqlite:../data/kanjis.db');
 
 //components & other forms
-$sql = "UPDATE kanjis SET components = ?, other_forms = ? WHERE literal = ?";
+$sql = "UPDATE kanjis SET components = ?, other_forms = ?, story = ? WHERE literal = ?";
 $stmt = $myPDO->prepare($sql);
-$results = $stmt->execute([$_POST['components'],$_POST['otherForms'],$_POST['literal']]);
-if(!$results) exit('Unable to update components');
+$results = $stmt->execute([$_POST['components'],$_POST['otherForms'],$_POST['story'], $_POST['literal']]);
 
-//story
-//check if exists
-$sql = "SELECT * FROM kanjis_study WHERE literal = ? LIMIT 1";
-$stmt = $myPDO->prepare($sql);
-$results = $stmt->execute([$_POST['literal']]);
-$entry = $stmt->fetch();
+if(!$results) exit('Unable to update kanji');
 
-if($entry) {        
-    //exists so must update the story
-    $sql = "UPDATE kanjis_study SET story = ? WHERE literal = ?";
-    $stmt = $myPDO->prepare($sql);
-    $results = $stmt->execute([$_POST['story'],$_POST['literal']]);
-} else {
-    // does not exists, must be created
-    $sql = "INSERT INTO kanjis_study (literal, score, story, added) VALUES (?,?,?,?)";
-    $stmt = $myPDO->prepare($sql);
-    $results = $stmt->execute([$_POST['literal'],0,$_POST['story'],0]);
-}
-if(!$results) exit('Unable to update story');
 
 header("Location: ../pages/kanji.php?literal=" . $_POST['literal']);
 exit;
