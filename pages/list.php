@@ -97,7 +97,11 @@ function text_kanken($PDO, $grade) {
             $entries = $stmt->fetchAll();
         ?>
         <div class="title">MY STUDY LIST (<?php echo count($entries); ?> characters):</div>
+        <?php if(count($entries) == 0): ?>
+            <p>You haven't added any kanjis yet! To do so click on the "<strong>Add</strong>" button on the top right of the page when viewing a kanji.</p>
+        <?php else: ?>
         <?php echo loop_entries($entries); ?>
+        <?php endif; ?>
 
     <?php elseif($_GET['list'] == 'heisg6'): ?>
         <?php

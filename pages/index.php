@@ -44,6 +44,9 @@
         <li><b>Add an example</b>: This allows to add example words for kanjis. Adding a word that contains more than one kanji will add the example to all kanjis involved.</li>
     </ul>
 
+    <h2>Reset study list</h2>
+    Do you want to reset your current progress? Clicking the following button will remove any added kanji from your list and will reset every score back to zero. The stories and images already present will not be removed.<form action="../actions/reset_progress.php" method="POST"><button type="submit" class="danger"  onclick="return confirm('This will reset all your progress. Do you want to continue?')">delete progress</button></form>
+
     <h2>What's next?</h2>
     I contemplated adding a built in database for examples (words and/or phrases) like JMdict_e but I decided against it since I don't want this app to turn into a dictionary. For the mime_content_type 
     the app has everything I want it to have.

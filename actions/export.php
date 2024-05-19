@@ -1,7 +1,6 @@
 <?php
 
-header('Content-Type: text/csv');
-header('Content-Disposition: attachment; filename="my_kanjis.csv"');
+
 
 // db connection
 $myPDO = new PDO('sqlite:../data/kanjis.db');
@@ -11,7 +10,10 @@ $sql = "SELECT * FROM kanjis WHERE added = 1";
 $stmt = $myPDO->prepare($sql);
 $results = $stmt->execute();
 $entries = $stmt->fetchAll();
-if(!$entries) exit('No kanjis');
+if(!$entries) exit("No kanjis to export. Make sure to add some kanjis to your list first.");
+
+header('Content-Type: text/csv');
+header('Content-Disposition: attachment; filename="my_kanjis.csv"');
 
 //
 $doc = "";

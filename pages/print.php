@@ -12,6 +12,8 @@ $stmt = $myPDO->prepare($sql);
 $results = $stmt->execute();
 $entries = $stmt->fetchAll();
 
+if(!$entries) exit("No kanjis to print. Make sure to add some kanjis to your list first.");
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

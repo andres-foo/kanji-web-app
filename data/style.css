@@ -151,6 +151,11 @@ button, #edit-toggle {
     font-size: 0.8em;
     border:none;
 }
+button.danger {
+    background-color: red;
+    color:white;
+    font-weight: bold;
+}
 .header input {
     background-color:#121212;
     padding:10px 20px;

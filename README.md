@@ -8,9 +8,9 @@ This is a small app I'm using to study kanjis. It's a locally run php app that u
 
 ## USAGE
 
-It only requires an apache server to run. It currently holds my progress as I make modifications, to start fresh the table **kanjis** and **examples** should have the columns **added** and **score** set to 0.
+It only requires an apache server to run. It currently holds my progress as I make modifications. To start fresh click the button **DELETE PROGRESS** found in the homepage.
 
-The starting page is:
+The homepage is:
 
 ```
 /kanjiapp/pages/index.php
