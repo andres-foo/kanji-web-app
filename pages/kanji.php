@@ -58,7 +58,6 @@ if(isset($_GET['literal'])) {
                 <div class="meanings">
                     <?php echo str_replace(";", ", ", $entry['meanings']); ?>
                 </div><!-- meanings -->
-                <?php if(!isset($_SESSION['simple']) || $_SESSION['simple'] == 'off'): ?>
 
                     <?php if(!empty($entry['other_forms'])): ?>
                     <div class="other_forms">
@@ -142,7 +141,6 @@ if(isset($_GET['literal'])) {
                         echo '</div><!-- readings -->';
                     }
                 ?>
-                <?php endif; //session for readings ?>
                 <?php 
                     if(!empty($entry['components'])) { 
                         echo '<div class="title briem-hand-normal">Components</div>';
