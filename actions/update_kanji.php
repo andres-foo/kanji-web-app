@@ -18,6 +18,22 @@ $results = $stmt->execute([$_POST['components'],$_POST['otherForms'],$_POST['sto
 
 if(!$results) exit('Unable to update kanji');
 
+// file upload
+if(getimagesize($_FILES["image"]["tmp_name"])) {
+    $imageFileType = strtolower(pathinfo(basename($_FILES["image"]["name"]),PATHINFO_EXTENSION));
+  
+    if($imageFileType != "jpg") {
+        exit("Only JPG images allowed");
+    }
+
+    $target = "../data/images/" . $_POST['literal'] . '.jpg';
+
+    if(file_exists($target)) {
+        unlink($target);
+    }
+
+    move_uploaded_file($_FILES["image"]["tmp_name"], $target);  
+}
 
 header("Location: ../pages/kanji.php?literal=" . $_POST['literal']);
 exit;

@@ -233,7 +233,7 @@ if(isset($_GET['literal'])) {
                 <?php endif; ?>
 
                 <div class="edit" id="edit-area">
-                    <form action="../actions/update_kanji.php" method="POST">
+                    <form action="../actions/update_kanji.php" enctype="multipart/form-data" method="POST">
                         <span>Components</span>
                         <input type="hidden" name="literal" value="<?php echo $entry['literal']; ?>">
                         <input type="text" name="components" value="<?php echo $entry['components']; ?>" placeholder="𠂇;口">
@@ -241,7 +241,9 @@ if(isset($_GET['literal'])) {
                         <input type="text" name="otherForms" value="<?php echo $entry['other_forms']; ?>" placeholder="亻;人">
                         <span>Story (Use #日# to create links or _day_ for emphasis)</span>
                         <textarea rows="4" name="story"><?php echo $entry['story']; ?></textarea>
-                        <button type="submit">Save changes</button>
+                        <span>Image</span>
+                        <input type="file" name="image">
+                        <p><button type="submit">Save changes</button></p>
                     </form>
                 </div>
             </div><!-- right -->
