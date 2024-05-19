@@ -14,7 +14,7 @@ $myPDO = new PDO('sqlite:../data/kanjis.db');
 //components & other forms
 $sql = "UPDATE kanjis SET components = ?, other_forms = ?, story = ? WHERE literal = ?";
 $stmt = $myPDO->prepare($sql);
-$results = $stmt->execute([$_POST['components'],$_POST['otherForms'],$_POST['story'], $_POST['literal']]);
+$results = $stmt->execute([trim($_POST['components']),trim($_POST['otherForms']),trim($_POST['story']), $_POST['literal']]);
 
 if(!$results) exit('Unable to update kanji');
 
