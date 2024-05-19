@@ -54,21 +54,24 @@ if(isset($_GET['literal'])) {
             </div><!-- left -->
             <div class="right">
             
-                <?php if(!empty($entry['other_forms'])): ?>
-                <div class="other_forms">
-                    ALSO 
-                    <?php 
-                        $other_forms = explode(";",$entry['other_forms']); 
-                        foreach($other_forms as $other_form) {
-                            echo '<a href="kanji.php?literal='.$other_form.'">'.$other_form.'</a>';
-                        }
-                    ?>
-                </div>
-                <?php endif; ?>
+
                 <div class="meanings">
                     <?php echo str_replace(";", ", ", $entry['meanings']); ?>
                 </div><!-- meanings -->
                 <?php if(!isset($_SESSION['simple']) || $_SESSION['simple'] == 'off'): ?>
+
+                    <?php if(!empty($entry['other_forms'])): ?>
+                    <div class="other_forms">
+                        other forms: 
+                        <?php 
+                            $other_forms = explode(";",$entry['other_forms']); 
+                            foreach($other_forms as $other_form) {
+                                echo '<a href="kanji.php?literal='.$other_form.'">'.$other_form.'</a>';
+                            }
+                        ?>
+                    </div>
+                    <?php endif; ?>
+
                     <div class="meta">
                         <div class="item">
                             <span class="ref">strokes</span>
