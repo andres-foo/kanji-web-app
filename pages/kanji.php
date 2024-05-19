@@ -141,6 +141,11 @@ if(isset($_GET['literal'])) {
                         echo '</div><!-- readings -->';
                     }
                 ?>
+                <div class="links">
+                    <a href="https://www.kanshudo.com/kanji/<?php echo $entry['literal'];?>" target="_blank">kanshudo</a> / 
+                    <a href="https://thekanjimap.com/<?php echo $entry['literal'];?>" target="_blank">thekanjimap</a> / 
+                    <a href="https://en.wiktionary.org/wiki/<?php echo $entry['literal'];?>" target="_blank">wiki</a>
+                </a>
                 <?php 
                     if(!empty($entry['components'])) { 
                         echo '<div class="title briem-hand-normal">Components</div>';
