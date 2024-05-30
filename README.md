@@ -28,7 +28,7 @@ There's a very simple scoring system in place dependent on reviews and selecting
 
 ## USING THE EXPORT FUNCTION FOR ANKI
 
-Using the export function will create an csv file that can be imported in Anki. For that, a deck must be created that has the following fields with the exact same names:
+Using the export function will create a csv file that can be imported in Anki. For that, a deck must be created that has the following fields with the exact same names:
 
 ```
 Kanji
@@ -74,6 +74,9 @@ and the format for the cards should be the following:
 />
 {{/Image}}
 ```
+
+The resulting deck would look like this:
+![Anki](https://github.com/andres-foo/kanji-web-app/blob/main/data/Anki.png?raw=true)
 
 ## CREDITS
 
