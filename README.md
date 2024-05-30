@@ -26,6 +26,55 @@ There's a very simple scoring system in place dependent on reviews and selecting
 - Being marked as easy adds 2 to the score
 - Being marked as hard substract 2 from the score
 
+## USING THE EXPORT FUNCTION FOR ANKI
+
+Using the export function will create an csv file that can be imported in Anki. For that, a deck must be created that has the following fields with the exact same names:
+
+```
+Kanji
+Meanings
+Components
+Story
+Examples
+Image
+```
+
+and the format for the cards should be the following:
+
+### front template
+
+```html
+<div style="font-size:100px">{{Kanji}}</div>
+```
+
+### back template
+
+```html
+<div style="font-size:100px">{{Kanji}}</div>
+
+<hr id="answer" />
+
+<b>{{Meanings}}</b><br />
+
+{{Components}}
+
+<hr />
+
+{{Story}}
+
+<hr />
+
+{{Examples}}
+
+<hr />
+
+{{#Image}}
+<img
+  src="https://github.com/andres-foo/kanji-web-app/blob/main/data/images/{{Kanji}}.jpg?raw=true"
+/>
+{{/Image}}
+```
+
 ## CREDITS
 
 ### Kanjis
