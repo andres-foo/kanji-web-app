@@ -76,6 +76,7 @@ and the format for the cards should be the following:
 ```
 
 The resulting deck would look like this:
+
 ![Anki](https://github.com/andres-foo/kanji-web-app/blob/main/data/Anki.png?raw=true)
 
 ## CREDITS
