@@ -22,7 +22,15 @@ foreach($entries as $kanji) {
     $doc .= $kanji['literal'].";";
     $doc .= str_replace(";", ", ", $kanji['meanings']).";"; 
     $doc .= str_replace(";", ", ", $kanji['components']).";"; 
-    $doc .= $kanji['story'].";";
+
+    // story
+    // links
+    $pattern = '/#(.+?)#/';
+    $story = preg_replace($pattern, '<b style="color:lightgreen">$1</b>',$kanji['story']);
+    // emphasis
+    $pattern = '/\_(.+?)\_/';
+    $story = preg_replace($pattern, '<b style="color:lightgreen">$1</b>',$story); 
+    $doc .= $story.";";
 
     // examples
     $sql = "SELECT * FROM examples WHERE added = 1 AND kanji != '' AND kanji LIKE ? ORDER BY jlpt DESC";
@@ -33,7 +41,14 @@ foreach($entries as $kanji) {
     foreach($my_examples as $my_example) {
         $examples[] = $my_example['kanji']."[".$my_example['kana']."]";
     }
-    $doc .= join(", ", $examples);
+    $doc .= join(", ", $examples) . ";";
+
+    // image
+    if(file_exists("../data/images/" . $kanji['literal'] . ".jpg")) {
+        $doc .= "true";
+    }
+
+    // end of kanji
     $doc .= "\n";
 }
 echo $doc;
