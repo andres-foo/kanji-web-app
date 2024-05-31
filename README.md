@@ -44,7 +44,7 @@ and the format for the cards should be the following:
 ### front template
 
 ```html
-<div style="font-size:100px">{{Kanji}}</div>
+<div style="font-size:240px">{{Kanji}}</div>
 ```
 
 ### back template
@@ -52,23 +52,19 @@ and the format for the cards should be the following:
 ```html
 <div style="font-size:100px">{{Kanji}}</div>
 
-<hr id="answer" />
-
-<b>{{Meanings}}</b><br />
-
-{{Components}}
-
 <hr />
 
-{{Story}}
+<p style="font-weight:bold">{{Meanings}}</p>
 
+<p>{{Components}}</p>
+
+{{#Story}}
 <hr />
-
-{{Examples}}
-
+<p>{{Story}}</p>
+{{/Story}} {{#Examples}}
 <hr />
-
-{{#Image}}
+{{Examples}} {{/Examples}} {{#Image}}
+<hr />
 <img
   src="https://github.com/andres-foo/kanji-web-app/blob/main/data/images/{{Kanji}}.jpg?raw=true"
 />
