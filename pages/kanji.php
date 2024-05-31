@@ -205,7 +205,10 @@ if(isset($_GET['literal'])) {
                             <?php else: ?>
                             <div class="word">
                             <?php endif; ?>
-                            <a href="search.php?query=<?php echo $example['kanji'];?>" class="example-kanji"><?php echo $example['kanji']; ?></a><span class="example-text">「<?php echo $example['kana']; ?>」(jlpt<?php echo $example['jlpt'];?>) <?php echo $example['meanings']; ?>
+                            <a href="search.php?query=<?php echo $example['kanji'];?>" class="example-kanji"><?php echo $example['kanji']; ?></a><span class="example-text">「<?php echo $example['kana']; ?>」
+                            <?php if($example['jlpt'] != 0): ?>(jlpt<?php echo $example['jlpt'];?>)
+                            <?php endif; //jlpt ?>
+                            <?php echo $example['meanings']; ?>
                             <form action="../actions/toggle_example_study.php" method="POST">
                                 <input type="hidden" name="id" value="<?php echo $example['id'];?>">
                                 <input type="hidden" name="literal" value="<?php echo $_GET['literal'];?>">
