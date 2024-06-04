@@ -24,13 +24,16 @@ foreach($entries as $kanji) {
     $doc .= str_replace(";", ", ", $kanji['components']).";"; 
 
     // story
-    // links
-    $pattern = '/#(.+?)#/';
-    $story = preg_replace($pattern, '<b style="color:lightgreen">$1</b>',$kanji['story']);
-    // emphasis
-    $pattern = '/\_(.+?)\_/';
-    $story = preg_replace($pattern, '<b style="color:lightgreen">$1</b>',$story); 
-    $doc .= $story.";";
+    if(empty($kanji['story'])) {
+        $doc .= ";";
+    } else {
+        $pattern = '/#(.+?)#/';
+        $story = preg_replace($pattern, '<b style="color:lightgreen">$1</b>',$kanji['story']);
+        // emphasis
+        $pattern = '/\_(.+?)\_/';
+        $story = preg_replace($pattern, '<b style="color:lightgreen">$1</b>',$story); 
+        $doc .= $story.";";
+    }
 
     // examples
     $sql = "SELECT * FROM examples WHERE added = 1 AND kanji != '' AND kanji LIKE ? ORDER BY jlpt DESC";
