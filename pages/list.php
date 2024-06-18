@@ -92,7 +92,7 @@ function text_kanken($PDO, $grade) {
        
     <?php elseif($_GET['list'] == 'my_list'): ?>
         <?php
-            $sql = "SELECT literal, added FROM kanjis WHERE added = 1";
+            $sql = "SELECT literal, added FROM kanjis WHERE added = 1 ORDER BY added_at DESC";
             $stmt = $myPDO->query($sql);
             $entries = $stmt->fetchAll();
         ?>

@@ -19,11 +19,11 @@ if(!$entry) exit('No such kanji found.');
 
 // if its already added remove and reset score
 if($entry['added'] == 1) {
-    $sql = "UPDATE kanjis SET added = 0, score = 0 WHERE literal = ?";
+    $sql = "UPDATE kanjis SET added = 0, score = 0, added_at = null WHERE literal = ?";
     $stmt = $myPDO->prepare($sql);
     $results = $stmt->execute([$_POST['literal']]);
 } else {
-    $sql = "UPDATE kanjis SET added = 1, score = 0 WHERE literal = ?";
+    $sql = "UPDATE kanjis SET added = 1, score = 0, added_at = CURRENT_TIMESTAMP WHERE literal = ?";
     $stmt = $myPDO->prepare($sql);
     $results = $stmt->execute([$_POST['literal']]);
 }
