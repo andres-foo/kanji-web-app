@@ -13,10 +13,16 @@ if (isset($_GET['query'])) {
     if (empty($_GET['query'])) {
         $error = "Don't leave the search empty.";
     } else {
-        // save to history
-        $sql = "INSERT INTO search_history (query) VALUES (?)";
+        // verify search is not same as last one
+        $sql = "SELECT query FROM search_history ORDER BY id DESC LIMIT 1";
         $stmt = $myPDO->prepare($sql);
-        $result = $stmt->execute([$_GET['query']]);
+        $last_search = $stmt->execute() ? $stmt->fetch()['query'] : null;
+        // save new search
+        if ($last_search !== $_GET['query']) {
+            $sql = "INSERT INTO search_history (query) VALUES (?)";
+            $stmt = $myPDO->prepare($sql);
+            $result = $stmt->execute([$_GET['query']]);
+        }
 
         //if japanese
         if (itHasJapanese($_GET['query'])) {
