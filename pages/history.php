@@ -34,7 +34,7 @@ $queries = $stmt->fetchAll();
             ?>
             <div class="title"><?= $date['date'] ?> (<?= count($entries) ?>)</div>
             <?php foreach ($entries as $entry) : ?>
-                <a href="./kanji.php?literal=<?= $entry['kanji'] ?>"><?= $entry['kanji'] ?></a>
+                <a href="./kanji.php?literal=<?= $entry['kanji'] ?>"><?= $entry['kanji'] ?></a> <span class="history-<?= $entry['type'] ?>"><?= $entry['before'] ?> <span class="review-separator-<?= $entry['type'] ?>"></span> <?= $entry['after'] ?></span>
             <?php endforeach; ?>
         <?php endforeach; ?>
     </div>

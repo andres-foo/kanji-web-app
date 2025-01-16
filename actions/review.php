@@ -36,17 +36,7 @@ if (!$entries) {
             array_pop($_SESSION['last10']);
         }
     }
-    // update score
-    $sql = "UPDATE kanjis SET score = score + 1 WHERE literal = ?";
-    $stmt = $myPDO->prepare($sql);
-    $results = $stmt->execute([$entries[0]['literal']]);
-    $literal = $entries[0]['literal'];
-    // record the review
-    date_default_timezone_set('America/Santiago');
-    $sql = "INSERT INTO review_history (kanji, date) VALUES(?, ?)";
-    $stmt = $myPDO->prepare($sql);
-    $results = $stmt->execute([$entries[0]['literal'], date('Y-m-d')]);
 
-    header("Location: ../pages/kanji.php?literal=" . $literal . "&ref=review");
+    header("Location: ../pages/kanji.php?literal=" . $entries[0]['literal'] . "&ref=review");
     exit;
 }

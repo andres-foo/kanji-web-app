@@ -223,7 +223,50 @@ a:hover, button:hover{
 }
 .review:hover{
     color:#6ff882;
+}
 
+.review-scoring {
+    display:flex;
+    justify-content: center;
+    margin:20px 0;
+    gap:25px;
+}
+.review-good, .review-neutral, .review-bad {
+    padding:7px 15px;
+    font-size: 1.5rem;
+    opacity:0.8;
+}
+.review-good:hover, .review-neutral:hover, .review-bad:hover {
+    opacity:1;
+    color:#121212;
+} 
+.review-good, span.history-good {
+    background-color: #6ff882;
+    color:#121212;
+}
+.review-neutral, span.history-neutral {
+    background-color: #ddfc96;
+    color:#121212;
+}
+.review-bad, span.history-bad {
+    background-color: #e66767;
+    color:#121212;
+}
+.history-good, .history-bad, .history-neutral {
+    padding:0px 4px;
+    border-radius: 5px;
+    margin-right: 20px;
+    font-size: 0.8rem;
+}
+
+.review-separator-good::before {
+    content: '↗';
+}
+.review-separator-bad::before {
+    content: '↘';
+}
+.review-separator-neutral::before {
+    content: '→';
 }
 
 .list {

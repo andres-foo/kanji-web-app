@@ -32,25 +32,20 @@ if (isset($_GET['literal'])) {
         </div>
     <?php else : ?>
 
+        <?php if (isset($_GET['ref']) && $_GET['ref'] == 'review') : ?>
+            <form action="../actions/mark_difficulty.php" class="review-scoring" method="POST">
+                <button class=" review-good" name="review_good">Good</button>
+                <button class="review-neutral" name="review_neutral">Neutral</button>
+                <button class="review-bad" name="review_bad">Bad</button>
+                <input type="hidden" name="literal" value="<?php echo $entry['literal']; ?>">
+            </form>
+        <?php endif; ?>
+
         <div class="card <?php if ($entry['added'] == 1) echo ' added'; ?>">
             <div class="left">
                 <div class="kanji"><?php echo $entry['literal']; ?></div>
                 <div class="big-kanji"><?php echo $entry['literal']; ?></div>
-                <?php if (isset($_GET['ref']) && $_GET['ref'] == 'review') : ?>
-                    <div class="rating">
-                        <form action="../actions/mark_difficulty.php" method="POST">
-                            <input type="hidden" name="difficulty" value="easy">
-                            <input type="hidden" name="literal" value="<?php echo $entry['literal']; ?>">
-                            <button type="submit">Easy</button>
-                        </form>
-                        <form action="../actions/mark_difficulty.php" method="POST">
-                            <input type="hidden" name="difficulty" value="hard">
-                            <input type="hidden" name="literal" value="<?php echo $entry['literal']; ?>">
-                            <button type="submit">Hard</button>
 
-                        </form>
-                    </div>
-                <?php endif; ?>
             </div><!-- left -->
             <div class="right">
 
@@ -174,9 +169,14 @@ if (isset($_GET['literal'])) {
 
                 <!-- image -->
                 <?php
-                $img = "../data/images/" . $entry['literal'] . ".jpg";
-                if (file_exists($img)) {
-                    echo "<a href='../data/images/" . $entry['literal'] . ".jpg' target='_blank'><img src='" . $img . "'></a>";
+                $img = "../data/images/" . $entry['literal'];
+                $imgjpg = $img . ".jpg";
+                $imgpng = $img . ".png";
+
+                if (file_exists($imgjpg)) {
+                    echo "<a href='" . $imgjpg . "' target='_blank'><img src='" . $imgjpg . "'></a>";
+                } elseif (file_exists($imgpng)) {
+                    echo "<a href='" . $imgpng . "' target='_blank'><img src='" . $imgpng . "'></a>";
                 }
                 ?>
 
