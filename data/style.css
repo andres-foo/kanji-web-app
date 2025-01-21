@@ -35,6 +35,9 @@ body {
 .word.added, .card.added {
     border:2px solid #16cc2e;
 }
+.card.added.unfinished {
+    border:2px solid #cf3521;
+}
 .error {
     padding:20px;
     border-radius: 5px;
@@ -187,6 +190,9 @@ a:hover, button:hover{
     font-size: 1em;    
     font-family: "NotoSansJP", "BabelStoneHan";
 }
+.edit input[type=checkbox] {
+    width:auto;
+}
 
 .edit {
     width:100%;
@@ -194,6 +200,7 @@ a:hover, button:hover{
     display:none;
 }
 .edit span {
+    margin-top:10px;
     display:block;
     text-transform: uppercase;
     color:#959595;
@@ -279,8 +286,14 @@ a:hover, button:hover{
 .list a.added {
     color:#16cc2e;
 }
+.list a.unfinished {
+    color: #cf3521;
+}
 .list a.added:hover {
     color:#6ff882;
+}
+.list a.unfinished:hover {
+    color: #f58273;
 }
 
 .words .word {

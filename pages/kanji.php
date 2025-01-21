@@ -41,7 +41,7 @@ if (isset($_GET['literal'])) {
             </form>
         <?php endif; ?>
 
-        <div class="card <?php if ($entry['added'] == 1) echo ' added'; ?>">
+        <div class="card <?php if ($entry['added'] == 1) echo ' added'; ?><?php if ($entry['unfinished'] == 1) echo ' unfinished'; ?>">
             <div class="left">
                 <div class="kanji"><?php echo $entry['literal']; ?></div>
                 <div class="big-kanji"><?php echo $entry['literal']; ?></div>
@@ -244,9 +244,11 @@ if (isset($_GET['literal'])) {
 
                                         <div class="edit" id="edit-area">
                                             <form action="../actions/update_kanji.php" enctype="multipart/form-data" method="POST">
-                                                <span>Components</span>
                                                 <input type="hidden" name="literal" value="<?php echo $entry['literal']; ?>">
-                                                <input type="text" name="components" value="<?php echo $entry['components']; ?>" placeholder="𠂇;口">
+                                                <span>Unfinished</span>
+                                                <input type="checkbox" <?= $entry['unfinished'] == 1 ? 'checked' : '' ?> name="unfinished">kanji is missing information
+                                                <span>Components</span>
+                                                <input type=" text" name="components" value="<?php echo $entry['components']; ?>" placeholder="𠂇;口">
                                                 <span>Other forms</span>
                                                 <input type="text" name="otherForms" value="<?php echo $entry['other_forms']; ?>" placeholder="亻;人">
                                                 <span>Story (Use #日# to create links or _day_ for emphasis)</span>

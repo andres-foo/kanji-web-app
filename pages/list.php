@@ -18,7 +18,8 @@
         foreach ($entries as $entry) {
             $text .= '<a href="kanji.php?literal=' . $entry['literal'] . '"';
             if ($entry['added'] == 1) {
-                $text .= ' class="added"' . ' title="Added: ' . $entry['added_at'] . ' • Score: ' . $entry['score'] . '"';
+                $unfinished = ($entry['unfinished']) ? ' unfinished' : '';
+                $text .= ' class="added' . $unfinished . '"' . ' title="Added: ' . $entry['added_at'] . ' • Score: ' . $entry['score'] . '"';
             }
             $text .= '>' . $entry['literal'] . '</a>';
         }
@@ -27,7 +28,7 @@
 
     function text_jlpt($PDO, $level)
     {
-        $sql = "SELECT literal, added, added_at, score FROM kanjis WHERE jlpt = ?";
+        $sql = "SELECT literal, added, added_at, score, unfinished FROM kanjis WHERE jlpt = ?";
         $stmt = $PDO->prepare($sql);
         $result = $stmt->execute([$level]);
         $entries = $stmt->fetchAll();
@@ -42,7 +43,7 @@
 
     function text_grade($PDO, $grade)
     {
-        $sql = "SELECT literal, added, added_at, score FROM kanjis WHERE grade = ?";
+        $sql = "SELECT literal, added, added_at, score, unfinished FROM kanjis WHERE grade = ?";
         $stmt = $PDO->prepare($sql);
         $result = $stmt->execute([$grade]);
         $entries = $stmt->fetchAll();
@@ -57,7 +58,7 @@
 
     function text_kanken($PDO, $grade)
     {
-        $sql = "SELECT literal, added, added_at, score FROM kanjis WHERE kanken = ?";
+        $sql = "SELECT literal, added, added_at, score, unfinished FROM kanjis WHERE kanken = ?";
         $stmt = $PDO->prepare($sql);
         $result = $stmt->execute([$grade]);
         $entries = $stmt->fetchAll();
@@ -98,7 +99,7 @@
 
         <?php elseif ($_GET['list'] == 'my_list') : ?>
             <?php
-            $sql = "SELECT literal, added, added_at, score FROM kanjis WHERE added = 1 ORDER BY added_at DESC";
+            $sql = "SELECT literal, added, added_at, score, unfinished FROM kanjis WHERE added = 1 ORDER BY added_at DESC";
             $stmt = $myPDO->query($sql);
             $entries = $stmt->fetchAll();
             ?>
@@ -111,7 +112,7 @@
 
         <?php elseif ($_GET['list'] == 'heisg6') : ?>
             <?php
-            $sql = "SELECT literal, added, added_at, score FROM kanjis WHERE heisg6 IS NOT NULL ORDER BY heisg6 ASC";
+            $sql = "SELECT literal, added, added_at, score, unfinished FROM kanjis WHERE heisg6 IS NOT NULL ORDER BY heisg6 ASC";
             $stmt = $myPDO->query($sql);
             $entries = $stmt->fetchAll();
             ?>
@@ -120,7 +121,7 @@
 
         <?php elseif ($_GET['list'] == 'frequency') : ?>
             <?php
-            $sql = "SELECT literal, added, added_at, score FROM kanjis WHERE frequency IS NOT NULL ORDER BY frequency ASC";
+            $sql = "SELECT literal, added, added_at, score, unfinished FROM kanjis WHERE frequency IS NOT NULL ORDER BY frequency ASC";
             $stmt = $myPDO->query($sql);
             $entries = $stmt->fetchAll();
             ?>
