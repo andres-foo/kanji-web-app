@@ -37,7 +37,8 @@ session_start();
                 <a href="list.php?list=heisg6" <?php if (isset($_GET['list']) && $_GET['list'] == 'heisg6') echo ' class="selected"'; ?>>HEISG6</a>
                 <a href="list.php?list=frequency" <?php if (isset($_GET['list']) && $_GET['list'] == 'frequency') echo ' class="selected"'; ?>>FREQUENCY</a>
                 <a href="list.php?list=kanken" <?php if (isset($_GET['list']) && $_GET['list'] == 'kanken') echo ' class="selected"'; ?>>KANKEN</a>
-                <a href="../actions/export.php" class="export">&#8595; EXPORT .CSV</a>
+                <a href="../actions/export_kanji.php" class="export">&#8595; KANJIS</a>
+                <a href="../actions/export_words.php" class="export">&#8595; WORDS</a>
                 <a href="../pages/history.php" class="export">HISTORY</a>
                 <a href="../pages/print.php" target="_blank" class="export">TO PRINT</a>
             </div>
