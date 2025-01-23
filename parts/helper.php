@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 if (!defined('home')) {
     header('HTTP/1.0 403 Forbidden');
@@ -10,31 +10,38 @@ if (!defined('home')) {
  * https://stackoverflow.com/questions/56507695/how-to-search-japanese-character-in-string-with-php
  */
 
-function isOnlyKanji($str) {
+function isOnlyKanji($str)
+{
     return preg_match('/^[\p{Han}]+$/u', $str) > 0;
 }
 
-function itHasKanji($str) {
+function itHasKanji($str)
+{
     return preg_match('/[\p{Han}㇒]+/u', $str) > 0;
 }
 
-function itHasJapanese($str) {
+function itHasJapanese($str)
+{
     return preg_match('/[\p{Katakana}\p{Hiragana}\p{Han}「」㇒]+/u', $str) > 0;
 }
 
-function isOnlyJapanese($str) {
+function isOnlyJapanese($str)
+{
     return preg_match('/^[\p{Katakana}\p{Hiragana}\p{Han}「」]+$/u', $str) > 0;
 }
 
-function isOnlyHiragana($str) {
+function isOnlyHiragana($str)
+{
     return preg_match('/^[\p{Hiragana}\.]+$/u', $str) > 0;
 }
 
-function isOnlyKatakana($str) {
+function isOnlyKatakana($str)
+{
     return preg_match('/^[\p{Katakana}\.]+$/u', $str) > 0;
 }
 
-function obtainKanjis($str) {
+function obtainKanjis($str)
+{
     preg_match_all('/[p\p{Han}㇒]/u', $str, $matches);
     return $matches;
 }
@@ -43,7 +50,8 @@ function obtainKanjis($str) {
  * Original by @ https://github.com/kinosuke01 from:
  * https://github.com/kinosuke01/convertible-romaji
  */
-function toHiragana($text = '') {
+function toHiragana($text = '')
+{
     $decision_table = [
         'kka' => 'っか',
         'kki' => 'っき',
@@ -76,8 +84,8 @@ function toHiragana($text = '') {
         'ze' => 'ぜ',
         'zo' => 'ぞ',
         'da' => 'だ',
-    //    'ji' => 'ぢ',
-        'zu' => 'づ',
+        //    'ji' => 'ぢ',
+        //    'zu' => 'づ',
         'de' => 'で',
         'do' => 'ど',
         'ba' => 'ば',
