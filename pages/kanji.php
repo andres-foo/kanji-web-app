@@ -169,14 +169,10 @@ if (isset($_GET['literal'])) {
 
                 <!-- image -->
                 <?php
-                $img = "../data/images/" . $entry['literal'];
-                $imgjpg = $img . ".jpg";
-                $imgpng = $img . ".png";
+                $img = "../data/images/" . $entry['literal'] . ".jpg";
 
-                if (file_exists($imgjpg)) {
-                    echo "<a href='" . $imgjpg . "' target='_blank'><img src='" . $imgjpg . "'></a>";
-                } elseif (file_exists($imgpng)) {
-                    echo "<a href='" . $imgpng . "' target='_blank'><img src='" . $imgpng . "'></a>";
+                if (file_exists($img)) {
+                    echo "<a href='" . $img . "' target='_blank'><img src='" . $img . "'></a>";
                 }
                 ?>
 
