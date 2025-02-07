@@ -32,6 +32,10 @@ foreach ($entries as $kanji) {
         // emphasis
         $pattern = '/\_(.+?)\_/';
         $story = preg_replace($pattern, '<b style="color:lightgreen">$1</b>', $story);
+        // todo
+        $pattern = '/\?(.+?)\?/';
+        $story = preg_replace($pattern, '<b style="color:red">TODO: $1</b>', $story);
+
         $doc .= $story . ";";
     }
 

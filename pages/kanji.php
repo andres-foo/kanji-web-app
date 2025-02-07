@@ -162,7 +162,10 @@ if (isset($_GET['literal'])) {
                         $story = preg_replace($pattern, '<a href="kanji.php?literal=$1">$1</a>', $entry['story']);
                         // emphasis
                         $pattern = '/\_(.+?)\_/';
-                        echo preg_replace($pattern, '<span>$1</span>', $story);
+                        $story = preg_replace($pattern, '<span>$1</span>', $story);
+                        // todo
+                        $pattern = '/\?(.+?)\?/';
+                        echo preg_replace($pattern, '<em>TODO: $1</em>', $story);
                         ?>
                     </div><!-- story -->
                 <?php endif; ?>
@@ -247,7 +250,7 @@ if (isset($_GET['literal'])) {
                                                 <input type=" text" name="components" value="<?php echo $entry['components']; ?>" placeholder="𠂇;口">
                                                 <span>Other forms</span>
                                                 <input type="text" name="otherForms" value="<?php echo $entry['other_forms']; ?>" placeholder="亻;人">
-                                                <span>Story (Use #日# to create links or _day_ for emphasis)</span>
+                                                <span>Story (#query# to create a search, _day_ for emphasis and ?msg? for TODO)</span>
                                                 <textarea rows="4" name="story"><?php echo $entry['story']; ?></textarea>
                                                 <span>Image</span>
                                                 <input type="file" name="image">

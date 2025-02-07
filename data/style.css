@@ -357,6 +357,13 @@ hr {
     color:#e4e4e4;
     border-bottom: 2px solid #16cc2e;
 }
+.story > em {
+    font-style: normal;
+    padding:0 4px;
+    background-color: #FFF;
+    color:#cf3521;
+    margin:0 5px;
+}
 button.options {
     background:none;
     text-transform: none;
