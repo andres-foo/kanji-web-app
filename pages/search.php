@@ -182,7 +182,7 @@ if (isset($_GET['query'])) {
         <?php foreach ($examples as $example) : ?>
             <div class="card search search-word<?php if ($example['added'] == 1) echo ' added'; ?>">
                 <?php echo '<a href="search.php?query=' . $example['kanji'] . '">' . $example['kanji'] . '</a>「' . $example['kana'] . '」'; ?> (jlpt<?php echo $example['jlpt']; ?>)
-                <?php echo $example['meanings']; ?>
+                <?php echo str_replace(',', ', ', $example['meanings']); ?>
             </div>
         <?php endforeach; ?>
     <?php endif; ?>

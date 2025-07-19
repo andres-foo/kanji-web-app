@@ -208,7 +208,7 @@ if (isset($_GET['literal'])) {
                                         <?php if ($example['jlpt'] != 0) : ?>(jlpt<?php echo $example['jlpt']; ?>)
                                     <?php endif; //jlpt 
                                     ?>
-                                    <?php echo $example['meanings']; ?>
+                                    <?php echo str_replace(',', ', ', $example['meanings']); ?>
                                     <form action="../actions/toggle_example_study.php" method="POST">
                                         <input type="hidden" name="id" value="<?php echo $example['id']; ?>">
                                         <input type="hidden" name="literal" value="<?php echo $_GET['literal']; ?>">

@@ -19,7 +19,7 @@ foreach ($entries as $word) {
     // basics
     $doc .= $word['kanji'] . ";";
     $doc .= trim($word['kana']) . ";";
-    $doc .= str_replace(";", ", ", trim($word['meanings'])) . ";";
+    $doc .= str_replace(",", ", ", trim($word['meanings'])) . ";";
     $doc .= "true"; // fromKanjiApp
     // end of word
     $doc .= "\n";
