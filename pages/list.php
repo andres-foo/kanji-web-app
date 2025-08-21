@@ -108,19 +108,32 @@
 
         <?php elseif ($_GET['list'] == 'my_list') : ?>
 
-            <h1>MY LIST</h1>
+            <h1>MY STUDY LIST</h1>
 
             <?php
-            $sql = "SELECT literal, added, added_at, score, unfinished FROM kanjis WHERE added = 1 ORDER BY added_at DESC";
+            $sql = "SELECT literal, added, added_at, score, unfinished FROM kanjis WHERE added = 1 AND component_only IS NULL ORDER BY added_at DESC";
             $stmt = $myPDO->query($sql);
             $entries = $stmt->fetchAll();
             ?>
-            <div class="title">MY STUDY LIST (<?php echo count($entries); ?> characters):</div>
+            <div class="title">Kanjis (<?php echo count($entries); ?> characters):</div>
             <?php if (count($entries) == 0) : ?>
                 <p>You haven't added any kanjis yet! To do so click on the "<strong>Add</strong>" button on the top right of the page when viewing a kanji.</p>
             <?php else : ?>
                 <?php echo loop_entries($entries); ?>
             <?php endif; ?>
+
+            <?php
+            $sql = "SELECT literal, added, added_at, score, unfinished FROM kanjis WHERE added = 1 AND component_only = 1 ORDER BY added_at DESC";
+            $stmt = $myPDO->query($sql);
+            $entries = $stmt->fetchAll();
+            ?>
+            <div class="title">COMPONENTS ONLY (<?php echo count($entries); ?> characters):</div>
+            <?php if (count($entries) == 0) : ?>
+                <p>You haven't added any kanjis yet! To do so click on the "<strong>Add</strong>" button on the top right of the page when viewing a kanji.</p>
+            <?php else : ?>
+                <?php echo loop_entries($entries); ?>
+            <?php endif; ?>
+
 
         <?php elseif ($_GET['list'] == 'heisg6') : ?>
 
