@@ -78,7 +78,13 @@
 
 
     <div class="list">
+
+
+
         <?php if ($_GET['list'] == 'jlpt') : ?>
+
+            <h1>JLPT</h1>
+
             <?php
             echo text_jlpt($myPDO, 5);
             echo text_jlpt($myPDO, 4);
@@ -87,6 +93,9 @@
             echo text_jlpt($myPDO, 1);
             ?>
         <?php elseif ($_GET['list'] == 'jouyou') : ?>
+
+            <h1>JOUYOU</h1>
+
             <?php
             echo text_grade($myPDO, 1);
             echo text_grade($myPDO, 2);
@@ -98,6 +107,9 @@
             ?>
 
         <?php elseif ($_GET['list'] == 'my_list') : ?>
+
+            <h1>MY LIST</h1>
+
             <?php
             $sql = "SELECT literal, added, added_at, score, unfinished FROM kanjis WHERE added = 1 ORDER BY added_at DESC";
             $stmt = $myPDO->query($sql);
@@ -111,6 +123,9 @@
             <?php endif; ?>
 
         <?php elseif ($_GET['list'] == 'heisg6') : ?>
+
+            <h1>HEISG6</h1>
+
             <?php
             $sql = "SELECT literal, added, added_at, score, unfinished FROM kanjis WHERE heisg6 IS NOT NULL ORDER BY heisg6 ASC";
             $stmt = $myPDO->query($sql);
@@ -120,6 +135,9 @@
             <?php echo loop_entries($entries); ?>
 
         <?php elseif ($_GET['list'] == 'frequency') : ?>
+
+            <h1>FREQUENCY</h1>
+
             <?php
             $sql = "SELECT literal, added, added_at, score, unfinished FROM kanjis WHERE frequency IS NOT NULL ORDER BY frequency ASC";
             $stmt = $myPDO->query($sql);
@@ -129,6 +147,9 @@
             <?php echo loop_entries($entries); ?>
 
         <?php elseif ($_GET['list'] == 'kanken') : ?>
+
+            <h1>KANKEN</h1>
+
             <?php
             echo text_kanken($myPDO, 10);
             echo text_kanken($myPDO, 9);
