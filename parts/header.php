@@ -38,14 +38,14 @@ session_start();
                 <form action="../actions/review.php" method="POST">
                     <button type="submit" class="review">REVIEW</button>
                 </form>
-                <div class="list-menu">LISTS
+                <a href="list.php?list=my_list">MY LIST</a>
+                <div class="list-menu">MORE LISTS
                     <div class="list-menu-content">
-                        <a href="list.php?list=my_list">MY LIST</a>
+                        <a href="list.php?list=kanken">KANKEN</a>
                         <a href="list.php?list=jlpt">JLPT</a>
                         <a href="list.php?list=jouyou">JOUYOU</a>
-                        <a href="list.php?list=heisg6">HEISG6</a>
                         <a href="list.php?list=frequency">FREQUENCY</a>
-                        <a href="list.php?list=kanken">KANKEN</a>
+                        <a href="list.php?list=heisg6">HEISG6</a>
                     </div>
                 </div>
                 <a href="../actions/export_kanji.php" class="export">&#8595; KANJIS</a>
