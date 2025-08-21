@@ -52,6 +52,7 @@ session_start();
                 <a href="../actions/export_words.php" class="export">&#8595; WORDS</a>
                 <a href="../pages/history.php" class="export">HISTORY</a>
                 <a href="../pages/print.php" target="_blank" class="export">TO PRINT</a>
+                <a href="../pages/add-example.php" class="export">+ EXAMPLE</a>
             </div>
             <div class="header-form">
                 <form action="search.php" method="GET">

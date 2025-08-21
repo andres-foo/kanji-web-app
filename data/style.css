@@ -181,7 +181,7 @@ a, button {
 a:hover, button:hover{
     color:#d7b7fd;
 }
-.edit textarea, .edit input {
+.edit textarea, .edit input, .add-example input , .add-example select {
     background-color:#121212;
     color:#e4e4e4;
     border:none;
@@ -191,8 +191,11 @@ a:hover, button:hover{
     font-size: 1em;    
     font-family: "NotoSansJP", "BabelStoneHan";
 }
-.edit input[type=checkbox] {
+.edit input[type=checkbox] , .add-example input[type=checkbox]{
     width:auto;
+}
+.add-example {
+    display:block;
 }
 
 .edit {
