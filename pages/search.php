@@ -9,6 +9,8 @@ $myPDO = new PDO('sqlite:../data/kanjis.db');
 // search
 $kanjis = [];
 $examples = [];
+// history
+$history_limit = 100;
 if (isset($_GET['query'])) {
     if (empty($_GET['query'])) {
         $error = "Don't leave the search empty.";
@@ -22,6 +24,14 @@ if (isset($_GET['query'])) {
             $sql = "INSERT INTO search_history (query) VALUES (?)";
             $stmt = $myPDO->prepare($sql);
             $result = $stmt->execute([$_GET['query']]);
+        }
+        // delete old history entries if over limit
+        $countStmt = $myPDO->query("SELECT COUNT(*) FROM search_history");
+        $searchCount = $countStmt->fetchColumn();
+        if ($searchCount > $history_limit) {
+            $deleteCount = $searchCount - $history_limit;
+            $deleteStmt = $myPDO->prepare("DELETE FROM search_history WHERE id IN (SELECT id FROM search_history ORDER BY id ASC LIMIT ?)");
+            $deleteStmt->execute([$deleteCount]);
         }
 
         //if japanese
