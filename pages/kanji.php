@@ -244,16 +244,14 @@ if (isset($_GET['literal'])) {
                                         <div class="edit" id="edit-area">
                                             <form action="../actions/update_kanji.php" enctype="multipart/form-data" method="POST">
                                                 <input type="hidden" name="literal" value="<?php echo $entry['literal']; ?>">
-                                                <span>Unfinished</span>
-                                                <input type="checkbox" <?= $entry['unfinished'] == 1 ? 'checked' : '' ?> name="unfinished">kanji is missing information
                                                 <span>Components</span>
                                                 <input type=" text" name="components" value="<?php echo $entry['components']; ?>" placeholder="𠂇;口">
                                                 <span>Other forms</span>
                                                 <input type="text" name="otherForms" value="<?php echo $entry['other_forms']; ?>" placeholder="亻;人">
                                                 <span>Story (#query# to create a search, _day_ for emphasis and ?msg? for TODO)</span>
                                                 <textarea rows="4" name="story"><?php echo $entry['story']; ?></textarea>
-                                                <span>Component only</span>
-                                                <input type="checkbox" <?= $entry['component_only'] == 1 ? 'checked' : '' ?> name="component_only">literal is a component only
+                                                <p><input type="checkbox" <?= $entry['unfinished'] == 1 ? 'checked' : '' ?> name="unfinished">kanji is missing information</p>
+                                                <p><input type="checkbox" <?= $entry['component_only'] == 1 ? 'checked' : '' ?> name="component_only">literal is a component only</p>
                                                 <span>Image</span>
                                                 <input type="file" name="image">
                                                 <p><button type="submit">Save changes</button></p>
