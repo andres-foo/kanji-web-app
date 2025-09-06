@@ -27,7 +27,7 @@ require '../parts/helper.php';
                 if (!isset($previous_group)) {
                     // first ever group
                     echo "<div class='component-group' id='group-" . $entry['component_group'] . "' ondrop='dropHandler(event)' ondragover='dragoverHandler(event)'>";
-                    echo "<div class='component-group-title'>group " . $entry['component_group'] . "</div>";
+                    echo "<div class='component-group-title'>" . ($entry['component_group'] == '0' ? 'No group' : 'Group ' . $entry['component_group']) . "</div>";
                 } else {
                     // starting from second group
                     if ($previous_group != $entry['component_group']) {
@@ -42,7 +42,7 @@ require '../parts/helper.php';
                         <a href="kanji.php?literal=<?= $entry['literal']; ?>"><?= $entry['literal']; ?></a>
                     </div>
                     <div class="component-meaning">
-                        <?= $entry['meanings']; ?>
+                        <?= str_replace(';', ', ', $entry['meanings']); ?>
                     </div>
                     <div class="component-story">
                         <?= parse_story($entry['story']); ?>
