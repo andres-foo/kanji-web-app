@@ -13,7 +13,7 @@ require '../parts/helper.php';
     // db connection
     $myPDO = new PDO('sqlite:../data/kanjis.db');
 
-    $sql = "SELECT * FROM kanjis WHERE added = 1 AND component_only = 1 ORDER BY component_group ASC";
+    $sql = "SELECT * FROM kanjis WHERE added = 1 AND is_component = 1 ORDER BY component_group ASC";
     $stmt = $myPDO->query($sql);
     $entries = $stmt->fetchAll();
     ?>

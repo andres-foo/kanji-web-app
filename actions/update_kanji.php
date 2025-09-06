@@ -14,10 +14,10 @@ $myPDO = new PDO('sqlite:../data/kanjis.db');
 
 //components & other forms
 $unfinished = isset($_POST['unfinished']) ? 1 : NULL;
-$component_only = isset($_POST['component_only']) ? 1 : NULL;
-$sql = "UPDATE kanjis SET components = ?, other_forms = ?, story = ?, unfinished = ?, component_only = ? WHERE literal = ?";
+$is_component = isset($_POST['is_component']) ? 1 : NULL;
+$sql = "UPDATE kanjis SET components = ?, other_forms = ?, story = ?, unfinished = ?, is_component = ? WHERE literal = ?";
 $stmt = $myPDO->prepare($sql);
-$results = $stmt->execute([trim($_POST['components']), trim($_POST['otherForms']), trim($_POST['story']), $unfinished, $component_only, $_POST['literal']]);
+$results = $stmt->execute([trim($_POST['components']), trim($_POST['otherForms']), trim($_POST['story']), $unfinished, $is_component, $_POST['literal']]);
 
 if (!$results) exit('Unable to update kanji');
 
