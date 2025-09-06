@@ -383,11 +383,11 @@ hr {
 .rules {
     display:block;
 }
-.story span {
+.story span, .component-story span {
     color:#e4e4e4;
     border-bottom: 2px solid #16cc2e;
 }
-.story > em {
+.story > em,  .component-story em {
     font-style: normal;
     padding:0 4px;
     background-color: #FFF;
@@ -397,6 +397,44 @@ hr {
 button.options {
     background:none;
     text-transform: none;
+}
+
+/* COMPONENTS */
+.component-list{
+    display: flex;
+    flex-direction: column;
+    gap:40px;
+}
+.component-card {
+    display:grid;
+    grid-template-columns: 70px 1fr 1fr 1fr;
+    gap:1px;
+    background-color: #121212;
+    border-left: 2px solid #16cc2e;
+}
+.component-card.unfinished {
+    border-left: 2px solid #cf3521;
+}
+.component-card div {
+    padding:10px;
+}
+.component-card .component-literal {
+    text-align: center;
+}
+.component-group .component-card:not(:last-child) {
+    border-bottom: 1px solid #262626;
+}
+.component-story a {
+    font-size: 0.5 em;
+}
+.component-group-title {
+    padding:10px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    color:#e4e4e4;
+    text-transform: uppercase;
+    font-size: 0.8em;
+    background:#121212;
 }
 
 /* PRINT */

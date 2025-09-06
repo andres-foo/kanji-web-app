@@ -1,6 +1,10 @@
 <?php define('home', true); ?>
 
 <?php
+
+// only for parse_story
+require '../parts/helper.php';
+
 // db connection
 $myPDO = new PDO('sqlite:../data/kanjis.db');
 
@@ -143,7 +147,7 @@ if (isset($_GET['literal'])) {
                 </div>
                 <?php
                 if (!empty($entry['components'])) {
-                    echo '<div class="title briem-hand-normal">Components</div>';
+                    echo '<div class="title">Components</div>';
                     echo '<div class="components">';
                     $componentsArray = explode(";", $entry['components']);
                     foreach ($componentsArray as $component) {
@@ -157,15 +161,7 @@ if (isset($_GET['literal'])) {
                     <div class="title">Story</div>
                     <div class="story">
                         <?php
-                        // links
-                        $pattern = '/#(.+?)#/';
-                        $story = preg_replace($pattern, '<a href="kanji.php?literal=$1">$1</a>', $entry['story']);
-                        // emphasis
-                        $pattern = '/\_(.+?)\_/';
-                        $story = preg_replace($pattern, '<span>$1</span>', $story);
-                        // todo
-                        $pattern = '/\?(.+?)\?/';
-                        echo preg_replace($pattern, '<em>TODO: $1</em>', $story);
+                        echo parse_story($entry['story']);
                         ?>
                     </div><!-- story -->
                 <?php endif; ?>

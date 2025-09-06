@@ -39,6 +39,7 @@ session_start();
                     <button type="submit" class="review">REVIEW</button>
                 </form>
                 <a href="list.php?list=my_list">MY LIST</a>
+                <a href="components.php">COMPONENTS</a>
                 <div class="list-menu">MORE LISTS
                     <div class="list-menu-content">
                         <a href="list.php?list=kanken">KANKEN</a>

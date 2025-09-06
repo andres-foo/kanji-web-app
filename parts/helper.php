@@ -191,3 +191,20 @@ function toKatakana($text = '')
     $text = mb_convert_kana($text, 'C');
     return $text;
 }
+
+function parse_story($story)
+{
+    // links
+    $pattern = '/#(.+?)#/';
+    $story = preg_replace($pattern, '<a href="kanji.php?literal=$1">$1</a>', $story);
+
+    // emphasis
+    $pattern = '/\_(.+?)\_/';
+    $story = preg_replace($pattern, '<span>$1</span>', $story);
+
+    // todo
+    $pattern = '/\?(.+?)\?/';
+    $story = preg_replace($pattern, '<em>TODO: $1</em>', $story);
+
+    return $story;
+}
