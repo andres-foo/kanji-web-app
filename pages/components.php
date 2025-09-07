@@ -18,9 +18,9 @@ require '../parts/helper.php';
     $entries = $stmt->fetchAll();
 
     // check groups
-    $sql = "SELECT DISTINCT component_group FROM kanjis ORDER BY component_group ASC";
+    $sql = "SELECT component_group as max_group FROM kanjis ORDER BY component_group DESC LIMIT 1";
     $stmt = $myPDO->query($sql);
-    $groups = $stmt->fetchAll();
+    $groups = $stmt->fetch();
 
     ?>
 
@@ -31,16 +31,13 @@ require '../parts/helper.php';
             <?php foreach ($entries as $entry): ?>
                 <?php
                 if (!isset($previous_group)) {
-                    // first ever group
-                    echo "<div class='component-group' id='group-" . $entry['component_group'] . "' ondrop='dropHandler(event)' ondragover='dragoverHandler(event)'>";
-                    echo "<div class='component-group-title'>" . ($entry['component_group'] == '0' ? 'No group' : 'Group ' . $entry['component_group']) . "</div>";
-                } else {
-                    // starting from second group
-                    if ($previous_group != $entry['component_group']) {
-                        echo "</div><!-- component-group -->";
-                        echo "<div class='component-group' id='group-" . $entry['component_group'] . "' ondrop='dropHandler(event)' ondragover='dragoverHandler(event)'>";
-                        echo "<div class='component-group-title'>group " . $entry['component_group'] . "</div>";
-                    }
+                    echo "<div class='component-group'>";
+                    echo "<div class='component-group-title'>group " . $entry['component_group'] . "</div>";
+                } else if ($previous_group != $entry['component_group']) {
+                    echo "</div><!-- component-group -->";
+
+                    echo "<div class='component-group'>";
+                    echo "<div class='component-group-title'>group " . $entry['component_group'] . "</div>";
                 }
                 ?>
                 <div class="component-card<?php echo $entry['unfinished'] ? ' unfinished' : ''; ?>" draggable="true" ondragstart="dragstartHandler(event)" id="<?= $entry['literal'] ?>">
@@ -67,14 +64,14 @@ require '../parts/helper.php';
                         <form method="POST" action="/actions/update-group.php">
                             <input type="hidden" name="literal" value="<?= $entry['literal'] ?>">
                             <select name="group" class="component-group-dropdown" onchange="updateGroup(this)">
-                                <?php foreach ($groups as $group): ?>
-                                    <?php if ($group['component_group'] == $entry['component_group']): ?>
-                                        <option value="<?= $group['component_group'] ?>" disabled selected><?= $group['component_group'] ?>
+                                <?php for ($group = 0; $group <= $groups['max_group']; $group++): ?>
+                                    <?php if ($group == $entry['component_group']): ?>
+                                        <option value="<?= $group ?>" disabled selected><?= $group ?>
                                         <?php else: ?>
-                                        <option value="<?= $group['component_group'] ?>" <?php echo $group['component_group'] == $entry['component_group'] ? 'disabled' : '' ?>><?= $group['component_group'] ?>
+                                        <option value="<?= $group ?>"><?= $group ?>
                                         <?php endif; ?>
-                                    <?php endforeach; ?>
-                                        <option value="-1">New
+                                    <?php endfor; ?>
+                                        <option value="<?= $group ?>">New
                             </select>
                         </form>
                     </div>

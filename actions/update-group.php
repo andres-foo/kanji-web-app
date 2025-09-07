@@ -16,24 +16,6 @@ $group = $_POST['group'];
 // db connection
 $myPDO = new PDO('sqlite:../data/kanjis.db');
 
-
-// if "new" check for any empty group number to reuse
-if ($group == -1) {
-    $sql = "SELECT DISTINCT component_group FROM kanjis ORDER BY component_group ASC";
-    $stmt = $myPDO->query($sql);
-    $groups = $stmt->fetchAll();
-    $new_group = 0;
-    foreach ($groups as $group) {
-        if ($group['component_group'] == $new_group) {
-            $new_group++;
-        } else {
-            break;
-        }
-    }
-    $group = $new_group;
-}
-
-
 $sql = "UPDATE kanjis SET component_group = ? WHERE literal = ?";
 $stmt = $myPDO->prepare($sql);
 
