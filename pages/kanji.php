@@ -246,8 +246,8 @@ if (isset($_GET['literal'])) {
                                                 <input type="text" name="otherForms" value="<?php echo $entry['other_forms']; ?>" placeholder="亻;人">
                                                 <span>Story (#query# to create a search, _day_ for emphasis and ?msg? for TODO)</span>
                                                 <textarea rows="4" name="story"><?php echo $entry['story']; ?></textarea>
-                                                <p><input type="checkbox" <?= $entry['unfinished'] == 1 ? 'checked' : '' ?> name="unfinished">is missing information</p>
-                                                <p><input type="checkbox" <?= $entry['is_component'] == 1 ? 'checked' : '' ?> name="is_component">is a basic component</p>
+                                                <p><input id="unfinished" type="checkbox" <?= $entry['unfinished'] == 1 ? 'checked' : '' ?> name="unfinished"><label for="unfinished">is missing information</label></p>
+                                                <p><input id="is_component" type="checkbox" <?= $entry['is_component'] == 1 ? 'checked' : '' ?> name="is_component"><label for="is_component">is a basic component</label></p>
                                                 <span>Image</span>
                                                 <input type="file" name="image">
                                                 <p><button type="submit">Save changes</button></p>
