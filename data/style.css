@@ -390,8 +390,9 @@ hr {
 .story > em,  .component-story em {
     font-style: normal;
     padding:0 4px;
-    background-color: #FFF;
-    color:#cf3521;
+    background-color: #c3ceaa;
+    color:#121212;
+    border-radius: 4px;
     margin:0 5px;
 }
 button.options {
