@@ -16,6 +16,12 @@ require '../parts/helper.php';
     $sql = "SELECT * FROM kanjis WHERE added = 1 AND is_component = 1 ORDER BY component_group ASC";
     $stmt = $myPDO->query($sql);
     $entries = $stmt->fetchAll();
+
+    // check groups
+    $sql = "SELECT DISTINCT component_group FROM kanjis ORDER BY component_group ASC";
+    $stmt = $myPDO->query($sql);
+    $groups = $stmt->fetchAll();
+
     ?>
 
     <?php if (count($entries) == 0) : ?>
@@ -57,6 +63,21 @@ require '../parts/helper.php';
                             <a href="kanji.php?literal=<?= $example['literal']; ?>"><?= $example['literal']; ?></a>
                         <?php endforeach; ?>
                     </div>
+                    <div>
+                        <form method="POST" action="/actions/update-group.php">
+                            <input type="hidden" name="literal" value="<?= $entry['literal'] ?>">
+                            <select name="group" class="component-group-dropdown" onchange="updateGroup(this)">
+                                <?php foreach ($groups as $group): ?>
+                                    <?php if ($group['component_group'] == $entry['component_group']): ?>
+                                        <option value="<?= $group['component_group'] ?>" disabled selected><?= $group['component_group'] ?>
+                                        <?php else: ?>
+                                        <option value="<?= $group['component_group'] ?>" <?php echo $group['component_group'] == $entry['component_group'] ? 'disabled' : '' ?>><?= $group['component_group'] ?>
+                                        <?php endif; ?>
+                                    <?php endforeach; ?>
+                                        <option value="-1">New
+                            </select>
+                        </form>
+                    </div>
                 </div><!-- component-card -->
                 <?php
                 $previous_group = $entry['component_group'];
@@ -64,66 +85,17 @@ require '../parts/helper.php';
             <?php endforeach; ?>
         </div><!-- component-group (close last group) -->
         <!-- extra group to increase -->
-        <?php
-        // extra group at the end
-        $new_group = $previous_group + 1;
-        echo "<div class='component-group' id='group-" . $new_group . "' ondrop='dropHandler(event)' ondragover='dragoverHandler(event)'>";
-        echo "<div class='component-group-title'>group " . $new_group . "</div>";
-        echo "</div>";
-        ?>
+
 </div><!-- component-list -->
 
 <?php endif; ?>
-
-
-
 
 </div>
 
 <?php require '../parts/footer.php'; ?>
 
 <script>
-    function dragstartHandler(ev) {
-        ev.dataTransfer.setData("text", ev.target.id);
-    }
-
-    function dragoverHandler(ev) {
-        ev.preventDefault();
-    }
-
-    function dropHandler(ev) {
-        ev.preventDefault();
-        const data = ev.dataTransfer.getData("text");
-        ev.target.closest('.component-group').appendChild(document.getElementById(data));
-
-        // info
-        let groupValue = ev.target.closest('.component-group').id.split('-')[1];
-        let literalValue = data;
-
-        // ajax
-        fetch('/actions/ajax-update-group.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    group: groupValue,
-                    literal: literalValue,
-                }),
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.json(); // Or response.text() if your API returns plain text
-            })
-            .then(data => {
-                console.log('Success:', data);
-                // Handle the response from the server
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-                // Handle any errors that occurred during the fetch
-            });
+    function updateGroup(el) {
+        el.closest('form').submit();
     }
 </script>

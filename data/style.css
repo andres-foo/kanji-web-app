@@ -407,7 +407,7 @@ button.options {
 }
 .component-card {
     display:grid;
-    grid-template-columns: 70px 1fr 1fr 1fr;
+    grid-template-columns: auto 1fr 1fr 1fr auto;
     gap:1px;
     background-color: #121212;
     border-left: 2px solid #16cc2e;
@@ -435,6 +435,20 @@ button.options {
     text-transform: uppercase;
     font-size: 0.8em;
     background:#121212;
+}
+.component-story a {
+    font-size: initial !important;
+}
+.component-group-dropdown {
+    visibility: hidden;
+    background:#262626;
+    border:0;
+    color: #EFEFEF;
+    padding:4px;
+    border-radius: 4px;
+}
+.component-card:hover .component-group-dropdown {
+    visibility: visible;
 }
 
 /* PRINT */
