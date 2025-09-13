@@ -400,6 +400,16 @@ button.options {
     text-transform: none;
 }
 
+/**/
+.component-flag {
+    position:absolute;
+    top:5px;
+    left:0;
+    text-transform:uppercase;
+    font-size: x-small;
+    background:#121212;
+    padding:4px 9px;
+}
 /* COMPONENTS */
 .component-list{
     display: flex;

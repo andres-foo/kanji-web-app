@@ -46,6 +46,9 @@ if (isset($_GET['literal'])) {
         <?php endif; ?>
 
         <div class="card <?php if ($entry['added'] == 1) echo ' added'; ?><?php if ($entry['unfinished'] == 1) echo ' unfinished'; ?>">
+            <?php if ($entry['is_component']): ?>
+                <div class="component-flag">basic component</div>
+            <?php endif; ?>
             <div class="left">
                 <div class="kanji"><?php echo $entry['literal']; ?></div>
                 <div class="big-kanji"><?php echo $entry['literal']; ?></div>
