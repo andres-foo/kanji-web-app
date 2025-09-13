@@ -107,7 +107,7 @@ body {
 .card .right .other_forms {
     color:#959595;
 }
-.card .right .component a {
+.card .right .component a, .card .right .related a {
     background-color:#121212;
     margin:0 10px 5px 0;
     padding:5px 10px;

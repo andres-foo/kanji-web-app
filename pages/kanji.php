@@ -158,6 +158,17 @@ if (isset($_GET['literal'])) {
                     echo '</div><!-- components -->';
                 }
                 ?>
+                <?php
+                if (!empty($entry['related'])) {
+                    echo '<div class="title">See also</div>';
+                    echo '<div class="components">';
+                    $relatedArray = explode(";", $entry['related']);
+                    foreach ($relatedArray as $related) {
+                        echo '<div class="component"><a href="kanji.php?literal=' . $related . '">' . $related . '</a></div>';
+                    }
+                    echo '</div><!-- related -->';
+                }
+                ?>
                 <?php if (!empty($entry['story'])) : ?>
 
                     <div class="title">Story</div>
@@ -246,6 +257,8 @@ if (isset($_GET['literal'])) {
                                                 <input type=" text" name="components" value="<?php echo $entry['components']; ?>" placeholder="𠂇;口">
                                                 <span>Other forms</span>
                                                 <input type="text" name="otherForms" value="<?php echo $entry['other_forms']; ?>" placeholder="亻;人">
+                                                <span>See also</span>
+                                                <input type="text" name="related" value="<?php echo $entry['related']; ?>" placeholder="亻;人">
                                                 <span>Story (#query# to create a search, _day_ for emphasis and ?msg? for TODO)</span>
                                                 <textarea rows="4" name="story"><?php echo $entry['story']; ?></textarea>
                                                 <p><input id="unfinished" type="checkbox" <?= $entry['unfinished'] == 1 ? 'checked' : '' ?> name="unfinished"><label for="unfinished">is missing information</label></p>
