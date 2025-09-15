@@ -19,7 +19,8 @@
             $text .= '<a href="kanji.php?literal=' . $entry['literal'] . '"';
             if ($entry['added'] == 1) {
                 $unfinished = ($entry['unfinished']) ? ' unfinished' : '';
-                $text .= ' class="added' . $unfinished . '"' . ' title="Added: ' . $entry['added_at'] . ' • Score: ' . $entry['score'] . '"';
+                $ids_pending = empty($entry['ids']) ? '' : ' ids-pending';
+                $text .= ' class="added' . $unfinished . $ids_pending . '"' . ' title="Added: ' . $entry['added_at'] . ' • Score: ' . $entry['score'] . '"';
             }
             $text .= '>' . $entry['literal'] . '</a>';
         }
@@ -111,7 +112,7 @@
             <h1>MY STUDY LIST</h1>
 
             <?php
-            $sql = "SELECT literal, added, added_at, score, unfinished FROM kanjis WHERE added = 1 AND is_component IS NULL ORDER BY added_at DESC";
+            $sql = "SELECT literal, added, added_at, score, unfinished, ids FROM kanjis WHERE added = 1 AND is_component IS NULL ORDER BY added_at DESC";
             $stmt = $myPDO->query($sql);
             $entries = $stmt->fetchAll();
             ?>
@@ -123,7 +124,7 @@
             <?php endif; ?>
 
             <?php
-            $sql = "SELECT literal, added, added_at, score, unfinished FROM kanjis WHERE added = 1 AND is_component = 1 ORDER BY added_at DESC";
+            $sql = "SELECT literal, added, added_at, score, unfinished, ids FROM kanjis WHERE added = 1 AND is_component = 1 ORDER BY added_at DESC";
             $stmt = $myPDO->query($sql);
             $entries = $stmt->fetchAll();
             ?>

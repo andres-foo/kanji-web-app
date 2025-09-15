@@ -319,6 +319,9 @@ a:hover, button:hover{
 .list a.unfinished {
     color: #cf3521;
 }
+.list a.ids-pending {
+    border-bottom:1px solid red;
+}
 .list a.added:hover {
     color:#6ff882;
 }
