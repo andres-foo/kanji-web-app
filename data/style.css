@@ -414,6 +414,19 @@ button.options {
     padding:4px 9px;
 }
 /* COMPONENTS */
+.component-words {
+    vertical-align: middle;
+    display:flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.component-usage-count {
+    font-size: x-small;
+    margin:5px;
+    padding:2px 5px;
+    border-radius: 4px;
+    background-color: #262626;
+}
 .component-list{
     display: flex;
     flex-direction: column;
@@ -454,16 +467,18 @@ button.options {
     font-size: initial !important;
 }
 .component-group-dropdown {
-    visibility: hidden;
+    /* visibility: hidden; */
     background:#262626;
     border:0;
     color: #EFEFEF;
     padding:4px;
     border-radius: 4px;
 }
+/*
 .component-card:hover .component-group-dropdown {
     visibility: visible;
 }
+*/
 
 /* PRINT */
 .print-body {
