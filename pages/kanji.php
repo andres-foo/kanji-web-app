@@ -207,6 +207,11 @@ if (isset($_GET['literal'])) {
                 $stmt->execute(['%' . $entry['literal'] . '%']);
                 $examples = $stmt->fetchAll();
 
+                // phrases
+                $sql = "SELECT * FROM phrases WHERE japanese LIKE ?";
+                $stmt = $myPDO->prepare($sql);
+                $stmt->execute(['%' . $entry['literal'] . '%']);
+                $phrases = $stmt->fetchAll();
 
                 // kanjis that contain this kanji as a component
                 $sql = "SELECT * FROM kanjis WHERE components LIKE ? ORDER BY added DESC";
@@ -246,6 +251,31 @@ if (isset($_GET['literal'])) {
                                 <?php endforeach; ?>
                                 </div><!-- words -->
                             <?php endif; ?>
+
+
+
+                            <!-- phrases -->
+                            <?php if (!empty($phrases)) : ?>
+                                <div class="words">
+                                    <div class="title">Phrases</div>
+
+                                    <!-- my examples -->
+                                    <?php foreach ($phrases as $phrase) : ?>
+                                        <?php
+                                        echo '<div class="word">';
+                                        echo '<audio controls>';
+                                        echo '<source src="../data/phrases/' . $phrase['audio'] . '" type="audio/mpeg">';
+                                        echo 'Your browser does not support the audio element.';
+                                        echo '</audio>';
+                                        echo '<a href="search.php?query=' . $phrase['japanese'] . '" class="example-kanji">' . str_replace('<br>', '', $phrase['furigana']) . '</a>';
+                                        echo '<span class="example-text">' . $phrase['english'] . '<span>';
+                                        echo '</div>';
+                                        ?>
+
+                                    <?php endforeach; ?>
+                                </div><!-- words -->
+                            <?php endif; ?>
+
 
                             <?php if (!empty($contained_in_kanjis)) : ?>
                                 <div class="words">
