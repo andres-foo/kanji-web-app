@@ -35,6 +35,9 @@ body {
 .word.added, .card.added {
     border:2px solid #16cc2e;
 }
+.word.ignore a {
+    color:gray;
+}
 .card.added.unfinished {
     border:2px solid #cf3521;
 }
@@ -64,6 +67,9 @@ body {
     font-family:"NotoSansJP", "BabelStoneHan";
     font-size:120pt;
     padding:10px;
+}
+.card .left.ignore .kanji, .card .left.ignore .big-kanji {
+    color:grey;
 }
 .card .left .big-kanji {
     font-family:"KanjiStrokeOrders", "BabelStoneHan";
@@ -321,6 +327,9 @@ a:hover, button:hover{
 }
 .list a.ids-pending {
     border-bottom:1px solid red;
+}
+.list a.ignore {
+    color:grey;
 }
 .list a.added:hover {
     color:#6ff882;

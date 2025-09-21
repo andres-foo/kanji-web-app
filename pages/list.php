@@ -18,9 +18,11 @@
         foreach ($entries as $entry) {
             $text .= '<a href="kanji.php?literal=' . $entry['literal'] . '"';
             if ($entry['added'] == 1) {
-                $unfinished = ($entry['unfinished']) ? ' unfinished' : '';
-                $ids_pending = empty($entry['ids']) ? '' : ' ids-pending';
-                $text .= ' class="added' . $unfinished . $ids_pending . '"' . ' title="Added: ' . $entry['added_at'] . ' • Score: ' . $entry['score'] . '"';
+                $unfinished = ($entry['unfinished']) ? ' unfinished ' : '';
+                // exclude components from being greyed out since I added them manually and I need to distinguish finished from unfinished
+                $ignore = ($entry['ignore'] == 1 && !$entry['is_component']) ? ' ignore ' : '';
+                $ids_pending = empty($entry['ids']) ? '' : ' ids-pending ';
+                $text .= ' class="added' . $unfinished . $ignore . $ids_pending . '"' . ' title="Added: ' . $entry['added_at'] . ' • Score: ' . $entry['score'] . '"';
             }
             $text .= '>' . $entry['literal'] . '</a>';
         }
@@ -112,7 +114,7 @@
             <h1>MY STUDY LIST</h1>
 
             <?php
-            $sql = "SELECT literal, added, added_at, score, unfinished, ids FROM kanjis WHERE added = 1 AND is_component IS NULL ORDER BY added_at DESC";
+            $sql = "SELECT * FROM kanjis WHERE added = 1 AND is_component IS NULL ORDER BY added_at DESC";
             $stmt = $myPDO->query($sql);
             $entries = $stmt->fetchAll();
             ?>
@@ -124,7 +126,7 @@
             <?php endif; ?>
 
             <?php
-            $sql = "SELECT literal, added, added_at, score, unfinished, ids FROM kanjis WHERE added = 1 AND is_component = 1 ORDER BY added_at DESC";
+            $sql = "SELECT * FROM kanjis WHERE added = 1 AND is_component = 1 ORDER BY added_at DESC";
             $stmt = $myPDO->query($sql);
             $entries = $stmt->fetchAll();
             ?>

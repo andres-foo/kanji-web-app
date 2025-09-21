@@ -49,7 +49,7 @@ if (isset($_GET['literal'])) {
             <?php if ($entry['is_component']): ?>
                 <div class="component-flag">basic component</div>
             <?php endif; ?>
-            <div class="left">
+            <div class="left<?= $entry['ignore'] == 1 ? ' ignore' : ''; ?>">
                 <div class="kanji"><?php echo $entry['literal']; ?></div>
                 <div class="big-kanji"><?php echo $entry['literal']; ?></div>
 
@@ -83,13 +83,13 @@ if (isset($_GET['literal'])) {
                             <span class="ref">frequency</span>
                             <span class="number"><?php echo $entry['frequency']; ?></span>
                         </div>
-                    <?php endif; ?>
+                    <?php endif; ?><!-- freq -->
                     <?php if (!empty($entry['jlpt'])) : ?>
                         <div class="item">
                             <span class="ref">jlpt</span>
                             <span class="number"><?php echo $entry['jlpt']; ?></span>
                         </div>
-                    <?php endif; ?>
+                    <?php endif; ?><!-- jlpt -->
                     <?php if (!empty($entry['grade'])) : ?>
                         <div class="item">
                             <span class="ref">grade</span>
@@ -107,29 +107,29 @@ if (isset($_GET['literal'])) {
                                 ?>
                             </span>
                         </div>
-                    <?php endif; ?>
+                    <?php endif; ?><!-- grade -->
                     <?php if (!empty($entry['heisg6'])) : ?>
                         <div class="item">
                             <span class="ref">heisg6</span>
                             <span class="number"><?php echo $entry['heisg6']; ?></span>
                         </div>
-                        <?php if (!empty($entry['kanken'])) : ?>
-                            <div class="item">
-                                <span class="ref">kanken</span>
-                                <span class="number">
-                                    <?php
-                                    if ($entry['kanken'] == 1.5) {
-                                        echo "pre 1";
-                                    } elseif ($entry['kanken'] == 2.5) {
-                                        echo "pre 2";
-                                    } else {
-                                        echo $entry['kanken'];
-                                    }
-                                    ?>
-                                </span>
-                            </div>
-                        <?php endif; ?>
-                    <?php endif; ?>
+                    <?php endif; ?> <!-- heisg6 -->
+                    <?php if (!empty($entry['kanken'])) : ?>
+                        <div class="item">
+                            <span class="ref">kanken</span>
+                            <span class="number">
+                                <?php
+                                if ($entry['kanken'] == 1.5) {
+                                    echo "pre 1";
+                                } elseif ($entry['kanken'] == 2.5) {
+                                    echo "pre 2";
+                                } else {
+                                    echo $entry['kanken'];
+                                }
+                                ?>
+                            </span>
+                        </div>
+                    <?php endif; ?><!-- kanken -->
                 </div><!-- meta -->
                 <?php
                 if (!empty($entry['onReadings']) or !empty($entry['kunReadings'])) {
@@ -220,94 +220,93 @@ if (isset($_GET['literal'])) {
 
                         <!-- my examples -->
                         <?php foreach ($examples as $example) : ?>
-                            <?php if ($example['added'] == 1) : ?>
-                                <div class="word added">
-                                <?php else : ?>
-                                    <div class="word">
-                                    <?php endif; ?>
-                                    <a href="search.php?query=<?php echo $example['kanji']; ?>" class="example-kanji"><?php echo $example['kanji']; ?></a><span class="example-text">「<?php echo $example['kana']; ?>」
-                                        <?php if ($example['jlpt'] != 0) : ?>(jlpt<?php echo $example['jlpt']; ?>)
-                                    <?php endif; //jlpt 
-                                    ?>
-                                    <?php echo str_replace(',', ', ', $example['meanings']); ?>
-                                    <form action="../actions/toggle_example_study.php" method="POST">
-                                        <input type="hidden" name="id" value="<?php echo $example['id']; ?>">
-                                        <input type="hidden" name="literal" value="<?php echo $_GET['literal']; ?>">
-                                        <button type="submit">
-                                            <?php if ($example['added'] == 1) : ?>
-                                                remove
-                                            <?php else : ?>
-                                                add
-                                            <?php endif; ?>
-                                        </button>
-                                    </form>
-                                    </span>
-                                    </div>
-                                <?php endforeach; ?>
-                                </div><!-- words -->
-                            <?php endif; ?>
-
-                            <?php if (!empty($contained_in_kanjis)) : ?>
-                                <div class="words">
-                                    <div class="title">Kanjis that contain this component</div>
-                                    <?php foreach ($contained_in_kanjis as $example) : ?>
+                            <?php
+                            $added = ($example['added'] == 1) ? ' added ' : '';
+                            ?>
+                            <div class="word<?= $added ?>">
+                                <a href="search.php?query=<?php echo $example['kanji']; ?>" class="example-kanji"><?php echo $example['kanji']; ?></a><span class="example-text">「<?php echo $example['kana']; ?>」
+                                    <?php if ($example['jlpt'] != 0) : ?>(jlpt<?php echo $example['jlpt']; ?>)
+                                <?php endif; //jlpt 
+                                ?>
+                                <?php echo str_replace(',', ', ', $example['meanings']); ?>
+                                <form action="../actions/toggle_example_study.php" method="POST">
+                                    <input type="hidden" name="id" value="<?php echo $example['id']; ?>">
+                                    <input type="hidden" name="literal" value="<?php echo $_GET['literal']; ?>">
+                                    <button type="submit">
                                         <?php if ($example['added'] == 1) : ?>
-                                            <div class="word added">
-                                            <?php else : ?>
-                                                <div class="word">
-                                                <?php endif; ?>
-                                                <a href="kanji.php?literal=<?php echo $example['literal']; ?>" class="example-kanji"><?php echo $example['literal']; ?></a>
-                                                </div>
-                                            <?php endforeach; ?>
-                                            </div><!-- contained_in_kanjis -->
+                                            remove
+                                        <?php else : ?>
+                                            add
                                         <?php endif; ?>
-
-                                        <div class="edit" id="edit-area">
-                                            <form action="../actions/update_kanji.php" enctype="multipart/form-data" method="POST">
-                                                <input type="hidden" name="literal" value="<?php echo $entry['literal']; ?>">
-                                                <span>Components</span>
-                                                <input type=" text" name="components" value="<?php echo $entry['components']; ?>" placeholder="𠂇;口">
-                                                <span>Ids</span>
-                                                <input type=" text" name="ids" value="<?php echo $entry['ids']; ?>" placeholder="𠂇;口">
-                                                <span>Other forms</span>
-                                                <input type="text" name="otherForms" value="<?php echo $entry['other_forms']; ?>" placeholder="亻;人">
-                                                <span>See also</span>
-                                                <input type="text" name="related" value="<?php echo $entry['related']; ?>" placeholder="亻;人">
-                                                <span>Story (#query# to create a search, _day_ for emphasis and ?msg? for TODO)</span>
-                                                <textarea rows="4" name="story"><?php echo $entry['story']; ?></textarea>
-                                                <p><input id="unfinished" type="checkbox" <?= $entry['unfinished'] == 1 ? 'checked' : '' ?> name="unfinished"><label for="unfinished">is missing information</label></p>
-                                                <p><input id="is_component" type="checkbox" <?= $entry['is_component'] == 1 ? 'checked' : '' ?> name="is_component"><label for="is_component">is a basic component</label></p>
-                                                <span>Image</span>
-                                                <input type="file" name="image">
-                                                <p><button type="submit">Save changes</button></p>
-                                            </form>
-                                        </div>
-                                </div><!-- right -->
-
-                                <div class="action">
-                                    <?php if ($entry['added'] == '' || $entry['added'] == 0) : ?>
-                                        <form action="../actions/toggle_kanji_study.php" method="POST">
-                                            <input type="hidden" name="literal" value="<?php echo $entry['literal']; ?>">
-                                            <button type="submit">add</button>
-                                        </form>
-                                    <?php else : ?>
-                                        <form action="../actions/toggle_kanji_study.php" method="POST">
-                                            <input type="hidden" name="literal" value="<?php echo $entry['literal']; ?>">
-                                            <button type="submit">remove</button>
-                                        </form>
-                                    <?php endif; ?>
-                                    <a id="edit-toggle" href="#edit-area">edit</a>
-                                </div><!-- action -->
-
-
-                    </div><!-- card -->
+                                    </button>
+                                </form>
+                                </span>
+                            </div>
+                        <?php endforeach; ?>
+                    </div><!-- words -->
                 <?php endif; ?>
-            <?php else : ?>
-                <div class="card empty">
-                    No kanji selected.
+
+                <?php if (!empty($contained_in_kanjis)) : ?>
+                    <div class="words">
+                        <div class="title">Kanjis that contain this component</div>
+                        <?php foreach ($contained_in_kanjis as $example) : ?>
+                            <?php
+                            $added = ($example['added'] == 1) ? ' added ' : '';
+                            $ignore = ($example['ignore'] == 1) ? ' ignore ' : '';
+                            ?>
+                            <div class="word<?= $added ?><?= $ignore ?>">
+                                <a href="kanji.php?literal=<?php echo $example['literal']; ?>" class="example-kanji"><?php echo $example['literal']; ?></a>
+                            </div>
+                        <?php endforeach; ?>
+                    </div><!-- contained_in_kanjis -->
+                <?php endif; ?>
+
+                <div class="edit" id="edit-area">
+                    <form action="../actions/update_kanji.php" enctype="multipart/form-data" method="POST">
+                        <input type="hidden" name="literal" value="<?php echo $entry['literal']; ?>">
+                        <span>Components</span>
+                        <input type=" text" name="components" value="<?php echo $entry['components']; ?>" placeholder="𠂇;口">
+                        <span>Ids</span>
+                        <input type=" text" name="ids" value="<?php echo $entry['ids']; ?>" placeholder="𠂇;口">
+                        <span>Other forms</span>
+                        <input type="text" name="otherForms" value="<?php echo $entry['other_forms']; ?>" placeholder="亻;人">
+                        <span>See also</span>
+                        <input type="text" name="related" value="<?php echo $entry['related']; ?>" placeholder="亻;人">
+                        <span>Story (#query# to create a search, _day_ for emphasis and ?msg? for TODO)</span>
+                        <textarea rows="4" name="story"><?php echo $entry['story']; ?></textarea>
+                        <p><input id="unfinished" type="checkbox" <?= $entry['unfinished'] == 1 ? 'checked' : '' ?> name="unfinished"><label for="unfinished">is missing information</label></p>
+                        <p><input id="is_component" type="checkbox" <?= $entry['is_component'] == 1 ? 'checked' : '' ?> name="is_component"><label for="is_component">is a basic component</label></p>
+                        <span>Image</span>
+                        <input type="file" name="image">
+                        <p><button type="submit">Save changes</button></p>
+                    </form>
                 </div>
-            <?php endif; ?><!-- isset literal -->
+            </div><!-- right -->
 
-            <script src="../data/script.js"></script>
+            <div class="action">
+                <?php if ($entry['added'] == '' || $entry['added'] == 0) : ?>
+                    <form action="../actions/toggle_kanji_study.php" method="POST">
+                        <input type="hidden" name="literal" value="<?php echo $entry['literal']; ?>">
+                        <button type="submit">add</button>
+                    </form>
+                <?php else : ?>
+                    <form action="../actions/toggle_kanji_study.php" method="POST">
+                        <input type="hidden" name="literal" value="<?php echo $entry['literal']; ?>">
+                        <button type="submit">remove</button>
+                    </form>
+                <?php endif; ?>
+                <a id="edit-toggle" href="#edit-area">edit</a>
+            </div><!-- action -->
 
-            <?php require '../parts/footer.php'; ?>
+
+        </div><!-- card -->
+    <?php endif; ?>
+<?php else : ?>
+    <div class="card empty">
+        No kanji selected.
+    </div>
+<?php endif; ?><!-- isset literal -->
+
+<script src="../data/script.js"></script>
+
+<?php require '../parts/footer.php'; ?>

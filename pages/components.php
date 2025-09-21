@@ -14,7 +14,10 @@ require '../parts/helper.php';
     $myPDO = new PDO('sqlite:../data/kanjis.db');
 
     //$sql = "SELECT * FROM kanjis WHERE added = 1 AND is_component = 1 ORDER BY component_group ASC";
-    $sql = "SELECT k1.*, COUNT(k2.literal) as total_used FROM kanjis as k1 LEFT JOIN kanjis as k2 ON INSTR(k2.components, k1.literal) > 0 WHERE k1.added = 1 AND k1.is_component = 1 GROUP BY k1.literal ORDER BY k1.component_group ASC";
+    //$sql = "SELECT k1.*, COUNT(k2.literal) as total_used FROM kanjis as k1 LEFT JOIN kanjis as k2 ON INSTR(k2.components, k1.literal) > 0 WHERE k1.added = 1 AND k1.is_component = 1 GROUP BY k1.literal ORDER BY k1.component_group ASC";
+    $sql = "SELECT k1.*, (SELECT COUNT(*) FROM kanjis AS k2 WHERE k2.components LIKE CONCAT('%', k1.literal, '%') AND k2.ignore = 0) AS total_used FROM kanjis AS k1
+WHERE k1.added = 1 AND k1.is_component = 1
+ORDER BY k1.component_group ASC";
     $stmt = $myPDO->query($sql);
     $entries = $stmt->fetchAll();
 
@@ -57,7 +60,7 @@ require '../parts/helper.php';
                         $stmt = $myPDO->query($sql);
                         $examples = $stmt->fetchAll();
                         ?>
-                        <span class="component-usage-count" title="currently added / total kanjis that use this component">
+                        <span class="component-usage-count" title="currently added / total kanjis not ignored that use this component">
                             <?= sizeof($examples) . " / " . $entry['total_used']; ?>
                         </span>
                         <?php foreach ($examples as $example): ?>
