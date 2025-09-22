@@ -87,7 +87,7 @@ Kanjis were extracted and converted to a sqlite using kanjidic2 extractor found 
 
 ### Components
 
-Componets for each kanji were extracted from the Ideographic Description Sequences (IDS) for CJK Unified Ideographs from the url [https://babelstone.co.uk/CJK/IDS.TXT](https://babelstone.co.uk/CJK/IDS.TXT)
+Componets for each kanji were extracted from the Ideographic Description Sequences (IDS) found at [https://github.com/cjkvi/cjkvi-ids](https://github.com/cjkvi/cjkvi-ids)
 
 ### Kanji stroke orders
 
@@ -97,10 +97,18 @@ For the stroke orders the font KanjiStrokeOrders was used, it can be found at: [
 
 The font BabelStoneHan was added to correctly display some literals, it can be found at: [https://www.babelstone.co.uk/Fonts/PUA.html](https://www.babelstone.co.uk/Fonts/PUA.html)
 
-### Example words by jlpt
+### Example words
 
-The words used as example for each kanji were originally taken from [https://en.wiktionary.org/wiki/Appendix:JLPT](https://en.wiktionary.org/wiki/Appendix:JLPT)
+Example words were taken from the EDICT Dictionary file, edict2 to be precise found at [https://www.edrdg.org/jmdict/edict.html](https://www.edrdg.org/jmdict/edict.html)
+
+
+~~The words used as example for each kanji were originally taken from [https://en.wiktionary.org/wiki/Appendix:JLPT](https://en.wiktionary.org/wiki/Appendix:JLPT)~~
+
 
 ### JLPT for kanjis
 
 The JLPT that corresponds to each Kanji was modified from the original obtained from KANJIDIC project to include jlpt level 5. The new values were added from [https://www.nihongo-pro.com/kanji-pal/list/jlpt](https://www.nihongo-pro.com/kanji-pal/list/jlpt)
+
+### Frequency for words
+
+The frequency for 20.000 words was added from the "Japanese Wikipidea (2022)" found at [https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Japanese](https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Japanese) more specifically at: [1-10000](https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Japanese2022_10000) and [10001-20000](https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Japanese2022_10001-20000)

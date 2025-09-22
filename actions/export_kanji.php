@@ -44,11 +44,20 @@ foreach ($entries as $kanji) {
     $stmt = $myPDO->prepare($sql);
     $stmt->execute(['%' . $kanji['literal'] . '%']);
     $my_examples = $stmt->fetchAll();
-    $examples = array();
+
+    // examples
+    $examples = '';
     foreach ($my_examples as $my_example) {
-        $examples[] = $my_example['kanji'] . "[" . $my_example['kana'] . "]";
+        $examples .= $my_example['kanji'] . "[" . $my_example['kana'] . "] : " . $my_example['meanings'] . '<br>';
     }
-    $doc .= join(", ", $examples) . ";";
+    $doc .= $examples . ";";
+
+    // examples front (no kana / meanings)
+    $examples = '';
+    foreach ($my_examples as $my_example) {
+        $examples .= '<span class="tag">' . $my_example['kanji'] . '</span>';
+    }
+    $doc .= $examples . ";";
 
     // image
     if (file_exists("../data/images/" . $kanji['literal'] . ".jpg")) {

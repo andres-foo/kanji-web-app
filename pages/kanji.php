@@ -207,6 +207,11 @@ if (isset($_GET['literal'])) {
                 $stmt->execute(['%' . $entry['literal'] . '%']);
                 $examples = $stmt->fetchAll();
 
+                // examples2
+                $sql = "SELECT * FROM examples2 WHERE kanji != '' AND kanji LIKE ? ORDER BY freq_wiki DESC";
+                $stmt = $myPDO->prepare($sql);
+                $stmt->execute(['%' . $entry['literal'] . '%']);
+                $examples2 = $stmt->fetchAll();
 
                 // kanjis that contain this kanji as a component
                 $sql = "SELECT * FROM kanjis WHERE components LIKE ? ORDER BY added DESC";
@@ -243,7 +248,33 @@ if (isset($_GET['literal'])) {
                                 </span>
                             </div>
                         <?php endforeach; ?>
+
+                        <div class="title">Examples2</div>
+                        <!-- my examples2 -->
+                        <?php foreach ($examples2 as $example) : ?>
+                            <?php
+                            $added = ($example['added'] == 1) ? ' added ' : '';
+                            ?>
+                            <div class="word<?= $added ?>">
+                                <a href="search.php?query=<?php echo $example['kanji']; ?>" class="example-kanji"><?php echo str_replace(";", " / ", $example['kanji']); ?></a><span class="example-text">「<?php echo $example['kana']; ?>」
+
+                                    <?php echo str_replace(',', ', ', $example['meanings']); ?>
+                                    <form action="../actions/toggle_example_study.php" method="POST">
+                                        <input type="hidden" name="id" value="<?php echo $example['id']; ?>">
+                                        <input type="hidden" name="literal" value="<?php echo $_GET['literal']; ?>">
+                                        <button type="submit">
+                                            <?php if ($example['added'] == 1) : ?>
+                                                remove
+                                            <?php else : ?>
+                                                add
+                                            <?php endif; ?>
+                                        </button>
+                                    </form>
+                                </span>
+                            </div>
+                        <?php endforeach; ?>
                     </div><!-- words -->
+
                 <?php endif; ?>
 
                 <?php if (!empty($contained_in_kanjis)) : ?>
