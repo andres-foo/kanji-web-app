@@ -201,17 +201,17 @@ if (isset($_GET['literal'])) {
                 ?>
 
                 <?php
-                // examples
-                $sql = "SELECT * FROM examples WHERE kanji != '' AND kanji LIKE ? ORDER BY jlpt DESC";
+                // priority examples
+                $sql = "SELECT * FROM examples WHERE kanji != '' AND kanji LIKE ? AND (jlpt IS NOT NULL OR freq_wiki IS NOT NULL OR added = 1) ORDER BY added DESC, jlpt DESC, freq_wiki ASC";
                 $stmt = $myPDO->prepare($sql);
                 $stmt->execute(['%' . $entry['literal'] . '%']);
                 $examples = $stmt->fetchAll();
 
-                // examples2
-                $sql = "SELECT * FROM examples2 WHERE kanji != '' AND kanji LIKE ? ORDER BY freq_wiki DESC";
+                // more examples
+                $sql = "SELECT * FROM examples WHERE kanji != '' AND kanji LIKE ? AND (jlpt IS NULL AND freq_wiki IS NULL AND added != 1)";
                 $stmt = $myPDO->prepare($sql);
                 $stmt->execute(['%' . $entry['literal'] . '%']);
-                $examples2 = $stmt->fetchAll();
+                $more_examples = $stmt->fetchAll();
 
                 // kanjis that contain this kanji as a component
                 $sql = "SELECT * FROM kanjis WHERE components LIKE ? ORDER BY added DESC";
@@ -223,42 +223,17 @@ if (isset($_GET['literal'])) {
                     <div class="words">
                         <div class="title">Examples</div>
 
-                        <!-- my examples -->
+                        <!-- priority examples -->
                         <?php foreach ($examples as $example) : ?>
                             <?php
                             $added = ($example['added'] == 1) ? ' added ' : '';
                             ?>
                             <div class="word<?= $added ?>">
-                                <a href="search.php?query=<?php echo $example['kanji']; ?>" class="example-kanji"><?php echo $example['kanji']; ?></a><span class="example-text">「<?php echo $example['kana']; ?>」
-                                    <?php if ($example['jlpt'] != 0) : ?>(jlpt<?php echo $example['jlpt']; ?>)
-                                <?php endif; //jlpt 
-                                ?>
-                                <?php echo str_replace(',', ', ', $example['meanings']); ?>
-                                <form action="../actions/toggle_example_study.php" method="POST">
-                                    <input type="hidden" name="id" value="<?php echo $example['id']; ?>">
-                                    <input type="hidden" name="literal" value="<?php echo $_GET['literal']; ?>">
-                                    <button type="submit">
-                                        <?php if ($example['added'] == 1) : ?>
-                                            remove
-                                        <?php else : ?>
-                                            add
-                                        <?php endif; ?>
-                                    </button>
-                                </form>
-                                </span>
-                            </div>
-                        <?php endforeach; ?>
-
-                        <div class="title">Examples2</div>
-                        <!-- my examples2 -->
-                        <?php foreach ($examples2 as $example) : ?>
-                            <?php
-                            $added = ($example['added'] == 1) ? ' added ' : '';
-                            ?>
-                            <div class="word<?= $added ?>">
+                                <?php if ($example['jlpt'] != 0) : ?><span class="word-meta">JLPT.<?php echo $example['jlpt']; ?></span><?php endif; ?>
+                                <?php if ($example['freq_wiki'] != 0) : ?><span class="word-meta">F.<?php echo $example['freq_wiki']; ?></span><?php endif; ?>
                                 <a href="search.php?query=<?php echo $example['kanji']; ?>" class="example-kanji"><?php echo str_replace(";", " / ", $example['kanji']); ?></a><span class="example-text">「<?php echo $example['kana']; ?>」
 
-                                    <?php echo str_replace(',', ', ', $example['meanings']); ?>
+                                    <?php echo str_replace(';', ', ', $example['meanings']); ?>
                                     <form action="../actions/toggle_example_study.php" method="POST">
                                         <input type="hidden" name="id" value="<?php echo $example['id']; ?>">
                                         <input type="hidden" name="literal" value="<?php echo $_GET['literal']; ?>">
@@ -273,6 +248,36 @@ if (isset($_GET['literal'])) {
                                 </span>
                             </div>
                         <?php endforeach; ?>
+
+                        <?php if (!empty($more_examples)) : ?>
+                            <p><a href="#" id="more-word-examples-toggle">toggle more examples ...</a></p>
+                            <!-- more examples -->
+                            <div id="more-word-examples">
+                                <?php foreach ($more_examples as $example) : ?>
+                                    <?php
+                                    $added = ($example['added'] == 1) ? ' added ' : '';
+                                    ?>
+                                    <div class="word<?= $added ?>">
+                                        <a href="search.php?query=<?php echo $example['kanji']; ?>" class="example-kanji"><?php echo str_replace(";", " / ", $example['kanji']); ?></a><span class="example-text">「<?php echo $example['kana']; ?>」
+
+                                            <?php echo str_replace(';', ', ', $example['meanings']); ?>
+                                            <form action="../actions/toggle_example_study.php" method="POST">
+                                                <input type="hidden" name="id" value="<?php echo $example['id']; ?>">
+                                                <input type="hidden" name="literal" value="<?php echo $_GET['literal']; ?>">
+                                                <button type="submit">
+                                                    <?php if ($example['added'] == 1) : ?>
+                                                        remove
+                                                    <?php else : ?>
+                                                        add
+                                                    <?php endif; ?>
+                                                </button>
+                                            </form>
+                                        </span>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                        <?php endif; ?>
+
                     </div><!-- words -->
 
                 <?php endif; ?>
@@ -341,3 +346,16 @@ if (isset($_GET['literal'])) {
 <script src="../data/script.js"></script>
 
 <?php require '../parts/footer.php'; ?>
+
+<script>
+    let btn = document.querySelector("#more-word-examples-toggle");
+    let moreExamples = document.querySelector("#more-word-examples");
+    btn.addEventListener("click", function(e) {
+        e.preventDefault();
+        if (moreExamples.style.display === "block") {
+            moreExamples.style.display = "none";
+        } else {
+            moreExamples.style.display = "block";
+        }
+    });
+</script>

@@ -40,7 +40,7 @@ foreach ($entries as $kanji) {
     }
 
     // examples
-    $sql = "SELECT * FROM examples WHERE added = 1 AND kanji != '' AND kanji LIKE ? ORDER BY jlpt DESC";
+    $sql = "SELECT * FROM examples WHERE added = 1 AND kanji != '' AND kanji LIKE ?";
     $stmt = $myPDO->prepare($sql);
     $stmt->execute(['%' . $kanji['literal'] . '%']);
     $my_examples = $stmt->fetchAll();
@@ -48,14 +48,14 @@ foreach ($entries as $kanji) {
     // examples
     $examples = '';
     foreach ($my_examples as $my_example) {
-        $examples .= $my_example['kanji'] . "[" . $my_example['kana'] . "] : " . $my_example['meanings'] . '<br>';
+        $examples .= '<span class="tag"> ' . str_replace(';', ' / ', $my_example['kanji']) . '</span> <span class="kana"> [' . str_replace(';', ' / ', $my_example['kana']) . '] </span><br> • ' . str_replace(';', '<br> • ', $my_example['meanings']) . '<hr>';
     }
     $doc .= $examples . ";";
 
     // examples front (no kana / meanings)
     $examples = '';
     foreach ($my_examples as $my_example) {
-        $examples .= '<span class="tag">' . $my_example['kanji'] . '</span>';
+        $examples .= '<span class="tag">' . str_replace(';', ' / ', $my_example['kanjiClean']) . '</span>';
     }
     $doc .= $examples . ";";
 

@@ -346,6 +346,17 @@ a:hover, button:hover{
     position:relative;
     cursor:default;
     margin-right:5px;
+    padding:5px 10px;
+}
+.word .word-meta {
+    background:#262626;
+    color:#FFF;
+    padding:3px;
+    border-radius: 4px;
+    font-size:0.8rem;
+}
+#more-word-examples {
+    display:none;
 }
 .title {
     text-transform: uppercase;
