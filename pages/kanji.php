@@ -202,7 +202,7 @@ if (isset($_GET['literal'])) {
 
                 <?php
                 // priority examples
-                $sql = "SELECT * FROM examples WHERE kanji != '' AND kanji LIKE ? AND (jlpt IS NOT NULL OR freq_wiki IS NOT NULL OR added = 1) ORDER BY added DESC, jlpt DESC, freq_wiki ASC";
+                $sql = "SELECT * FROM examples WHERE kanji != '' AND kanji LIKE ? AND (jlpt IS NOT NULL OR freq_wiki IS NOT NULL OR added = 1) ORDER BY CASE WHEN added = 1 THEN 1 WHEN jlpt IS NOT NULL THEN 2 WHEN freq_wiki IS NOT NULL THEN 3 ELSE 4 END, jlpt DESC, freq_wiki ASC";
                 $stmt = $myPDO->prepare($sql);
                 $stmt->execute(['%' . $entry['literal'] . '%']);
                 $examples = $stmt->fetchAll();
