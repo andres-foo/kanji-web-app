@@ -229,8 +229,8 @@ if (isset($_GET['literal'])) {
                             $added = ($example['added'] == 1) ? ' added ' : '';
                             ?>
                             <div class="word<?= $added ?>">
-                                <?php if ($example['jlpt'] != 0) : ?><span class="word-meta">JLPT.<?php echo $example['jlpt']; ?></span><?php endif; ?>
-                                <?php if ($example['freq_wiki'] != 0) : ?><span class="word-meta">F.<?php echo $example['freq_wiki']; ?></span><?php endif; ?>
+                                <?php if ($example['jlpt'] != 0) : ?><span class="word-meta">N<?php echo $example['jlpt']; ?></span><?php endif; ?>
+                                <?php if ($example['freq_wiki'] != 0) : ?><span class="word-meta">F<?php echo $example['freq_wiki']; ?></span><?php endif; ?>
                                 <a href="search.php?query=<?php echo $example['kanji']; ?>" class="example-kanji"><?php echo str_replace(";", " / ", $example['kanji']); ?></a><span class="example-text">「<?php echo $example['kana']; ?>」<br>
 
                                     <?php // echo str_replace(';', ', ', $example['meanings']); 
