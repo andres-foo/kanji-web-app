@@ -31,7 +31,7 @@
 
     function text_jlpt($PDO, $level)
     {
-        $sql = "SELECT literal, added, added_at, score, unfinished FROM kanjis WHERE jlpt = ?";
+        $sql = "SELECT * FROM kanjis WHERE jlpt = ?";
         $stmt = $PDO->prepare($sql);
         $result = $stmt->execute([$level]);
         $entries = $stmt->fetchAll();
@@ -46,7 +46,7 @@
 
     function text_grade($PDO, $grade)
     {
-        $sql = "SELECT literal, added, added_at, score, unfinished FROM kanjis WHERE grade = ?";
+        $sql = "SELECT * FROM kanjis WHERE grade = ?";
         $stmt = $PDO->prepare($sql);
         $result = $stmt->execute([$grade]);
         $entries = $stmt->fetchAll();
@@ -61,7 +61,7 @@
 
     function text_kanken($PDO, $grade)
     {
-        $sql = "SELECT literal, added, added_at, score, unfinished FROM kanjis WHERE kanken = ?";
+        $sql = "SELECT * FROM kanjis WHERE kanken = ?";
         $stmt = $PDO->prepare($sql);
         $result = $stmt->execute([$grade]);
         $entries = $stmt->fetchAll();
@@ -143,7 +143,7 @@
             <h1>HEISG6</h1>
 
             <?php
-            $sql = "SELECT literal, added, added_at, score, unfinished FROM kanjis WHERE heisg6 IS NOT NULL ORDER BY heisg6 ASC";
+            $sql = "SELECT * FROM kanjis WHERE heisg6 IS NOT NULL ORDER BY heisg6 ASC";
             $stmt = $myPDO->query($sql);
             $entries = $stmt->fetchAll();
             ?>
@@ -155,7 +155,7 @@
             <h1>FREQUENCY</h1>
 
             <?php
-            $sql = "SELECT literal, added, added_at, score, unfinished FROM kanjis WHERE frequency IS NOT NULL ORDER BY frequency ASC";
+            $sql = "SELECT * FROM kanjis WHERE frequency IS NOT NULL ORDER BY frequency ASC";
             $stmt = $myPDO->query($sql);
             $entries = $stmt->fetchAll();
             ?>
