@@ -233,7 +233,9 @@ if (isset($_GET['literal'])) {
                                 <?php if ($example['freq_wiki'] != 0) : ?><span class="word-meta">F.<?php echo $example['freq_wiki']; ?></span><?php endif; ?>
                                 <a href="search.php?query=<?php echo $example['kanji']; ?>" class="example-kanji"><?php echo str_replace(";", " / ", $example['kanji']); ?></a><span class="example-text">「<?php echo $example['kana']; ?>」<br>
 
-                                    <?php echo str_replace(';', ', ', $example['meanings']); ?>
+                                    <?php // echo str_replace(';', ', ', $example['meanings']); 
+                                    ?>
+                                    <?php echo formatMeanings($example['meanings']); ?>
                                     <form action="../actions/toggle_example_study.php" method="POST">
                                         <input type="hidden" name="id" value="<?php echo $example['id']; ?>">
                                         <input type="hidden" name="literal" value="<?php echo $_GET['literal']; ?>">

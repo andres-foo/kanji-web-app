@@ -208,3 +208,28 @@ function parse_story($story)
 
     return $story;
 }
+
+
+function formatMeanings($str)
+{
+    $str = rtrim($str, ';(P)');
+
+    if (preg_match('/.+(2).+/', $str)) {
+        //preg_match_all('/\([a-z]+\)\s+\(\d+\)\s+(.*?)(?=\([a-z]+\)\s+\(\d+\)|\Z)/s', $str, $output);
+        //preg_match_all('/\(\S+\)\s+\(\d+\)\s+(.*?)(?=\(\S+\)\s+\(\d+\)|\Z)/s', $str, $output);
+        preg_match_all('/\([a-z0-9-,]+\) \(\d+\) (.*?)(?=\([a-z0-9-,]+\) \(\d+\).*|\Z)/s', $str, $output);
+        $meanings = $output[1];
+
+        $result = [];
+        foreach ($meanings as $meaning) {
+            $meaning = rtrim($meaning, ';');
+            $meaning = str_replace(';', ', ', $meaning);
+            $result[] = '• ' . $meaning;
+        }
+        return implode('<br>', $result);
+    }
+
+    $result = str_replace(';', ', ', $str);
+    $result = '• ' . $result;
+    return $result;
+}

@@ -1,6 +1,8 @@
 <?php
 
+define('home', true);
 
+require('../parts/helper.php');
 
 // db connection
 $myPDO = new PDO('sqlite:../data/kanjis.db');
@@ -48,7 +50,8 @@ foreach ($entries as $kanji) {
     // examples
     $examples = '';
     foreach ($my_examples as $my_example) {
-        $examples .= '<span class="tag"> ' . str_replace(';', ' / ', $my_example['kanji']) . '</span> <span class="kana"> [' . str_replace(';', ' / ', $my_example['kana']) . '] </span><br> • ' . str_replace(';', '<br> • ', $my_example['meanings']) . '<hr>';
+        $examples .= '<span class="tag"> ' . str_replace(';', ' / ', $my_example['kanji']) . '</span> <span class="kana"> [' . str_replace(';', ' / ', $my_example['kana']) . '] </span><br>' . formatMeanings($my_example['meanings']) . '<hr>';
+        //$examples .= '<span class="tag"> ' . str_replace(';', ' / ', $my_example['kanji']) . '</span> <span class="kana"> [' . str_replace(';', ' / ', $my_example['kana']) . '] </span><br> • ' . str_replace(';', '<br> • ', $my_example['meanings']) . '<hr>';
     }
     $doc .= $examples . ";";
 
