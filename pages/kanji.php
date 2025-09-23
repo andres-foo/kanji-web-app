@@ -159,18 +159,6 @@ if (isset($_GET['literal'])) {
                 }
                 ?>
                 <?php
-                if (!empty($entry['ids'])) {
-                    echo '<div class="title">ids</div>';
-                    echo '<div class="components">';
-
-                    $idsArray = obtainKanjis($entry['ids'])[0];
-                    foreach ($idsArray as $ids) {
-                        echo '<div class="component"><a href="kanji.php?literal=' . $ids . '">' . $ids . '</a></div>';
-                    }
-                    echo '</div><!-- components -->';
-                }
-                ?>
-                <?php
                 if (!empty($entry['related'])) {
                     echo '<div class="title">See also</div>';
                     echo '<div class="components">';
@@ -304,8 +292,6 @@ if (isset($_GET['literal'])) {
                         <input type="hidden" name="literal" value="<?php echo $entry['literal']; ?>">
                         <span>Components</span>
                         <input type=" text" name="components" value="<?php echo $entry['components']; ?>" placeholder="𠂇;口">
-                        <span>Ids</span>
-                        <input type=" text" name="ids" value="<?php echo $entry['ids']; ?>" placeholder="𠂇;口">
                         <span>Other forms</span>
                         <input type="text" name="otherForms" value="<?php echo $entry['other_forms']; ?>" placeholder="亻;人">
                         <span>See also</span>

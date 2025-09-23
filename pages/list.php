@@ -21,8 +21,7 @@
                 $unfinished = ($entry['unfinished']) ? ' unfinished ' : '';
                 // exclude components from being greyed out since I added them manually and I need to distinguish finished from unfinished
                 $ignore = ($entry['ignore'] == 1 && !$entry['is_component']) ? ' ignore ' : '';
-                $ids_pending = empty($entry['ids']) ? '' : ' ids-pending ';
-                $text .= ' class="added' . $unfinished . $ignore . $ids_pending . '"' . ' title="Added: ' . $entry['added_at'] . ' • Score: ' . $entry['score'] . '"';
+                $text .= ' class="added' . $unfinished . $ignore . '"' . ' title="Added: ' . $entry['added_at'] . ' • Score: ' . $entry['score'] . '"';
             }
             $text .= '>' . $entry['literal'] . '</a>';
         }
