@@ -219,10 +219,11 @@ if (isset($_GET['literal'])) {
                             <div class="word<?= $added ?>">
                                 <?php if ($example['jlpt'] != 0) : ?><span class="word-meta">N<?php echo $example['jlpt']; ?></span><?php endif; ?>
                                 <?php if ($example['freq_wiki'] != 0) : ?><span class="word-meta">F<?php echo $example['freq_wiki']; ?></span><?php endif; ?>
-                                <a href="search.php?query=<?php echo $example['kanji']; ?>" class="example-kanji"><?php echo str_replace(";", " / ", $example['kanji']); ?></a><span class="example-text">「<?php echo $example['kana']; ?>」<br>
+                                <a href="search.php?query=<?php echo $example['kanji']; ?>" class="example-kanji"><?php echo formatKanjis($example['kanji']); ?></a>
 
-                                    <?php // echo str_replace(';', ', ', $example['meanings']); 
-                                    ?>
+                                <span class="example-text">
+                                    <?= str_replace(";", " / ", $example['kanji']); ?><br>
+                                    「<?php echo $example['kana']; ?>」<br>
                                     <?php echo formatMeanings($example['meanings']); ?>
                                     <form action="../actions/toggle_example_study.php" method="POST">
                                         <input type="hidden" name="id" value="<?php echo $example['id']; ?>">
@@ -248,9 +249,12 @@ if (isset($_GET['literal'])) {
                                     $added = ($example['added'] == 1) ? ' added ' : '';
                                     ?>
                                     <div class="word<?= $added ?>">
-                                        <a href="search.php?query=<?php echo $example['kanji']; ?>" class="example-kanji"><?php echo str_replace(";", " / ", $example['kanji']); ?></a><span class="example-text">「<?php echo $example['kana']; ?>」
+                                        <a href="search.php?query=<?php echo $example['kanji']; ?>" class="example-kanji"><?php echo formatKanjis($example['kanji']); ?></a>
 
-                                            <?php echo str_replace(';', ', ', $example['meanings']); ?>
+                                        <span class="example-text">
+                                            <?= str_replace(";", " / ", $example['kanji']); ?><br>
+                                            「<?php echo $example['kana']; ?>」<br>
+                                            <?php echo formatMeanings($example['meanings']); ?>
                                             <form action="../actions/toggle_example_study.php" method="POST">
                                                 <input type="hidden" name="id" value="<?php echo $example['id']; ?>">
                                                 <input type="hidden" name="literal" value="<?php echo $_GET['literal']; ?>">

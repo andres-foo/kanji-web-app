@@ -212,12 +212,12 @@ function parse_story($story)
 
 function formatMeanings($str)
 {
-    $str = rtrim($str, ';(P)');
+    if (preg_match('/.+;\(P\)\z/', $str)) {
+        $str = substr($str, 0, strlen($str) - 4);
+    }
 
     if (preg_match('/.+(2).+/', $str)) {
-        //preg_match_all('/\([a-z]+\)\s+\(\d+\)\s+(.*?)(?=\([a-z]+\)\s+\(\d+\)|\Z)/s', $str, $output);
-        //preg_match_all('/\(\S+\)\s+\(\d+\)\s+(.*?)(?=\(\S+\)\s+\(\d+\)|\Z)/s', $str, $output);
-        preg_match_all('/\([a-z0-9-,]+\) \(\d+\) (.*?)(?=\([a-z0-9-,]+\) \(\d+\).*|\Z)/s', $str, $output);
+        preg_match_all('/\([a-z0-9-,]+\) \(\d+\) (.*?)(?=\([a-z0-9-,]+\) \(\d+\).*|\Z)/', $str, $output);
         $meanings = $output[1];
 
         $result = [];
@@ -229,7 +229,32 @@ function formatMeanings($str)
         return implode('<br>', $result);
     }
 
-    $result = str_replace(';', ', ', $str);
-    $result = '• ' . $result;
-    return $result;
+    // is a single definition
+    preg_match('/\([a-z0-9-,]+\) (.*)/', $str, $output);
+    $meaning = str_replace(';', ', ', $output[1]);
+    $meaning = '• ' . $meaning;
+    return $meaning;
+}
+
+function formatKanjis($str)
+{
+    if (!str_contains($str, ";")) {
+        return $str;
+    }
+
+    $meta = [
+        'sK' => '',
+        'oK' => '',
+        'ateji' => '',
+        'rK' => '',
+        'sK' => '',
+        'io' => '',
+        'iK' => '',
+        'P' => '*'
+    ];
+
+    foreach ($meta as $k => $r) {
+        $str = str_replace('(' . $k . ')', $r, $str);
+    }
+    return str_replace(";", " / ", $str);
 }
