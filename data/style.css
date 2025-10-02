@@ -84,11 +84,40 @@ body {
     margin-top:10px;
 }
 .card .right .meta {
+    gap: 10px;
     margin:0;
+    margin-top:10px;
+}
+.kanji-tag {
+    font-size: large;
+    padding:4px 8px;
+    border-radius: 2px;
+    font-weight: bold;
+}
+.critical {
+    background-color: #16cc2e;
+    color:#121212;
+}
+.high {
+    background-color: #FFFF00;
+    color:#121212;
+}
+.medium {
+    background-color: orange;
+    color:#121212;
+}
+.low {
+    color:#FFF;
+    background-color: red;
+}
+.zero {
+    background-color: gray;
+    color: #FFF;
 }
 .card .right .readings {
     color:#959595;
     font-family: "NotoSansJP";
+    font-size: 2rem;
 }
 .card .right .story {
     padding: 5px 0;

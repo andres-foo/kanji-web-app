@@ -258,3 +258,222 @@ function formatKanjis($str)
     }
     return str_replace(";", " / ", $str);
 }
+
+
+
+function getImportanceJLPT($jlpt, $totalKnown)
+{
+
+    /*
+        #   ACCU
+        N5   80    80
+        N4  167   247
+        N3  370   617
+        N2  368   985
+        N1 1235  2220    
+    */
+    if ($jlpt == 5) {
+        return 'critical';
+    }
+
+    if ($totalKnown < 80) {
+        switch ($jlpt) {
+            case 4:
+                return 'high';
+            case 3:
+                return 'medium';
+            default:
+                return 'low';
+        }
+    }
+
+    if ($totalKnown < 247) {
+        switch ($jlpt) {
+            case 4:
+                return 'critical';
+            case 3:
+                return 'high';
+            case 2:
+                return 'medium';
+            default:
+                return 'low';
+        }
+    }
+
+    if ($totalKnown < 617) {
+        switch ($jlpt) {
+            case 4:
+            case 3:
+                return 'critical';
+            case 2:
+                return 'high';
+            default:
+                return 'medium';
+        }
+    }
+
+    if ($totalKnown < 985) {
+        switch ($jlpt) {
+            case 4:
+            case 3:
+            case 2:
+                return 'critical';
+            default:
+                return 'high';
+        }
+    }
+
+    return "critical";
+}
+
+
+function getImportanceKANKEN($kanken, $totalKnown)
+{
+
+    if ($kanken == 10) {
+        return 'critical';
+    }
+
+    if ($kanken == 1.5 || $kanken == 1) {
+        return 'zero';
+    }
+
+    if ($totalKnown < 80) {
+        switch ($kanken) {
+            case 9:
+                return 'high';
+            case 8:
+                return 'medium';
+            default:
+                return 'low';
+        }
+    }
+
+    if ($totalKnown < 240) {
+        switch ($kanken) {
+            case 9:
+                return 'critical';
+            case 8:
+                return 'high';
+            case 7:
+                return 'medium';
+            default:
+                return 'low';
+        }
+    }
+
+    if ($totalKnown < 440) {
+        switch ($kanken) {
+            case 9:
+            case 8:
+                return 'critical';
+            case 7:
+                return 'high';
+            case 6:
+                return 'medium';
+            default:
+                return 'low';
+        }
+    }
+
+    if ($totalKnown < 642) {
+        switch ($kanken) {
+            case 9:
+            case 8:
+            case 7:
+                return 'critical';
+            case 6:
+                return 'high';
+            case 5:
+                return 'medium';
+            default:
+                return 'low';
+        }
+    }
+
+    if ($totalKnown < 835) {
+        switch ($kanken) {
+            case 9:
+            case 8:
+            case 7:
+            case 6:
+                return 'critical';
+            case 5:
+                return 'high';
+            case 4:
+                return 'medium';
+            default:
+                return 'low';
+        }
+    }
+
+    if ($totalKnown < 1026) {
+        switch ($kanken) {
+            case 9:
+            case 8:
+            case 7:
+            case 6:
+            case 5:
+                return 'critical';
+            case 4:
+                return 'high';
+            case 3:
+                return 'medium';
+            default:
+                return 'low';
+        }
+    }
+
+    if ($totalKnown < 1339) {
+        switch ($kanken) {
+            case 9:
+            case 8:
+            case 7:
+            case 6:
+            case 5:
+            case 4:
+                return 'critical';
+            case 3:
+                return 'high';
+            case 2.5:
+                return 'medium';
+            default:
+                return 'low';
+        }
+    }
+
+    if ($totalKnown < 1623) {
+        switch ($kanken) {
+            case 9:
+            case 8:
+            case 7:
+            case 6:
+            case 5:
+            case 4:
+            case 3:
+                return 'critical';
+            case 2.5:
+                return 'high';
+            default:
+                return 'medium';
+        }
+    }
+
+    if ($totalKnown < 1951) {
+        switch ($kanken) {
+            case 9:
+            case 8:
+            case 7:
+            case 6:
+            case 5:
+            case 4:
+            case 3:
+            case 2.5:
+                return 'critical';
+            default:
+                return 'high';
+        }
+    }
+
+    return "critical";
+}
