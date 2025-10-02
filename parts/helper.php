@@ -273,14 +273,12 @@ function getImportanceJLPT($jlpt, $totalKnown)
         N1 1235  2220    
     */
     if ($jlpt == 5) {
-        return 'critical';
+        return 'high';
     }
 
     if ($totalKnown < 80) {
         switch ($jlpt) {
             case 4:
-                return 'high';
-            case 3:
                 return 'medium';
             default:
                 return 'low';
@@ -290,10 +288,8 @@ function getImportanceJLPT($jlpt, $totalKnown)
     if ($totalKnown < 247) {
         switch ($jlpt) {
             case 4:
-                return 'critical';
-            case 3:
                 return 'high';
-            case 2:
+            case 3:
                 return 'medium';
             default:
                 return 'low';
@@ -304,11 +300,11 @@ function getImportanceJLPT($jlpt, $totalKnown)
         switch ($jlpt) {
             case 4:
             case 3:
-                return 'critical';
-            case 2:
                 return 'high';
-            default:
+            case 2:
                 return 'medium';
+            default:
+                return 'low';
         }
     }
 
@@ -317,13 +313,13 @@ function getImportanceJLPT($jlpt, $totalKnown)
             case 4:
             case 3:
             case 2:
-                return 'critical';
-            default:
                 return 'high';
+            default:
+                return 'medium';
         }
     }
 
-    return "critical";
+    return "high";
 }
 
 
@@ -331,7 +327,7 @@ function getImportanceKANKEN($kanken, $totalKnown)
 {
 
     if ($kanken == 10) {
-        return 'critical';
+        return 'high';
     }
 
     if ($kanken == 1.5 || $kanken == 1) {
@@ -341,8 +337,6 @@ function getImportanceKANKEN($kanken, $totalKnown)
     if ($totalKnown < 80) {
         switch ($kanken) {
             case 9:
-                return 'high';
-            case 8:
                 return 'medium';
             default:
                 return 'low';
@@ -352,10 +346,8 @@ function getImportanceKANKEN($kanken, $totalKnown)
     if ($totalKnown < 240) {
         switch ($kanken) {
             case 9:
-                return 'critical';
-            case 8:
                 return 'high';
-            case 7:
+            case 8:
                 return 'medium';
             default:
                 return 'low';
@@ -366,10 +358,8 @@ function getImportanceKANKEN($kanken, $totalKnown)
         switch ($kanken) {
             case 9:
             case 8:
-                return 'critical';
-            case 7:
                 return 'high';
-            case 6:
+            case 7:
                 return 'medium';
             default:
                 return 'low';
@@ -381,10 +371,8 @@ function getImportanceKANKEN($kanken, $totalKnown)
             case 9:
             case 8:
             case 7:
-                return 'critical';
-            case 6:
                 return 'high';
-            case 5:
+            case 6:
                 return 'medium';
             default:
                 return 'low';
@@ -397,10 +385,8 @@ function getImportanceKANKEN($kanken, $totalKnown)
             case 8:
             case 7:
             case 6:
-                return 'critical';
-            case 5:
                 return 'high';
-            case 4:
+            case 5:
                 return 'medium';
             default:
                 return 'low';
@@ -414,10 +400,8 @@ function getImportanceKANKEN($kanken, $totalKnown)
             case 7:
             case 6:
             case 5:
-                return 'critical';
-            case 4:
                 return 'high';
-            case 3:
+            case 4:
                 return 'medium';
             default:
                 return 'low';
@@ -432,10 +416,8 @@ function getImportanceKANKEN($kanken, $totalKnown)
             case 6:
             case 5:
             case 4:
-                return 'critical';
-            case 3:
                 return 'high';
-            case 2.5:
+            case 3:
                 return 'medium';
             default:
                 return 'low';
@@ -451,11 +433,11 @@ function getImportanceKANKEN($kanken, $totalKnown)
             case 5:
             case 4:
             case 3:
-                return 'critical';
-            case 2.5:
                 return 'high';
-            default:
+            case 2.5:
                 return 'medium';
+            default:
+                return 'low';
         }
     }
 
@@ -469,11 +451,11 @@ function getImportanceKANKEN($kanken, $totalKnown)
             case 4:
             case 3:
             case 2.5:
-                return 'critical';
-            default:
                 return 'high';
+            default:
+                return 'medium';
         }
     }
 
-    return "critical";
+    return "high";
 }

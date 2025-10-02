@@ -105,12 +105,8 @@ body {
     border-radius: 2px;
     font-weight: bold;
 }
-.critical {
-    background-color: #16cc2e;
-    color:#121212;
-}
 .high {
-    background-color: #FFFF00;
+    background-color: #16cc2e;
     color:#121212;
 }
 .medium {
