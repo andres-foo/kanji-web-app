@@ -57,6 +57,16 @@ $totalKnown = $stmt->fetchColumn();
             <?php endif; ?>
             <div class="left<?= $entry['ignore'] == 1 ? ' ignore' : ''; ?>">
                 <div class="kanji"><?php echo $entry['literal']; ?></div>
+                <?php
+                if (!empty($entry['components'])) {
+                    echo '<div class="components">';
+                    $componentsArray = explode(";", $entry['components']);
+                    foreach ($componentsArray as $component) {
+                        echo '<a href="kanji.php?literal=' . $component . '">' . $component . '</a>';
+                    }
+                    echo '</div><!-- components -->';
+                }
+                ?>
                 <div class="big-kanji"><?php echo $entry['literal']; ?></div>
 
             </div><!-- left -->
@@ -173,17 +183,6 @@ $totalKnown = $stmt->fetchColumn();
                     <a href="https://en.wiktionary.org/wiki/<?php echo $entry['literal']; ?>" target="_blank">wiki</a>
                 </div>
                 <?php
-                if (!empty($entry['components'])) {
-                    echo '<div class="title">Components</div>';
-                    echo '<div class="components">';
-                    $componentsArray = explode(";", $entry['components']);
-                    foreach ($componentsArray as $component) {
-                        echo '<div class="component"><a href="kanji.php?literal=' . $component . '">' . $component . '</a></div>';
-                    }
-                    echo '</div><!-- components -->';
-                }
-                ?>
-                <?php
                 if (!empty($entry['related'])) {
                     echo '<div class="title">See also</div>';
                     echo '<div class="components">';
@@ -196,7 +195,9 @@ $totalKnown = $stmt->fetchColumn();
                 ?>
                 <?php if (!empty($entry['story'])) : ?>
 
+                    <!--
                     <div class="title">Story</div>
+                -->
                     <div class="story">
                         <?php
                         echo parse_story($entry['story']);
