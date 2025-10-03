@@ -25,6 +25,9 @@ foreach ($entries as $kanji) {
     $doc .= str_replace(";", ", ", $kanji['meanings']) . ";";
     $doc .= str_replace(";", ", ", $kanji['components']) . ";";
 
+    $doc .= (!is_null($kanji['onReadings']) ? str_replace(";", " / ", $kanji['onReadings']) : '') . ";";
+    $doc .= (!is_null($kanji['kunReadings']) ? str_replace(";", " / ", $kanji['kunReadings']) : '') . ";";
+
     // story
     if (empty($kanji['story'])) {
         $doc .= ";";
