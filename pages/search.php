@@ -100,13 +100,14 @@ if (isset($_GET['query'])) {
                     meanings LIKE ? OR 
                     meanings LIKE ? OR
                     meanings LIKE ?
-                ORDER BY CASE
+                ORDER BY added DESC, 
+                CASE
                     WHEN meanings = ? THEN 1
                     WHEN meanings LIKE ? THEN 2
                     WHEN meanings LIKE ? THEN 3
                     WHEN meanings LIKE ? THEN 4
                     WHEN meanings LIKE ? THEN 5
-                END
+                END ASC
                 SQL;
                 $stmt = $myPDO->prepare($sql);
                 $results = $stmt->execute([
