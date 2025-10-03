@@ -64,6 +64,10 @@ body {
     margin-top:15px;
     border-radius: 5px;
 }
+.card .left {
+    max-width: 190px;
+    text-align: center;
+}
 .card .left .kanji {
     font-family:"NotoSansJP", "BabelStoneHan";
     font-size:120pt;
@@ -79,12 +83,14 @@ body {
 }
 .card .left .components {
     display:flex;
+    flex-wrap: wrap;
     justify-content: center;
     gap:10px;
     font-size: 2rem;
-    flex-wrap: wrap;
+    padding:10px 15px;
 }
-.card .left .components a{    
+.card .left .components a{ 
+    display:inline-block;   
     border-radius: 4px;
     padding:2px 5px;
     background-color: #121212;
