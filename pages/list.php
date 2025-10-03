@@ -12,13 +12,14 @@
     // db connection
     $myPDO = new PDO('sqlite:../data/kanjis.db');
 
-    function loop_entries($entries)
+    function loop_entries($entries, $my_list = false)
     {
         $text = '';
         foreach ($entries as $entry) {
             $text .= '<a href="kanji.php?literal=' . $entry['literal'] . '"';
             if ($entry['added'] == 1) {
-                $unfinished = ($entry['unfinished']) ? ' unfinished ' : '';
+                // only show unfinished when looking at my list
+                $unfinished = ($entry['unfinished'] && $my_list) ? ' unfinished ' : '';
                 // exclude components from being greyed out since I added them manually and I need to distinguish finished from unfinished
                 $ignore = ($entry['ignore'] == 1 && !$entry['is_component']) ? ' ignore ' : '';
                 $text .= ' class="added' . $unfinished . $ignore . '"' . ' title="Added: ' . $entry['added_at'] . ' • Score: ' . $entry['score'] . '"';
@@ -121,7 +122,7 @@
             <?php if (count($entries) == 0) : ?>
                 <p>You haven't added any kanjis yet! To do so click on the "<strong>Add</strong>" button on the top right of the page when viewing a kanji.</p>
             <?php else : ?>
-                <?php echo loop_entries($entries); ?>
+                <?php echo loop_entries($entries, true); ?>
             <?php endif; ?>
 
             <?php
