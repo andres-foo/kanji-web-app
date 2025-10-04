@@ -33,13 +33,13 @@ foreach ($entries as $kanji) {
         $doc .= ";";
     } else {
         $pattern = '/#(.+?)#/';
-        $story = preg_replace($pattern, '<b style="color:lightgreen">$1</b>', $kanji['story']);
+        $story = preg_replace($pattern, '<span class="link">$1</span>', $kanji['story']);
         // emphasis
         $pattern = '/\_(.+?)\_/';
-        $story = preg_replace($pattern, '<b style="color:lightgreen">$1</b>', $story);
+        $story = preg_replace($pattern, '<span class="em">$1</span>', $story);
         // todo
         $pattern = '/\?(.+?)\?/';
-        $story = preg_replace($pattern, '<b style="color:red">TODO: $1</b>', $story);
+        $story = preg_replace($pattern, '<span class="todo">TODO: $1</span>', $story);
 
         $doc .= $story . ";";
     }
