@@ -141,6 +141,7 @@ body {
     border-radius: 5px;
     width:100%;
     margin-top: 10px;
+    line-height: 2.5rem;
 }
 
 .card .right .meta .item {
