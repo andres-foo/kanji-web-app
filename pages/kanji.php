@@ -248,8 +248,13 @@ $totalKnown = $stmt->fetchColumn();
                                 <a href="search.php?query=<?php echo $example['kanji']; ?>" class="example-kanji"><?php echo formatKanjis($example['kanji']); ?></a>
 
                                 <span class="example-text">
-                                    <?= str_replace(";", " / ", $example['kanji']); ?><br>
-                                    「<?php echo $example['kana']; ?>」<br>
+                                    <span style="font-size:1.6rem"><?= $example['kanji']; ?></span><br>
+                                    「<?= str_replace(';', ' / ', $example['kana']); ?>」<br>
+                                    <?php
+                                    if (!empty($example['kanji_alternative'])) {
+                                        echo '[also ' . str_replace(";", " / ", $example['kanji_alternative'])  . ']<br>';
+                                    }
+                                    ?>
                                     <?php echo formatMeanings($example['meanings']); ?>
                                     <form action="../actions/toggle_example_study.php" method="POST">
                                         <input type="hidden" name="id" value="<?php echo $example['id']; ?>">
@@ -278,8 +283,13 @@ $totalKnown = $stmt->fetchColumn();
                                         <a href="search.php?query=<?php echo $example['kanji']; ?>" class="example-kanji"><?php echo formatKanjis($example['kanji']); ?></a>
 
                                         <span class="example-text">
-                                            <?= str_replace(";", " / ", $example['kanji']); ?><br>
-                                            「<?php echo $example['kana']; ?>」<br>
+                                            <span style="font-size:1.6rem"><?= $example['kanji']; ?></span><br>
+                                            「<?= str_replace(';', ' / ', $example['kana']); ?>」<br>
+                                            <?php
+                                            if (!empty($example['kanji_alternative'])) {
+                                                echo '[also ' . str_replace(";", " / ", $example['kanji_alternative'])  . ']<br>';
+                                            }
+                                            ?>
                                             <?php echo formatMeanings($example['meanings']); ?>
                                             <form action="../actions/toggle_example_study.php" method="POST">
                                                 <input type="hidden" name="id" value="<?php echo $example['id']; ?>">

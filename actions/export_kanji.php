@@ -61,7 +61,8 @@ foreach ($entries as $kanji) {
     // examples front (no kana / meanings)
     $examples = '';
     foreach ($my_examples as $my_example) {
-        $examples .= '<span class="tag">' . str_replace(';', ' / ', $my_example['kanjiClean']) . '</span>';
+        // remove meta in parethesis 亜米利加(ateji)(rK) -> 亜米利加
+        $examples .= '<span class="tag">' . preg_replace('/\(.*\z/', '', $my_example['kanji']) . '</span>';
     }
     $doc .= $examples . ";";
 
