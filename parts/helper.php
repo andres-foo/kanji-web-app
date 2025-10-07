@@ -216,7 +216,7 @@ function formatMeanings($str)
         $str = substr($str, 0, strlen($str) - 4);
     }
 
-    if (preg_match('/.+(2).+/', $str)) {
+    if (preg_match('/.+\(2\).+/', $str)) {
         preg_match_all('/\([a-z0-9-,]+\) \(\d+\) (.*?)(?=\([a-z0-9-,]+\) \(\d+\).*|\Z)/', $str, $output);
         $meanings = $output[1];
 
