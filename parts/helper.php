@@ -63,6 +63,7 @@ function toHiragana($text = '')
         'ssu' => 'っす',
         'sse' => 'っせ',
         'sso' => 'っそ',
+        'ssho' => 'っしょ',
         'tta' => 'った',
         'tti' => 'っち',
         'ttu' => 'っつ',
