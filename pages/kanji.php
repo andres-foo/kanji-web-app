@@ -172,7 +172,9 @@ $totalKnown = $stmt->fetchColumn();
                     echo str_replace(";", "&nbsp;&nbsp;/&nbsp;&nbsp;", $entry['onReadings']);
 
                     if (!empty($entry['kunReadings'])) {
-                        echo '&nbsp;&nbsp;•&nbsp;&nbsp;';
+                        if (!empty($entry['onReadings'])) {
+                            echo '&nbsp;&nbsp;•&nbsp;&nbsp;';
+                        }
                         echo str_replace(";", "&nbsp;&nbsp;/&nbsp;&nbsp;", $entry['kunReadings']);
                     }
                     echo '</div><!-- readings -->';
