@@ -69,11 +69,7 @@ $totalKnown = $stmt->fetchColumn();
                     echo '<div class="components">';
                     $componentsArray = explode(";", $entry["components"]);
                     foreach ($componentsArray as $component) {
-                        echo '<a href="kanji.php?literal=' .
-                            $component .
-                            '">' .
-                            $component .
-                            "</a>";
+                        echo "<a href='kanji.php?literal={$component}'>{$component}</a>";
                     }
                     echo "</div><!-- components -->";
                 } ?>
@@ -93,11 +89,7 @@ $totalKnown = $stmt->fetchColumn();
                         <?php
                         $other_forms = explode(";", $entry["other_forms"]);
                         foreach ($other_forms as $other_form) {
-                            echo '<a href="kanji.php?literal=' .
-                                $other_form .
-                                '">' .
-                                $other_form .
-                                "</a>";
+                            echo "<a href='kanji.php?literal={$other_form}'>{$other_form}</a>";
                         }
                         ?>
                     </div>
@@ -160,11 +152,7 @@ $totalKnown = $stmt->fetchColumn();
                     echo '<div class="components">';
                     $relatedArray = explode(";", $entry["related"]);
                     foreach ($relatedArray as $related) {
-                        echo '<div class="component"><a href="kanji.php?literal=' .
-                            $related .
-                            '">' .
-                            $related .
-                            "</a></div>";
+                        echo "<div class='component'><a href='kanji.php?literal={$related}'>{$related}</a></div>";
                     }
                     echo "</div><!-- related -->";
                 } ?>
@@ -182,11 +170,7 @@ $totalKnown = $stmt->fetchColumn();
                 <?php
                 $img = "../data/images/" . $entry["literal"] . ".jpg";
                 if (file_exists($img)) {
-                    echo "<a href='" .
-                        $img .
-                        "' target='_blank'><img src='" .
-                        $img .
-                        "'></a>";
+                    echo "<a href='{$img}' target='_blank'><img src='{$img}'></a>";
                 }
                 ?>
 
@@ -263,13 +247,9 @@ $totalKnown = $stmt->fetchColumn();
                                             "literal"
                                         ]; ?>">
                                         <button type="submit">
-                                            <?php if (
-                                                $example["added"] == 1
-                                            ): ?>
-                                                remove
-                                            <?php else: ?>
-                                                add
-                                            <?php endif; ?>
+                                            <?= $example["added"] == 1
+                                                ? "remove"
+                                                : "add" ?>
                                         </button>
                                     </form>
                                 </span>
@@ -329,13 +309,9 @@ $totalKnown = $stmt->fetchColumn();
                                                     "literal"
                                                 ]; ?>">
                                                 <button type="submit">
-                                                    <?php if (
-                                                        $example["added"] == 1
-                                                    ): ?>
-                                                        remove
-                                                    <?php else: ?>
-                                                        add
-                                                    <?php endif; ?>
+                                                    <?= $example["added"] == 1
+                                                        ? "remove"
+                                                        : "add" ?>
                                                 </button>
                                             </form>
                                         </span>
