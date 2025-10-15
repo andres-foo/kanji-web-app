@@ -82,6 +82,54 @@ $totalKnown = $stmt->fetchColumn();
     // priority examples
     // more examples
     // kanjis that contain this kanji as a component
+    // priority examples
+    // more examples
+    // kanjis that contain this kanji as a component
+    // priority examples
+    // more examples
+    // kanjis that contain this kanji as a component
+    // priority examples
+    // more examples
+    // kanjis that contain this kanji as a component
+    // priority examples
+    // more examples
+    // kanjis that contain this kanji as a component
+    // priority examples
+    // more examples
+    // kanjis that contain this kanji as a component
+    // priority examples
+    // more examples
+    // kanjis that contain this kanji as a component
+    // priority examples
+    // more examples
+    // kanjis that contain this kanji as a component
+    // priority examples
+    // more examples
+    // kanjis that contain this kanji as a component
+    // priority examples
+    // more examples
+    // kanjis that contain this kanji as a component
+    // priority examples
+    // more examples
+    // kanjis that contain this kanji as a component
+    // priority examples
+    // more examples
+    // kanjis that contain this kanji as a component
+    // priority examples
+    // more examples
+    // kanjis that contain this kanji as a component
+    // priority examples
+    // more examples
+    // kanjis that contain this kanji as a component
+    // priority examples
+    // more examples
+    // kanjis that contain this kanji as a component
+    // priority examples
+    // more examples
+    // kanjis that contain this kanji as a component
+    // priority examples
+    // more examples
+    // kanjis that contain this kanji as a component
     elseif (isset($_GET["literal"])): ?>
     <?php if (!$entry): ?>
         <div class="card empty">
@@ -172,71 +220,6 @@ $totalKnown = $stmt->fetchColumn();
                     </div>
 
                 <?php endif; ?>
-
-                <?php if (false): ?><!-- hide previous meta -->
-                    <div class="meta">
-                        <div class="item">
-                            <span class="ref">strokes</span>
-                            <span class="number"><?php echo $entry[
-                                "strokes"
-                            ]; ?></span>
-                        </div>
-                        <?php if (!empty($entry["frequency"])): ?>
-                            <div class="item">
-                                <span class="ref">frequency</span>
-                                <span class="number"><?php echo $entry[
-                                    "frequency"
-                                ]; ?></span>
-                            </div>
-                        <?php endif; ?><!-- freq -->
-                        <?php if (!empty($entry["jlpt"])): ?>
-                            <div class="item">
-                                <span class="ref">jlpt</span>
-                                <span class="number"><?php echo $entry[
-                                    "jlpt"
-                                ]; ?></span>
-                            </div>
-                        <?php endif; ?><!-- jlpt -->
-                        <?php if (!empty($entry["grade"])): ?>
-                            <div class="item">
-                                <span class="ref">grade</span>
-                                <span class="number">
-                                    <?php if ($entry["grade"] <= 6) {
-                                        echo $entry["grade"];
-                                    } elseif ($entry["grade"] == 8) {
-                                        echo "HighSchool(Jouyou)";
-                                    } elseif ($entry["grade"] == 9) {
-                                        echo "Jinmeiyou(Names)";
-                                    } else {
-                                        echo "Jinmeiyou(Names extra)";
-                                    } ?>
-                                </span>
-                            </div>
-                        <?php endif; ?><!-- grade -->
-                        <?php if (!empty($entry["heisg6"])): ?>
-                            <div class="item">
-                                <span class="ref">heisg6</span>
-                                <span class="number"><?php echo $entry[
-                                    "heisg6"
-                                ]; ?></span>
-                            </div>
-                        <?php endif; ?> <!-- heisg6 -->
-                        <?php if (!empty($entry["kanken"])): ?>
-                            <div class="item">
-                                <span class="ref">kanken</span>
-                                <span class="number">
-                                    <?php if ($entry["kanken"] == 1.5) {
-                                        echo "pre 1";
-                                    } elseif ($entry["kanken"] == 2.5) {
-                                        echo "pre 2";
-                                    } else {
-                                        echo $entry["kanken"];
-                                    } ?>
-                                </span>
-                            </div>
-                        <?php endif; ?><!-- kanken -->
-                    </div><!-- meta -->
-                <?php endif; ?><!-- / hide previous meta -->
 
                 <?php if (
                     !empty($entry["onReadings"]) or
