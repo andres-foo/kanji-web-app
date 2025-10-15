@@ -34,7 +34,48 @@ $totalKnown = $stmt->fetchColumn();
         <?php echo $error; ?>
     </div>
 
-<?php
+<?php // priority examples
+    // more examples
+    // kanjis that contain this kanji as a component
+    // priority examples
+    // more examples
+    // kanjis that contain this kanji as a component
+    // priority examples
+    // more examples
+    // kanjis that contain this kanji as a component
+    // priority examples
+    // more examples
+    // kanjis that contain this kanji as a component
+    // priority examples
+    // more examples
+    // kanjis that contain this kanji as a component
+    // priority examples
+    // more examples
+    // kanjis that contain this kanji as a component
+    // priority examples
+    // more examples
+    // kanjis that contain this kanji as a component
+    // priority examples
+    // more examples
+    // kanjis that contain this kanji as a component
+    // priority examples
+    // more examples
+    // kanjis that contain this kanji as a component
+    // priority examples
+    // more examples
+    // kanjis that contain this kanji as a component
+    // priority examples
+    // more examples
+    // kanjis that contain this kanji as a component
+    // priority examples
+    // more examples
+    // kanjis that contain this kanji as a component
+    // priority examples
+    // more examples
+    // kanjis that contain this kanji as a component
+    // priority examples
+    // more examples
+    // kanjis that contain this kanji as a component
     // priority examples
     // more examples
     // kanjis that contain this kanji as a component
@@ -428,10 +469,9 @@ $totalKnown = $stmt->fetchColumn();
                             $added = $example["added"] == 1 ? " added " : "";
                             $ignore = $example["ignore"] == 1 ? " ignore " : "";
                             ?>
-                            <div class="word<?=
-                            $added
-                            $ignore
-                            ?>">
+                            <div class="word
+                            <?= $added ?>
+                            <?= $ignore ?>">
                                 <a href="kanji.php?literal=<?php echo $example[
                                     "literal"
                                 ]; ?>" class="example-kanji"><?php echo $example[
