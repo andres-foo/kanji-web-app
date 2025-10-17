@@ -8,7 +8,25 @@ require('../parts/helper.php');
 $myPDO = new PDO('sqlite:../data/kanjis.db');
 
 //check if exists as a kanji
-$sql = "SELECT * FROM kanjis WHERE added = 1";
+$sql = "SELECT
+    k.literal AS kliteral,
+    k.meanings AS kmeanings,
+    k.components AS kcomponents,
+    k.onReadings AS konReadings,
+    k.kunReadings AS kkunReadings,
+    k.story AS kstory,
+    e.kanji AS ekanji,
+    e.kana AS ekana,
+    e.meanings as emeanings,
+    e.added as eadded
+  FROM
+    kanjis AS k
+  LEFT JOIN
+    examples as e
+  ON
+    e.kanji LIKE concat('%', k.literal, '%') AND e.added = 1
+  WHERE
+    k.added";
 $stmt = $myPDO->prepare($sql);
 $results = $stmt->execute();
 $entries = $stmt->fetchAll();
@@ -17,11 +35,40 @@ if (!$entries) exit("No kanjis to export. Make sure to add some kanjis to your l
 header('Content-Type: text/csv');
 header('Content-Disposition: attachment; filename="kanjis.csv"');
 
+
+// prepare kanjis
+$kanjis = [];
+foreach ($entries as $row) {
+    if (!is_null($row["ekanji"])) {
+        $example = [
+            "kanji" => $row["ekanji"],
+            "kana" => $row["ekana"],
+            "meanings" => $row["emeanings"]
+        ];
+    } else {
+        $example = null;
+    }
+
+    if (array_key_exists($row["kliteral"], $kanjis)) {
+        $kanjis[$row["kliteral"]]["examples"][] = $example;
+    } else {
+        $kanjis[$row["kliteral"]] = [
+            "literal" => $row["kliteral"],
+            "meanings" => $row['kmeanings'],
+            "components" => $row['kcomponents'],
+            "onReadings" => $row['konReadings'],
+            "kunReadings" => $row['kkunReadings'],
+            "story" => $row['kstory'],
+            "examples" => is_null($example) ? [] : [$example],
+        ];
+    }
+}
+
 //
 $doc = "";
-foreach ($entries as $kanji) {
+foreach ($kanjis as $literal => $kanji) {
     // basics
-    $doc .= $kanji['literal'] . ";";
+    $doc .= $literal . ";";
     $doc .= str_replace(";", ", ", $kanji['meanings']) . ";";
     $doc .= str_replace(";", ", ", $kanji['components']) . ";";
 
@@ -45,29 +92,23 @@ foreach ($entries as $kanji) {
     }
 
     // examples
-    $sql = "SELECT * FROM examples WHERE added = 1 AND kanji != '' AND kanji LIKE ?";
-    $stmt = $myPDO->prepare($sql);
-    $stmt->execute(['%' . $kanji['literal'] . '%']);
-    $my_examples = $stmt->fetchAll();
-
-    // examples
-    $examples = '';
-    foreach ($my_examples as $my_example) {
-        $examples .= '<span class="tag"> ' . str_replace(';', ' / ', $my_example['kanji']) . '</span> <span class="kana"> [' . str_replace(';', ' / ', $my_example['kana']) . '] </span><br>' . formatMeanings($my_example['meanings']) . '<hr>';
+    $example_text = '';
+    foreach ($kanji["examples"] as $example) {
+        $example_text .= '<span class="tag"> ' . str_replace(';', ' / ', $example['kanji']) . '</span> <span class="kana"> [' . str_replace(';', ' / ', $example['kana']) . '] </span><br>' . formatMeanings($example['meanings']) . '<hr>';
         //$examples .= '<span class="tag"> ' . str_replace(';', ' / ', $my_example['kanji']) . '</span> <span class="kana"> [' . str_replace(';', ' / ', $my_example['kana']) . '] </span><br> • ' . str_replace(';', '<br> • ', $my_example['meanings']) . '<hr>';
     }
-    $doc .= $examples . ";";
+    $doc .= $example_text . ";";
 
     // examples front (no kana / meanings)
-    $examples = '';
-    foreach ($my_examples as $my_example) {
+    $example_text = '';
+    foreach ($kanji["examples"] as $example) {
         // remove meta in parethesis 亜米利加(ateji)(rK) -> 亜米利加
-        $examples .= '<span class="tag">' . preg_replace('/\(.*\z/', '', $my_example['kanji']) . '</span>';
+        $example_text .= '<span class="tag">' . preg_replace('/\(.*\z/', '', $example['kanji']) . '</span>';
     }
-    $doc .= $examples . ";";
+    $doc .= $example_text . ";";
 
     // image
-    if (file_exists("../data/images/" . $kanji['literal'] . ".jpg")) {
+    if (file_exists("../data/images/" . $literal . ".jpg")) {
         $doc .= "true";
     }
 
