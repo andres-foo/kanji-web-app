@@ -14,54 +14,59 @@
 }
 
 body {
-    background:#121212;
-    color:#e4e4e4;
-    font-family: "NotoSansJP";    
+    background: #121212;
+    color: #e4e4e4;
+    font-family: "NotoSansJP";
 }
-*{box-sizing: border-box;}
+* {
+    box-sizing: border-box;
+}
 .content {
     max-width: 1200px;
     margin: 10px auto;
-  }
+}
 /* card */
-.card, .header, .list {
-    position:relative;
-    background:#1e1e1e;
-    display:flex;
+.card,
+.header,
+.list {
+    position: relative;
+    background: #1e1e1e;
+    display: flex;
     border-radius: 5px;
     box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.1);
-    margin-bottom:20px;
+    margin-bottom: 20px;
 }
-.word.added, .card.added {
-    border:2px solid #16cc2e;
+.word.added,
+.card.added {
+    border: 2px solid #16cc2e;
 }
 .word.ignore a {
-    color:gray;
+    color: gray;
 }
 .card.added.unfinished {
-    border:2px solid #cf3521;
+    border: 2px solid #cf3521;
 }
 .error {
-    padding:20px;
+    padding: 20px;
     border-radius: 5px;
     background-color: #1e1e1e;
-    border-left:3px solid red;
+    border-left: 3px solid red;
 }
 .header {
-    padding:10px;
+    padding: 10px;
 }
 .card .right {
     display: flex;
     flex-direction: column;
-    flex-grow: 2;    
+    flex-grow: 2;
     align-items: flex-start;
-    padding:10px;
-    gap:10px;
+    padding: 10px;
+    gap: 10px;
 }
 .card .right img {
     max-width: 100%;
     max-height: 250px;
-    margin-top:15px;
+    margin-top: 15px;
     border-radius: 5px;
 }
 .card .left {
@@ -69,66 +74,68 @@ body {
     text-align: center;
 }
 .card .left .kanji {
-    font-family:"NotoSansJP", "BabelStoneHan";
-    font-size:120pt;
-    padding:10px;
+    font-family: "NotoSansJP", "BabelStoneHan";
+    font-size: 120pt;
+    padding: 10px;
 }
-.card .left.ignore .kanji, .card .left.ignore .big-kanji {
-    color:grey;
+.card .left.ignore .kanji,
+.card .left.ignore .big-kanji {
+    color: grey;
 }
 .card .left .big-kanji {
-    font-family:"KanjiStrokeOrders", "BabelStoneHan";
-    font-size:120pt;
-    padding:10px;
+    font-family: "KanjiStrokeOrders", "BabelStoneHan";
+    font-size: 120pt;
+    padding: 10px;
 }
 .card .left .components {
-    display:flex;
+    display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap:10px;
+    gap: 10px;
     font-size: 2rem;
-    padding:10px 15px;
+    padding: 10px 15px;
 }
-.card .left .components a{ 
-    display:inline-block;   
+.card .left .components a {
+    display: inline-block;
     border-radius: 4px;
-    padding:2px 5px;
+    padding: 2px 5px;
     background-color: #121212;
 }
-.card .right .meta, .card .right .components {
-    display:flex;
+.card .right .meta,
+.card .right .components {
+    display: flex;
     flex-wrap: wrap;
     flex-direction: row;
     justify-items: center;
 }
 .card .right .meta {
     gap: 10px;
-    margin:0;
+    margin: 0;
 }
 .kanji-tag {
     font-size: large;
-    padding:4px 8px;
+    padding: 4px 8px;
     border-radius: 2px;
     font-weight: bold;
 }
 .high {
     background-color: #16cc2e;
-    color:#121212;
+    color: #121212;
 }
 .medium {
     background-color: orange;
-    color:#121212;
+    color: #121212;
 }
 .low {
-    color:#FFF;
+    color: #fff;
     background-color: red;
 }
 .zero {
     background-color: gray;
-    color: #FFF;
+    color: #fff;
 }
 .card .right .readings {
-    color:#959595;
+    color: #959595;
     font-family: "NotoSansJP";
     font-size: 2rem;
 }
@@ -139,31 +146,32 @@ body {
     font-size: 1.4rem;
     padding: 25px 20px;
     border-radius: 5px;
-    width:100%;
+    width: 100%;
     margin-top: 10px;
     line-height: 2.5rem;
 }
 
 .card .right .meta .item {
-    margin:0 15px 0 0px;
-    color:#959595;
+    margin: 0 15px 0 0px;
+    color: #959595;
     font-size: 0.9em;
 }
 .card .right .meta .item .ref::after {
-    content:': ';
+    content: ": ";
 }
 .card .right .meanings {
     font-size: 2em;
-    margin:25px 0 0 0 ;
+    margin: 25px 0 0 0;
 }
 .card .right .other_forms {
-    color:#959595;
+    color: #959595;
 }
-.card .right .component a, .card .right .related a {
-    background-color:#121212;
-    margin:0 10px 5px 0;
-    padding:5px 10px;
-    border-radius: 5px;    
+.card .right .component a,
+.card .right .related a {
+    background-color: #121212;
+    margin: 0 10px 5px 0;
+    padding: 5px 10px;
+    border-radius: 5px;
     font-family: "NotoSansJP";
 }
 .card .right .component {
@@ -171,251 +179,319 @@ body {
 }
 .card .action {
     position: absolute;
-    top:10px;
-    right:10px;
+    top: 10px;
+    left: 50%;
+    transform: translate(-50%, 0);
 }
 .card .action form {
-    display:inline-block;
+    display: inline-block;
 }
 .card.empty {
-    padding:20px;
+    padding: 20px;
 }
 
 /* SEARCH */
 .card.search .kanji {
-    font-size:4em;
+    font-size: 4em;
 }
 .card.search .meanings {
     font-size: 1.2em;
-    margin:7px 0;
+    margin: 7px 0;
 }
 .search-word {
-    padding:15px;
+    padding: 15px;
     vertical-align: middle;
-    font-size:1.3em;
+    font-size: 1.3em;
 }
 
 /* FORM STUFF */
-button, #edit-toggle {
-    cursor:pointer;
-    background-color:#121212;
-    padding:5px 10px;
-    border-radius: 5px;    
+button,
+#edit-toggle {
+    cursor: pointer;
+    background-color: #121212;
+    padding: 5px 10px;
+    border-radius: 5px;
     font-family: "NotoSansJP";
     text-transform: uppercase;
     font-size: 0.8em;
-    border:none;
+    border: none;
 }
 button.danger {
     background-color: red;
-    color:white;
+    color: white;
     font-weight: bold;
 }
 .header input {
-    background-color:#121212;
-    padding:10px 20px;
-    border-radius: 5px;  
-    font-family: "NotoSansJP","BabelStoneHan";
-    color:#e4e4e4;
-    border:none;
-    width:100%;
+    background-color: #121212;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-family: "NotoSansJP", "BabelStoneHan";
+    color: #e4e4e4;
+    border: none;
+    width: 100%;
     font-size: 1.4em;
-    margin-bottom:10px;
+    margin-bottom: 10px;
 }
 .header form {
-    width:100%;
+    width: 100%;
 }
 
-a, button {
+a,
+button {
     text-decoration: none;
-    color:#b173fd;
+    color: #b173fd;
 }
-a:hover, button:hover{
-    color:#d7b7fd;
+a:hover,
+button:hover {
+    color: #d7b7fd;
 }
-.edit textarea, .edit input, .add-example input , .add-example select {
-    background-color:#121212;
-    color:#e4e4e4;
-    border:none;
+.edit textarea,
+.edit input,
+.add-example input,
+.add-example select {
+    background-color: #121212;
+    color: #e4e4e4;
+    border: none;
     border-radius: 5px;
-    padding:10px;
-    width:100%;
-    font-size: 1em;    
+    padding: 10px;
+    width: 100%;
+    font-size: 1em;
     font-family: "NotoSansJP", "BabelStoneHan";
 }
-.edit input[type=checkbox] , .add-example input[type=checkbox]{
-    width:auto;
+.edit input[type="checkbox"],
+.add-example input[type="checkbox"] {
+    width: auto;
 }
 .add-example {
-    display:block;
+    display: block;
 }
 
 .edit {
-    width:100%;
+    width: 100%;
     margin-top: 10px;
-    display:none;
+    display: none;
 }
 .edit span {
-    margin-top:10px;
-    display:block;
+    margin-top: 10px;
+    display: block;
     text-transform: uppercase;
-    color:#959595;
+    color: #959595;
     font-size: 0.85em;
 }
 .header {
     display: flex;
     flex-direction: column;
 }
-.header .header-actions a, .header button, .list-menu {
-    background:#121212;
-    padding:10px 15px;
-    margin:10px 10px 10px 0;
-    display:inline-block;
+.header .header-actions a,
+.header button,
+.list-menu {
+    background: #121212;
+    border: 1px solid transparent;
+    padding: 10px 15px;
+    margin: 10px 10px 10px 0;
+    display: inline-block;
     border-radius: 5px;
-    font-size:1em;
+    font-size: 1em;
 }
 .header .header-actions .export {
-    background:none;
-    padding:10px 0;
+    background: none;
+    padding: 10px 0;
 }
 .list-menu {
     display: inline-block;
-    position:relative;
+    position: relative;
 }
 .list-menu:hover .list-menu-content {
-    display:flex;
+    display: flex;
 }
 
 .list-menu-content {
-    position:absolute;
-    left:0;
-    top:40px;
-    display:none;
-    gap:10px;
+    position: absolute;
+    left: 0;
+    top: 40px;
+    display: none;
+    gap: 10px;
     flex-direction: column;
     z-index: 1000;
     background-color: #121212;
-    padding:15px 30px;
+    padding: 15px 30px;
     border-radius: 5px;
     border-top-left-radius: 0px;
 }
-.header .header-actions  .list-menu .list-menu-content a {
-    background:none;
-    padding:0;
-    margin:0;
+.header .header-actions .list-menu .list-menu-content a {
+    background: none;
+    padding: 0;
+    margin: 0;
 }
 .header form {
-    display:inline;
-}
-.review {
-    color:#16cc2e;
-}
-.review:hover{
-    color:#6ff882;
+    display: inline;
 }
 
+.review-card {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    padding: 40px;
+    gap: 20px;
+}
+.review-card .kanji {
+    font-size: 12rem;
+}
+.review-card .words {
+    display: flex;
+    gap: 20px;
+}
+.review-card .words .word {
+    font-size: 2rem;
+    border: 2px solid #121212;
+    padding: 10px 20px;
+    background: none;
+}
+.review {
+    color: greenyellow;
+}
+.review:hover {
+    color: greenyellow;
+    border: 1px solid greenyellow;
+}
+
+.review-button button {
+    color: greenyellow;
+    display: inline-block;
+    border-radius: 5px;
+    padding: 7px 15px;
+    font-size: 2rem;
+    background-color: #121212;
+    border: 1px solid transparent;
+}
+.review-button a:hover {
+    border: 1px solid greenyellow;
+}
+.review-options,
+.review-button {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
 .review-scoring {
-    display:flex;
+    display: flex;
     justify-content: center;
-    margin:20px 0;
-    gap:25px;
+    margin: 0;
+    gap: 10px;
 }
-.review-good, .review-neutral, .review-bad {
-    padding:7px 15px;
-    font-size: 1.5rem;
-    opacity:0.8;
+.review-good,
+.review-neutral,
+.review-bad {
+    padding: 7px 15px;
+    font-size: 2rem;
 }
-.review-good:hover, .review-neutral:hover, .review-bad:hover {
-    opacity:1;
-    color:#121212;
-} 
-.review-good, span.history-good {
+
+.review-good {
+    color: #16cc2e;
+}
+.review-bad {
+    color: #cf3521;
+}
+.review-good:hover {
+    color: #6ff882;
+}
+.review-bad:hover {
+    color: #e66767;
+}
+.review-good:hover,
+.review-bad:hover {
+    background-color: #000;
+}
+span.history-good {
     background-color: #6ff882;
-    color:#121212;
+    color: #121212;
 }
-.review-neutral, span.history-neutral {
+span.history-neutral {
     background-color: #ddfc96;
-    color:#121212;
+    color: #121212;
 }
-.review-bad, span.history-bad {
+span.history-bad {
     background-color: #e66767;
-    color:#121212;
+    color: #121212;
 }
-.history-good, .history-bad, .history-neutral {
-    padding:0px 4px;
+.history-good,
+.history-bad,
+.history-neutral {
+    padding: 0px 4px;
     border-radius: 5px;
     margin-right: 20px;
     font-size: 0.8rem;
 }
 
 .review-separator-good::before {
-    content: '↗';
+    content: "↗";
 }
 .review-separator-bad::before {
-    content: '↘';
+    content: "↘";
 }
 .review-separator-neutral::before {
-    content: '→';
+    content: "→";
 }
 
 .list {
-    display:block;
-    padding:10px 20px;
+    display: block;
+    padding: 10px 20px;
 }
-.list a{
+.list a {
     font-size: 2.2em;
 }
 .list a.added {
-    color:#16cc2e;
+    color: #16cc2e;
 }
 .list a.unfinished {
     color: #cf3521;
 }
 .list a.ignore {
-    color:grey;
+    color: grey;
 }
 .list a.added:hover {
-    color:#6ff882;
+    color: #6ff882;
 }
 .list a.unfinished:hover {
     color: #f58273;
 }
 
 .words .word {
-    border-radius: 5px;  
-    background:#121212;
-    margin-bottom:10px;
+    border-radius: 5px;
+    background: #121212;
+    margin-bottom: 10px;
     display: inline-block;
-    position:relative;
-    cursor:default;
-    margin-right:5px;
-    padding:5px 10px;
+    position: relative;
+    cursor: default;
+    margin-right: 5px;
+    padding: 5px 10px;
 }
 .word .word-meta {
-    background:#262626;
-    color:#FFF;
-    padding:3px;
+    background: #262626;
+    color: #fff;
+    padding: 3px;
     border-radius: 4px;
-    font-size:0.8rem;
+    font-size: 0.8rem;
 }
 #more-word-examples {
-    display:none;
+    display: none;
 }
 .title {
     text-transform: uppercase;
-    color:#FFF;
-    font-size:0.9em;
-    padding:5px 0;
+    color: #fff;
+    font-size: 0.9em;
+    padding: 5px 0;
 }
-.list .title:first-child{
-    margin-top:0px;
+.list .title:first-child {
+    margin-top: 0px;
 }
 hr {
-    display:block;
-    height:2px;
-    background:#121212;
-    border:none;
-    margin:20px 0;
+    display: block;
+    height: 2px;
+    background: #121212;
+    border: none;
+    margin: 20px 0;
 }
 
 .search-history {
@@ -423,81 +499,82 @@ hr {
     flex-wrap: wrap;
     gap: 16px;
 }
-.search-history a:nth-child(even){
-    background:rgba(0, 0, 0, 0.2);
-    padding:0px 8px;
+.search-history a:nth-child(even) {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 0px 8px;
     border-radius: 4px;
 }
 
 .rating {
-    display:flex;
+    display: flex;
     justify-content: center;
-    margin-bottom:10px;
-
+    margin-bottom: 10px;
 }
 .rating button {
-    font-size:1.2em;
-    margin:5px;
+    font-size: 1.2em;
+    margin: 5px;
 }
 .selected {
-    border-bottom:2px solid #ffffff;
+    border-bottom: 2px solid #ffffff;
 }
-.card .right .components .component a{
-    font-family:"NotoSansJP", "BabelStoneHan";
+.card .right .components .component a {
+    font-family: "NotoSansJP", "BabelStoneHan";
 }
 .rules {
-    display:block;
+    display: block;
 }
-.story span, .component-story span {
-    color:#e4e4e4;
+.story span,
+.component-story span {
+    color: #e4e4e4;
     border-bottom: 2px solid #16cc2e;
 }
-.story > em,  .component-story em {
+.story > em,
+.component-story em {
     font-style: normal;
-    padding:0 4px;
+    padding: 0 4px;
     background-color: #c3ceaa;
-    color:#121212;
+    color: #121212;
     border-radius: 4px;
-    margin:0 5px;
+    margin: 0 5px;
 }
 button.options {
-    background:none;
+    background: none;
     text-transform: none;
 }
 
 /**/
 .component-flag {
-    position:absolute;
-    top:5px;
-    left:0;
-    text-transform:uppercase;
+    position: absolute;
+    top: 5px;
+    left: 0;
+    text-transform: uppercase;
     font-size: x-small;
-    background:#121212;
-    padding:4px 9px;
+    background: #121212;
+    padding: 4px 9px;
 }
 /* COMPONENTS */
 .component-words {
     vertical-align: middle;
-    display:flex;
+    display: flex;
     flex-wrap: wrap;
     align-items: center;
 }
 .component-usage-count {
     font-size: x-small;
-    margin:5px;
-    padding:2px 5px;
+    margin: 5px;
+    padding: 2px 5px;
     border-radius: 4px;
     background-color: #262626;
 }
-.component-list{
+.component-list {
     display: flex;
     flex-direction: column;
-    gap:40px;
+    gap: 40px;
 }
 .component-card {
-    display:grid;
+    display: grid;
     grid-template-columns: auto 1fr 1fr 1fr auto;
-    gap:1px;
+    gap: 1px;
     background-color: #121212;
     border-left: 2px solid #16cc2e;
 }
@@ -505,7 +582,7 @@ button.options {
     border-left: 2px solid #cf3521;
 }
 .component-card div {
-    padding:10px;
+    padding: 10px;
 }
 .component-card .component-literal {
     text-align: center;
@@ -517,23 +594,23 @@ button.options {
     font-size: 0.5 em;
 }
 .component-group-title {
-    padding:10px;
+    padding: 10px;
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
-    color:#e4e4e4;
+    color: #e4e4e4;
     text-transform: uppercase;
     font-size: 0.8em;
-    background:#121212;
+    background: #121212;
 }
 .component-story a {
     font-size: initial !important;
 }
 .component-group-dropdown {
     /* visibility: hidden; */
-    background:#262626;
-    border:0;
-    color: #EFEFEF;
-    padding:4px;
+    background: #262626;
+    border: 0;
+    color: #efefef;
+    padding: 4px;
     border-radius: 4px;
 }
 /*
@@ -544,49 +621,48 @@ button.options {
 
 /* PRINT */
 .print-body {
-    color:#000;
-    background-color:#FFF;
+    color: #000;
+    background-color: #fff;
 }
 .print {
-    display:flex;
+    display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
 }
 .print .print-row {
-    border:1px solid #EFEFEF;
-    display:flex;
-    width:48%;
-    margin-bottom:10px;
+    border: 1px solid #efefef;
+    display: flex;
+    width: 48%;
+    margin-bottom: 10px;
     page-break-inside: avoid;
 }
 .print .print-literal {
-    font-size:2.5em;
-    padding:10px;
+    font-size: 2.5em;
+    padding: 10px;
 }
 .print .print-meanings {
-    font-size:1.2em;
+    font-size: 1.2em;
 }
 .print .print-extras {
     display: flex;
     flex-direction: column;
-    width:100%;
-    padding:10px;
+    width: 100%;
+    padding: 10px;
 }
-
 
 /* EXAMPLE HOVER */
 .example-text {
-    position:absolute;
-    display:inline-block;
-    max-width:650px;
+    position: absolute;
+    display: inline-block;
+    max-width: 650px;
     min-width: 400px;
     max-height: 350px;
     overflow-y: scroll;
-    width:auto;
-    background:rgba(0, 0, 0, 0.95);
-    z-index:10;
-    padding:10px;
-    visibility:hidden;
+    width: auto;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 10;
+    padding: 10px;
+    visibility: hidden;
     overflow-wrap: break-word;
     bottom: 100%;
     left: 50%;
@@ -599,15 +675,15 @@ button.options {
 .word a {
     display: inline-block;
     font-size: 1.6em;
-    padding:0px 7px 5px 7px;
+    padding: 0px 7px 5px 7px;
 }
 .word:hover .example-text {
     visibility: visible;
 }
 .words form {
-    display:inline-block;
+    display: inline-block;
 }
 .example-text form {
     display: block;
-    margin-top:10px;
+    margin-top: 10px;
 }

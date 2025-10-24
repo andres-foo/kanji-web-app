@@ -41,17 +41,6 @@ $totalKnown = $stmt->fetchColumn();
         </div>
     <?php else: ?>
 
-        <?php if (isset($_GET["ref"]) && $_GET["ref"] == "review"): ?>
-            <form action="../actions/mark_difficulty.php" class="review-scoring" method="POST">
-                <button class=" review-good" name="review_good">Good</button>
-                <button class="review-neutral" name="review_neutral">Neutral</button>
-                <button class="review-bad" name="review_bad">Bad</button>
-                <input type="hidden" name="literal" value="<?php echo $entry[
-                    "literal"
-                ]; ?>">
-            </form>
-        <?php endif; ?>
-
         <div class="card <?php
         if ($entry["added"] == 1) {
             echo " added";
@@ -382,6 +371,15 @@ $totalKnown = $stmt->fetchColumn();
                     </form>
                 </div>
             </div><!-- right -->
+
+            <?php if ($entry["added"] == 1): ?>
+            <div class="review-button">
+                <form action="../actions/review.php" method="POST">
+                    <button type="submit" class="review">🢅</button>
+                </form>
+            </div>
+
+            <?php endif; ?>
 
             <div class="action">
                 <?php if ($entry["added"] == "" || $entry["added"] == 0): ?>
