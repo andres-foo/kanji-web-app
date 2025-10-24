@@ -372,14 +372,11 @@ $totalKnown = $stmt->fetchColumn();
                 </div>
             </div><!-- right -->
 
-            <?php if ($entry["added"] == 1): ?>
             <div class="review-button">
                 <form action="../actions/review.php" method="POST">
                     <button type="submit" class="review">🢅</button>
                 </form>
             </div>
-
-            <?php endif; ?>
 
             <div class="action">
                 <?php if ($entry["added"] == "" || $entry["added"] == 0): ?>
