@@ -33,6 +33,9 @@ $totalKnown = $stmt->fetchColumn();
         <div class="review-options">
             <form action="../actions/mark_difficulty.php" class="review-scoring" method="POST">
                 <button class="review-good" name="review_good">⮝</button>
+                <a href="./kanji.php?literal=<?= $_GET[
+                    "literal"
+                ] ?>" class="review-neutral">🗘</a>
                 <button class="review-bad" name="review_bad">⮟</button>
                 <input type="hidden" name="literal" value="<?php echo $entry[
                     "literal"

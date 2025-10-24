@@ -385,6 +385,8 @@ button:hover {
 .review-bad {
     padding: 7px 15px;
     font-size: 2rem;
+    background-color: #121212;
+    border-radius: 5px;
 }
 
 .review-good {
@@ -393,6 +395,9 @@ button:hover {
 .review-bad {
     color: #cf3521;
 }
+.review-neutral {
+    color: #959595;
+}
 .review-good:hover {
     color: #6ff882;
 }
@@ -400,7 +405,8 @@ button:hover {
     color: #e66767;
 }
 .review-good:hover,
-.review-bad:hover {
+.review-bad:hover,
+.review-neutral:hover {
     background-color: #000;
 }
 span.history-good {
