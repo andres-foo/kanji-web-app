@@ -42,13 +42,13 @@ $totalKnown = $stmt->fetchColumn();
     <?php else: ?>
 
         <div class="card <?php
-        if ($entry["added"] == 1) {
-            echo " added";
-        }
-        if ($entry["unfinished"] == 1) {
-            echo " unfinished";
-        }
-        ?>">
+                            if ($entry["added"] == 1) {
+                                echo " added";
+                            }
+                            if ($entry["unfinished"] == 1) {
+                                echo " unfinished";
+                            }
+                            ?>">
             <?php if ($entry["is_component"]): ?>
                 <div class="component-flag">basic component</div>
             <?php endif; ?>
@@ -67,22 +67,45 @@ $totalKnown = $stmt->fetchColumn();
             </div><!-- left -->
             <div class="right">
 
+                <div class="extras">
+                    <?php if (!empty($entry["other_forms"])): ?>
+                        <div>
+                            aka
+                            <?php
+                            $other_forms = explode(";", $entry["other_forms"]);
+                            foreach ($other_forms as $other_form) {
+                                echo "<a href='kanji.php?literal={$other_form}'>{$other_form}</a>";
+                            }
+                            ?>
+                        </div>
+                    <?php endif; ?>
+                    <?php if (!empty($entry["related"])): ?>
+                        <div>
+                            see
+                            <?php
+                            $relatedArray = explode(";", $entry["related"]);
+                            foreach ($relatedArray as $related) {
+                                echo "<a href='kanji.php?literal={$related}'>{$related}</a>";
+                            }
+                            ?>
+                        </div>
+                    <?php endif; ?>
+                    <div>
+
+                        <a href="https://www.kanshudo.com/kanji/<?php echo $entry["literal"]; ?>" target="_blank">↗ kanshudo</a> •
+                        <a href="https://en.wiktionary.org/wiki/<?php echo $entry["literal"]; ?>" target="_blank">↗ wiki</a>
+                    </div>
+                    <div>
+                        <form class="kanji-actions" action="../actions/toggle_kanji_study.php" method="POST">
+                            <input type="hidden" name="literal" value="<?php echo $entry["literal"]; ?>">
+                            <button type="submit"><?= ($entry["added"] == 1) ? "⏻ remove" : "⏻ add" ?></button>
+                        </form>&nbsp;&nbsp;• <a id="edit-toggle" href="#edit-area">✎ edit</a>
+                    </div>
+                </div><!-- /extra -->
 
                 <div class="meanings">
                     <?php echo str_replace(";", ", ", $entry["meanings"]); ?>
                 </div><!-- meanings -->
-
-                <?php if (!empty($entry["other_forms"])): ?>
-                    <div class="other_forms">
-                        other forms:
-                        <?php
-                        $other_forms = explode(";", $entry["other_forms"]);
-                        foreach ($other_forms as $other_form) {
-                            echo "<a href='kanji.php?literal={$other_form}'>{$other_form}</a>";
-                        }
-                        ?>
-                    </div>
-                <?php endif; ?>
 
                 <?php if (!empty($entry["jlpt"]) || !empty($entry["grade"])): ?>
 
@@ -90,16 +113,16 @@ $totalKnown = $stmt->fetchColumn();
 
                         <?php if (!empty($entry["jlpt"])): ?>
                             <span class="kanji-tag <?= getImportanceJLPT(
-                                $entry["jlpt"],
-                                $totalKnown,
-                            ) ?>">N<?= $entry["jlpt"] ?></span>
+                                                        $entry["jlpt"],
+                                                        $totalKnown,
+                                                    ) ?>">N<?= $entry["jlpt"] ?></span>
                         <?php endif; ?><!-- jlpt -->
 
                         <?php if (!empty($entry["kanken"])): ?>
                             <span class="kanji-tag <?= getImportanceKANKEN(
-                                $entry["kanken"],
-                                $totalKnown,
-                            ) ?>">K<?= $entry["kanken"] ?></span>
+                                                        $entry["kanken"],
+                                                        $totalKnown,
+                                                    ) ?>">K<?= $entry["kanken"] ?></span>
                         <?php endif; ?><!-- kanken -->
 
                     </div>
@@ -128,41 +151,22 @@ $totalKnown = $stmt->fetchColumn();
                     }
                     echo "</div><!-- readings -->";
                 } ?>
-                <div class="links">
-                    <a href="https://www.kanshudo.com/kanji/<?php echo $entry[
-                        "literal"
-                    ]; ?>" target="_blank">kanshudo</a> /
-                    <a href="https://en.wiktionary.org/wiki/<?php echo $entry[
-                        "literal"
-                    ]; ?>" target="_blank">wiki</a>
-                </div>
-                <?php if (!empty($entry["related"])) {
-                    echo '<div class="title">See also</div>';
-                    echo '<div class="components">';
-                    $relatedArray = explode(";", $entry["related"]);
-                    foreach ($relatedArray as $related) {
-                        echo "<div class='component'><a href='kanji.php?literal={$related}'>{$related}</a></div>";
+
+                <div class="story-plus-image">
+                    <!-- image -->
+                    <?php
+                    $img = "../data/images/" . $entry["literal"] . ".jpg";
+                    if (file_exists($img)) {
+                        echo "<a href='{$img}' target='_blank' class='story-image'><img src='{$img}'></a>";
                     }
-                    echo "</div><!-- related -->";
-                } ?>
-                <?php if (!empty($entry["story"])): ?>
+                    ?>
 
-                    <!--
-                    <div class="title">Story</div>
-                -->
-                    <div class="story">
-                        <?php echo parse_story($entry["story"]); ?>
-                    </div><!-- story -->
-                <?php endif; ?>
-
-                <!-- image -->
-                <?php
-                $img = "../data/images/" . $entry["literal"] . ".jpg";
-                if (file_exists($img)) {
-                    echo "<a href='{$img}' target='_blank'><img src='{$img}'></a>";
-                }
-                ?>
-
+                    <?php if (!empty($entry["story"])): ?>
+                        <div class="story">
+                            <?php echo parse_story($entry["story"]); ?>
+                        </div><!-- story -->
+                    <?php endif; ?>
+                </div>
                 <?php
                 $sql =
                     "SELECT * FROM examples WHERE kanji != '' AND kanji LIKE ? AND (jlpt IS NOT NULL OR freq_wiki IS NOT NULL OR added = 1) ORDER BY CASE WHEN added = 1 THEN 1 WHEN jlpt IS NOT NULL THEN 2 WHEN freq_wiki IS NOT NULL THEN 3 ELSE 4 END, jlpt DESC, freq_wiki ASC";
@@ -191,29 +195,21 @@ $totalKnown = $stmt->fetchColumn();
                             <div class="word<?= $added ?>">
                                 <?php if (
                                     $example["jlpt"] != 0
-                                ): ?><span class="word-meta">N<?php echo $example[
-    "jlpt"
-]; ?></span><?php endif; ?>
+                                ): ?><span class="word-meta">N<?php echo $example["jlpt"]; ?></span><?php endif; ?>
                                 <?php if (
                                     $example["freq_wiki"] != 0
-                                ): ?><span class="word-meta">F<?php echo $example[
-    "freq_wiki"
-]; ?></span><?php endif; ?>
-                                <a href="search.php?query=<?php echo $example[
-                                    "kanji"
-                                ]; ?>" class="example-kanji"><?php echo formatKanjis(
-    $example["kanji"],
-); ?></a>
+                                ): ?><span class="word-meta">F<?php echo $example["freq_wiki"]; ?></span><?php endif; ?>
+                                <a href="search.php?query=<?php echo $example["kanji"]; ?>" class="example-kanji"><?php echo formatKanjis(
+                                                                                                                        $example["kanji"],
+                                                                                                                    ); ?></a>
 
                                 <span class="example-text">
-                                    <span style="font-size:1.6rem"><?= $example[
-                                        "kanji"
-                                    ] ?></span><br>
+                                    <span style="font-size:1.6rem"><?= $example["kanji"] ?></span><br>
                                     「<?= str_replace(
-                                        ";",
-                                        " / ",
-                                        $example["kana"],
-                                    ) ?>」<br>
+                                            ";",
+                                            " / ",
+                                            $example["kana"],
+                                        ) ?>」<br>
                                     <?php if (
                                         !empty($example["kanji_alternative"])
                                     ) {
@@ -229,12 +225,8 @@ $totalKnown = $stmt->fetchColumn();
                                         $example["meanings"],
                                     ); ?>
                                     <form action="../actions/toggle_example_study.php" method="POST">
-                                        <input type="hidden" name="id" value="<?php echo $example[
-                                            "id"
-                                        ]; ?>">
-                                        <input type="hidden" name="literal" value="<?php echo $_GET[
-                                            "literal"
-                                        ]; ?>">
+                                        <input type="hidden" name="id" value="<?php echo $example["id"]; ?>">
+                                        <input type="hidden" name="literal" value="<?php echo $_GET["literal"]; ?>">
                                         <button type="submit">
                                             <?= $example["added"] == 1
                                                 ? "remove"
@@ -252,38 +244,28 @@ $totalKnown = $stmt->fetchColumn();
                                 <?php foreach ($more_examples as $example): ?>
                                     <?php $added =
                                         $example["added"] == 1
-                                            ? " added "
-                                            : ""; ?>
+                                        ? " added "
+                                        : ""; ?>
                                     <div class="word<?= $added ?>">
-                                        <a href="search.php?query=<?php echo $example[
-                                            "kanji"
-                                        ]; ?>" class="example-kanji"><?php echo formatKanjis(
-    $example["kanji"],
-); ?></a>
+                                        <a href="search.php?query=<?php echo $example["kanji"]; ?>" class="example-kanji"><?php echo formatKanjis(
+                                                                                                                                $example["kanji"],
+                                                                                                                            ); ?></a>
 
                                         <span class="example-text">
-                                            <span style="font-size:1.6rem"><?= $example[
-                                                "kanji"
-                                            ] ?></span><br>
+                                            <span style="font-size:1.6rem"><?= $example["kanji"] ?></span><br>
                                             「<?= str_replace(
-                                                ";",
-                                                " / ",
-                                                $example["kana"],
-                                            ) ?>」<br>
+                                                    ";",
+                                                    " / ",
+                                                    $example["kana"],
+                                                ) ?>」<br>
                                             <?php if (
-                                                !empty(
-                                                    $example[
-                                                        "kanji_alternative"
-                                                    ]
-                                                )
+                                                !empty($example["kanji_alternative"])
                                             ) {
                                                 echo "[also " .
                                                     str_replace(
                                                         ";",
                                                         " / ",
-                                                        $example[
-                                                            "kanji_alternative"
-                                                        ],
+                                                        $example["kanji_alternative"],
                                                     ) .
                                                     "]<br>";
                                             } ?>
@@ -291,12 +273,8 @@ $totalKnown = $stmt->fetchColumn();
                                                 $example["meanings"],
                                             ); ?>
                                             <form action="../actions/toggle_example_study.php" method="POST">
-                                                <input type="hidden" name="id" value="<?php echo $example[
-                                                    "id"
-                                                ]; ?>">
-                                                <input type="hidden" name="literal" value="<?php echo $_GET[
-                                                    "literal"
-                                                ]; ?>">
+                                                <input type="hidden" name="id" value="<?php echo $example["id"]; ?>">
+                                                <input type="hidden" name="literal" value="<?php echo $_GET["literal"]; ?>">
                                                 <button type="submit">
                                                     <?= $example["added"] == 1
                                                         ? "remove"
@@ -324,11 +302,7 @@ $totalKnown = $stmt->fetchColumn();
                             <div class="word
                             <?= $added ?>
                             <?= $ignore ?>">
-                                <a href="kanji.php?literal=<?php echo $example[
-                                    "literal"
-                                ]; ?>" class="example-kanji"><?php echo $example[
-    "literal"
-]; ?></a>
+                                <a href="kanji.php?literal=<?php echo $example["literal"]; ?>" class="example-kanji"><?php echo $example["literal"]; ?></a>
                             </div>
                         <?php endforeach; ?>
                     </div><!-- contained_in_kanjis -->
@@ -336,35 +310,21 @@ $totalKnown = $stmt->fetchColumn();
 
                 <div class="edit" id="edit-area">
                     <form action="../actions/update_kanji.php" enctype="multipart/form-data" method="POST">
-                        <input type="hidden" name="literal" value="<?php echo $entry[
-                            "literal"
-                        ]; ?>">
+                        <input type="hidden" name="literal" value="<?php echo $entry["literal"]; ?>">
                         <span>Components</span>
-                        <input type=" text" name="components" value="<?php echo $entry[
-                            "components"
-                        ]; ?>" placeholder="𠂇;口">
+                        <input type=" text" name="components" value="<?php echo $entry["components"]; ?>" placeholder="𠂇;口">
                         <span>Other forms</span>
-                        <input type="text" name="otherForms" value="<?php echo $entry[
-                            "other_forms"
-                        ]; ?>" placeholder="亻;人">
+                        <input type="text" name="otherForms" value="<?php echo $entry["other_forms"]; ?>" placeholder="亻;人">
                         <span>See also</span>
-                        <input type="text" name="related" value="<?php echo $entry[
-                            "related"
-                        ]; ?>" placeholder="亻;人">
+                        <input type="text" name="related" value="<?php echo $entry["related"]; ?>" placeholder="亻;人">
                         <span>Story (#query# to create a search, _day_ for emphasis and ?msg? for TODO)</span>
-                        <textarea rows="4" name="story"><?php echo $entry[
-                            "story"
-                        ]; ?></textarea>
-                        <p><input id="unfinished" type="checkbox" <?= $entry[
-                            "unfinished"
-                        ] == 1
-                            ? "checked"
-                            : "" ?> name="unfinished"><label for="unfinished">is missing information</label></p>
-                        <p><input id="is_component" type="checkbox" <?= $entry[
-                            "is_component"
-                        ] == 1
-                            ? "checked"
-                            : "" ?> name="is_component"><label for="is_component">is a basic component</label></p>
+                        <textarea rows="4" name="story"><?php echo $entry["story"]; ?></textarea>
+                        <p><input id="unfinished" type="checkbox" <?= $entry["unfinished"] == 1
+                                                                        ? "checked"
+                                                                        : "" ?> name="unfinished"><label for="unfinished">is missing information</label></p>
+                        <p><input id="is_component" type="checkbox" <?= $entry["is_component"] == 1
+                                                                        ? "checked"
+                                                                        : "" ?> name="is_component"><label for="is_component">is a basic component</label></p>
                         <span>Image</span>
                         <input type="file" name="image">
                         <p><button type="submit">Save changes</button></p>
@@ -378,24 +338,7 @@ $totalKnown = $stmt->fetchColumn();
                 </form>
             </div>
 
-            <div class="action">
-                <?php if ($entry["added"] == "" || $entry["added"] == 0): ?>
-                    <form action="../actions/toggle_kanji_study.php" method="POST">
-                        <input type="hidden" name="literal" value="<?php echo $entry[
-                            "literal"
-                        ]; ?>">
-                        <button type="submit">add</button>
-                    </form>
-                <?php else: ?>
-                    <form action="../actions/toggle_kanji_study.php" method="POST">
-                        <input type="hidden" name="literal" value="<?php echo $entry[
-                            "literal"
-                        ]; ?>">
-                        <button type="submit">remove</button>
-                    </form>
-                <?php endif; ?>
-                <a id="edit-toggle" href="#edit-area">edit</a>
-            </div><!-- action -->
+
 
 
         </div><!-- card -->
