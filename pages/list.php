@@ -18,11 +18,7 @@
         foreach ($entries as $entry) {
             $text .= '<a href="kanji.php?literal=' . $entry['literal'] . '"';
             if ($entry['added'] == 1) {
-                // only show unfinished when looking at my list
-                $unfinished = ($entry['unfinished'] && $my_list) ? ' unfinished ' : '';
-                // exclude components from being greyed out since I added them manually and I need to distinguish finished from unfinished
-                $ignore = ($entry['ignore'] == 1 && !$entry['is_component']) ? ' ignore ' : '';
-                $text .= ' class="added' . $unfinished . $ignore . '"' . ' title="Added: ' . $entry['added_at'] . ' • Score: ' . $entry['score'] . '"';
+                $text .= ' class="added"';
             }
             $text .= '>' . $entry['literal'] . '</a>';
         }
@@ -41,21 +37,6 @@
             if ($entry['added'] == 1) $text .= ' class="added"';
             $text .= '>' . $entry['literal'] . '</a>';
         }
-        return $text;
-    }
-
-    function text_grade($PDO, $grade)
-    {
-        $sql = "SELECT * FROM kanjis WHERE grade = ?";
-        $stmt = $PDO->prepare($sql);
-        $result = $stmt->execute([$grade]);
-        $entries = $stmt->fetchAll();
-        if ($grade != 8) {
-            $text = '<div class="title">PRIMARY SCHOOL - GRADE ' . $grade . ' (' . count($entries) . ' characters):</div>';
-        } else {
-            $text = '<div class="title">SECONDARY SCHOOL (' . count($entries) . ' characters):</div>';
-        }
-        $text .= loop_entries($entries);
         return $text;
     }
 
@@ -95,60 +76,6 @@
             echo text_jlpt($myPDO, 2);
             echo text_jlpt($myPDO, 1);
             ?>
-        <?php elseif ($_GET['list'] == 'jouyou') : ?>
-
-            <h1>JOUYOU</h1>
-
-            <?php
-            echo text_grade($myPDO, 1);
-            echo text_grade($myPDO, 2);
-            echo text_grade($myPDO, 3);
-            echo text_grade($myPDO, 4);
-            echo text_grade($myPDO, 5);
-            echo text_grade($myPDO, 6);
-            echo text_grade($myPDO, 8);
-            ?>
-
-        <?php elseif ($_GET['list'] == 'my_list') : ?>
-
-            <h1>MY STUDY LIST</h1>
-
-            <?php
-            $sql = "SELECT * FROM kanjis WHERE added = 1 AND is_component IS NULL ORDER BY added_at DESC";
-            $stmt = $myPDO->query($sql);
-            $entries = $stmt->fetchAll();
-            ?>
-            <div class="title">Kanjis (<?php echo count($entries); ?> characters):</div>
-            <?php if (count($entries) == 0) : ?>
-                <p>You haven't added any kanjis yet! To do so click on the "<strong>Add</strong>" button on the top right of the page when viewing a kanji.</p>
-            <?php else : ?>
-                <?php echo loop_entries($entries, true); ?>
-            <?php endif; ?>
-
-            <?php
-            $sql = "SELECT * FROM kanjis WHERE added = 1 AND is_component = 1 ORDER BY added_at DESC";
-            $stmt = $myPDO->query($sql);
-            $entries = $stmt->fetchAll();
-            ?>
-            <div class="title">COMPONENTS (<?php echo count($entries); ?> characters):</div>
-            <?php if (count($entries) == 0) : ?>
-                <p>You haven't added any kanjis yet! To do so click on the "<strong>Add</strong>" button on the top right of the page when viewing a kanji.</p>
-            <?php else : ?>
-                <?php echo loop_entries($entries); ?>
-            <?php endif; ?>
-
-
-        <?php elseif ($_GET['list'] == 'heisg6') : ?>
-
-            <h1>HEISG6</h1>
-
-            <?php
-            $sql = "SELECT * FROM kanjis WHERE heisg6 IS NOT NULL ORDER BY heisg6 ASC";
-            $stmt = $myPDO->query($sql);
-            $entries = $stmt->fetchAll();
-            ?>
-            <div class="title">HEISG6 (<?php echo count($entries); ?> characters):</div>
-            <?php echo loop_entries($entries); ?>
 
         <?php elseif ($_GET['list'] == 'frequency') : ?>
 

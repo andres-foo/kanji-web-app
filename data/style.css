@@ -283,8 +283,7 @@ button:hover {
     flex-direction: column;
 }
 .header .header-actions a,
-.header button,
-.list-menu {
+.header button {
     background: #121212;
     border: 1px solid transparent;
     padding: 10px 15px;
@@ -304,19 +303,19 @@ button:hover {
 .list-menu:hover .list-menu-content {
     display: flex;
 }
-
 .list-menu-content {
     position: absolute;
     left: 0;
-    top: 40px;
+    top: 50px;
     display: none;
     gap: 10px;
     flex-direction: column;
     z-index: 1000;
     background-color: #121212;
-    padding: 15px 30px;
+    padding: 15px 15px;
     border-radius: 5px;
     border-top-left-radius: 0px;
+    background-color: rgba(0, 0, 0, 0.8);
 }
 .header .header-actions .list-menu .list-menu-content a {
     background: none;
@@ -440,12 +439,36 @@ span.history-bad {
     content: "→";
 }
 
+.kanji-list {
+    display:flex;
+    flex-wrap: wrap;
+    column-gap:20px;
+    row-gap: 10px;
+}
 .list {
     display: block;
     padding: 10px 20px;
 }
 .list a {
+    border-radius: 5px;
     font-size: 2.2em;
+    padding:0 5px;
+    border:1px solid transparent;
+}
+.list-score {
+    display:block;
+    border-bottom:2px solid #121212;
+    color:#c3ceaa;
+    margin-top:40px;
+    margin-bottom: 10px;
+    padding:0 0 5px 10px;
+    font-size: 1.5rem;
+}
+.list-filter a {
+    position:absolute;
+    top:10px;
+    right:10px;
+    font-size: 1.5rem;
 }
 .list a.added {
     color: #16cc2e;
@@ -454,7 +477,8 @@ span.history-bad {
     color: #cf3521;
 }
 .list a.ignore {
-    color: grey;
+
+    border: 1px dashed #959595;
 }
 .list a.added:hover {
     color: #6ff882;

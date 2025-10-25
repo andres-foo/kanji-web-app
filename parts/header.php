@@ -38,17 +38,15 @@ session_start();
                 <form action="../actions/review.php" method="POST">
                     <button type="submit" class="review">🢅 REVIEW</button>
                 </form>
-                <a href="list.php?list=my_list">MY LIST</a>
-                <a href="components.php">COMPONENTS</a>
-                <div class="list-menu">MORE LISTS
+                <div class="list-menu">
+                    <a href="my-list.php">MY LIST</a>
                     <div class="list-menu-content">
                         <a href="list.php?list=kanken">KANKEN</a>
                         <a href="list.php?list=jlpt">JLPT</a>
-                        <a href="list.php?list=jouyou">JOUYOU</a>
                         <a href="list.php?list=frequency">FREQUENCY</a>
-                        <a href="list.php?list=heisg6">HEISG6</a>
                     </div>
                 </div>
+                <a href="components.php">COMPONENTS</a>
                 <a href="../actions/export_kanji.php" class="export">&#8595; KANJIS</a>
                 <a href="../actions/export_words.php" class="export">&#8595; WORDS</a>
                 <a href="../pages/history.php" class="export">HISTORY</a>
@@ -58,10 +56,10 @@ session_start();
             <div class="header-form">
                 <form action="search.php" method="GET">
                     <input type="search" placeholder="Search by literal, readings or meanings" name="query" value="<?php if (
-                        isset($_GET["query"])
-                    ) {
-                        echo $_GET["query"];
-                    } ?>">
+                                                                                                                        isset($_GET["query"])
+                                                                                                                    ) {
+                                                                                                                        echo $_GET["query"];
+                                                                                                                    } ?>">
                 </form>
                 <?php if (
                     isset($_GET["query"]) &&
