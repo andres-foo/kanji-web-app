@@ -165,74 +165,52 @@ if (isset($_GET["query"])) {
         </div>
     <?php else: ?>
 
-        <div class="title"><?php echo count($kanjis); ?> kanjis found<?php if (
-     !empty($examples)
- ) {
-     echo ' <a href="#examples">↓ see ' . count($examples) . " examples</a>";
- } ?></div>
+        <div class="title">
+            <?php echo count($kanjis); ?> kanjis found
+        </div>
 
-        <?php foreach ($kanjis as $entry): ?>
+        <div class="search-results-kanjis">
+            <?php foreach ($kanjis as $entry): ?>
 
-            <div class="card search<?php if ($entry["added"] == 1) {
-                echo " added";
-            } ?>">
-                <div class="left">
-                    <div class="kanji"><a href="kanji.php?literal=<?php echo $entry[
-                        "literal"
-                    ]; ?>"><?php echo $entry["literal"]; ?></a></div>
-                </div><!-- left -->
-                <div class="right">
-                    <div class="meanings">
-                        <?php echo str_replace(
-                            ";",
-                            ", ",
-                            $entry["meanings"],
-                        ); ?>
-                    </div><!-- meanings -->
-                    <?php if (!empty($entry["onReadings"])) {
-                        echo '<div class="readings">';
-                        $onReadingsArray = explode(";", $entry["onReadings"]);
-                        foreach ($onReadingsArray as $onReading) {
-                            echo '<div class="reading">' .
-                                $onReading .
-                                "</div>";
-                        }
-                        echo "</div><!-- readings -->";
-                    } ?>
-                    <?php if (!empty($entry["kunReadings"])) {
-                        echo '<div class="readings">';
-                        $kunReadingsArray = explode(";", $entry["kunReadings"]);
-                        foreach ($kunReadingsArray as $kunReading) {
-                            echo '<div class="reading">' .
-                                $kunReading .
-                                "</div>";
-                        }
-                        echo "</div><!-- readings -->";
-                    } ?>
-                </div><!-- right -->
-
-            </div><!-- card -->
-        <?php endforeach; ?>
+                <div class="card search<?php if ($entry["added"] == 1) {
+                                            echo " added";
+                                        } ?>">
+                    <div class="left">
+                        <div class="kanji"><a href="kanji.php?literal=<?php echo $entry["literal"]; ?>"><?php echo $entry["literal"]; ?></a></div>
+                    </div><!-- left -->
+                    <div class="right">
+                        <div class="meanings">
+                            <?php echo str_replace(
+                                ";",
+                                ", ",
+                                $entry["meanings"],
+                            ); ?>
+                        </div><!-- meanings -->
+                    </div><!-- right -->
+                </div><!-- card -->
+            <?php endforeach; ?>
+        </div><!-- search-results-kanjis -->
     <?php endif; ?>
 
     <?php if (!empty($examples)): ?>
-        <div class="title" id="examples"><?php echo count(
-            $examples,
-        ); ?> examples found</div>
+        <div class="title">
+            <?php echo count(
+                $examples,
+            ); ?> examples found
+        </div>
         <?php foreach ($examples as $example): ?>
-            <div class="card search search-word<?php if (
-                $example["added"] == 1
-            ) {
-                echo " added";
-            } ?>">
-                <?php echo '<a href="search.php?query=' .
-                    $example["kanji"] .
-                    '">' .
-                    $example["kanji"] .
-                    "</a>「" .
-                    $example["kana"] .
-                    "」"; ?> (jlpt<?php echo $example["jlpt"]; ?>)
-                <?php echo str_replace(",", ", ", $example["meanings"]); ?>
+            <div class="card search flex-column search-word<?= ($example["added"] == 1) ? " added" : "" ?>">
+                <span>
+                    <a href="search.php?query=<?= $example["kanji"] ?>">
+                        <?= $example["kanji"] ?>
+                    </a>
+                    「<?= $example["kana"] ?>」
+                </span>
+                <span>
+                    <?= formatMeanings($example["meanings"]) ?>
+                    <?php //echo str_replace(";", ", ", $example["meanings"]); 
+                    ?>
+                </span>
             </div>
         <?php endforeach; ?>
     <?php endif; ?>
