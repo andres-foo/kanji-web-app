@@ -52,6 +52,7 @@ $totalKnown = $stmt->fetchColumn();
             <?php if ($entry["is_component"]): ?>
                 <div class="component-flag">basic component</div>
             <?php endif; ?>
+
             <div class="left<?= $entry["ignore"] == 1 ? " ignore" : "" ?>">
                 <div class="kanji"><?php echo $entry["literal"]; ?></div>
                 <?php if (!empty($entry["components"])) {
@@ -68,6 +69,21 @@ $totalKnown = $stmt->fetchColumn();
             <div class="right">
 
                 <div class="extras">
+                    <?php if (!empty($entry["jlpt"]) || !empty($entry["grade"])): ?>
+                        <?php if (!empty($entry["jlpt"])): ?>
+                            <div class="kanji-tag <?= getImportanceJLPT(
+                                                        $entry["jlpt"],
+                                                        $totalKnown,
+                                                    ) ?>">N<?= $entry["jlpt"] ?></div>
+                        <?php endif; ?><!-- jlpt -->
+
+                        <?php if (!empty($entry["kanken"])): ?>
+                            <div class="kanji-tag <?= getImportanceKANKEN(
+                                                        $entry["kanken"],
+                                                        $totalKnown,
+                                                    ) ?>">K<?= $entry["kanken"] ?></div>
+                        <?php endif; ?><!-- kanken -->
+                    <?php endif; ?>
                     <?php if (!empty($entry["other_forms"])): ?>
                         <div>
                             aka
@@ -91,9 +107,11 @@ $totalKnown = $stmt->fetchColumn();
                         </div>
                     <?php endif; ?>
                     <div>
-
                         <a href="https://www.kanshudo.com/kanji/<?php echo $entry["literal"]; ?>" target="_blank">↗ kanshudo</a> •
                         <a href="https://en.wiktionary.org/wiki/<?php echo $entry["literal"]; ?>" target="_blank">↗ wiki</a>
+                    </div>
+                    <div>
+                        score: <?= $entry["score"] ?>
                     </div>
                     <div>
                         <form class="kanji-actions" action="../actions/toggle_kanji_study.php" method="POST">
@@ -106,28 +124,6 @@ $totalKnown = $stmt->fetchColumn();
                 <div class="meanings">
                     <?php echo str_replace(";", ", ", $entry["meanings"]); ?>
                 </div><!-- meanings -->
-
-                <?php if (!empty($entry["jlpt"]) || !empty($entry["grade"])): ?>
-
-                    <div class="meta">
-
-                        <?php if (!empty($entry["jlpt"])): ?>
-                            <span class="kanji-tag <?= getImportanceJLPT(
-                                                        $entry["jlpt"],
-                                                        $totalKnown,
-                                                    ) ?>">N<?= $entry["jlpt"] ?></span>
-                        <?php endif; ?><!-- jlpt -->
-
-                        <?php if (!empty($entry["kanken"])): ?>
-                            <span class="kanji-tag <?= getImportanceKANKEN(
-                                                        $entry["kanken"],
-                                                        $totalKnown,
-                                                    ) ?>">K<?= $entry["kanken"] ?></span>
-                        <?php endif; ?><!-- kanken -->
-
-                    </div>
-
-                <?php endif; ?>
 
                 <?php if (
                     !empty($entry["onReadings"]) or
