@@ -715,7 +715,6 @@ hr {
 .story {
     border: 1px solid #322e55;
     box-shadow: 3px 4px 8px 7px rgb(36 34 67 / 61%);
-    z-index: 2;
 }
 
 .story span,
