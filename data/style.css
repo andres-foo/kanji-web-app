@@ -686,6 +686,9 @@ hr {
 
 .story-image {
     display: inline-block;
+}
+
+.story-image:hover {
     z-index: 3;
 }
 
