@@ -693,7 +693,7 @@ hr {
 }
 
 .story-image:hover img {
-    transform: scale(2) translate(100px) rotateZ(2deg);
+    transform: scale(2) translate(25%, -25%);
 }
 
 .story-image img {
