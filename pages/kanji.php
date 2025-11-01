@@ -169,11 +169,20 @@ $totalKnown = $stmt->fetchColumn();
                 $stmt = $myPDO->prepare($sql);
                 $stmt->execute(["%" . $entry["literal"] . "%"]);
                 $examples = $stmt->fetchAll();
+
                 $sql =
                     "SELECT * FROM examples WHERE kanji != '' AND kanji LIKE ? AND (jlpt IS NULL AND freq_wiki IS NULL AND added != 1)";
                 $stmt = $myPDO->prepare($sql);
                 $stmt->execute(["%" . $entry["literal"] . "%"]);
                 $more_examples = $stmt->fetchAll();
+
+                $sql =
+                    "SELECT * FROM phrases WHERE phrase LIKE ?";
+                $stmt = $myPDO->prepare($sql);
+                $stmt->execute(["%" . $entry["literal"] . "%"]);
+                $phrases = $stmt->fetchAll();
+
+
                 $sql =
                     "SELECT * FROM kanjis WHERE components LIKE ? ORDER BY added DESC";
                 $stmt = $myPDO->prepare($sql);
@@ -285,6 +294,22 @@ $totalKnown = $stmt->fetchColumn();
 
                     </div><!-- words -->
 
+                <?php endif; ?>
+
+                <?php if (!empty($phrases)): ?>
+                    <div class="title">Phrases</div>
+                    <div class="phrases">
+                        <?php foreach ($phrases as $phrase): ?>
+                            <div class="phrase">
+                                <div class="phrase-ruby">
+                                    <a href="search.php?query=<?= $phrase["phrase"] ?>"><?= $phrase["phrase_ruby"] ?></a>
+                                </div>
+                                <div class="phrase-translation">
+                                    <?= $phrase["translation"] ?>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
                 <?php endif; ?>
 
                 <?php if (!empty($contained_in_kanjis)): ?>

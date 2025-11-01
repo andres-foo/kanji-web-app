@@ -902,6 +902,26 @@ button.options {
     display: inline-block;
 }
 
+/* PHRASES*/
+.phrases {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.phrases .phrase {
+    padding: 10px;
+    background: #121212;
+    border-radius: 5px;
+}
+
+.phrases .phrase .phrase-ruby {
+    font-size: 1.6rem;
+}
+
+
+
 .example-text form {
     display: block;
     margin-top: 10px;
