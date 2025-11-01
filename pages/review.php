@@ -33,13 +33,9 @@ $totalKnown = $stmt->fetchColumn();
         <div class="review-options">
             <form action="../actions/mark_difficulty.php" class="review-scoring" method="POST">
                 <button class="review-good" name="review_good">⮝</button>
-                <a href="./kanji.php?literal=<?= $_GET[
-                    "literal"
-                ] ?>" class="review-neutral">🗘</a>
+                <a href="./kanji.php?literal=<?= $_GET["literal"] ?>" class="review-neutral">🗘</a>
                 <button class="review-bad" name="review_bad">⮟</button>
-                <input type="hidden" name="literal" value="<?php echo $entry[
-                    "literal"
-                ]; ?>">
+                <input type="hidden" name="literal" value="<?php echo $entry["literal"]; ?>">
             </form>
         </div>
 
@@ -59,9 +55,25 @@ $totalKnown = $stmt->fetchColumn();
                 <div class="words">
                     <!-- priority examples -->
                     <?php foreach ($examples as $example): ?>
-                            <span class="word"><?php echo formatKanjis(
-                                $example["kanji"],
-                            ); ?></span>
+                        <span class="word"><?php echo formatKanjis(
+                                                $example["kanji"],
+                                            ); ?></span>
+                    <?php endforeach; ?>
+                </div><!-- words -->
+            <?php endif; ?>
+
+            <?php
+            $sql =
+                "SELECT * FROM phrases WHERE phrase LIKE ?";
+            $stmt = $myPDO->prepare($sql);
+            $stmt->execute(["%" . $entry["literal"] . "%"]);
+            $phrases = $stmt->fetchAll();
+            ?>
+            <?php if (!empty($phrases)): ?>
+                <div class="phrases">
+                    <!-- priority examples -->
+                    <?php foreach ($phrases as $phrase): ?>
+                        <span class="phrase"><?= $phrase["phrase"] ?></span>
                     <?php endforeach; ?>
                 </div><!-- words -->
             <?php endif; ?>

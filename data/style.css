@@ -424,7 +424,16 @@ button:hover {
     gap: 20px;
 }
 
-.review-card .words .word {
+.review-card .phrases {
+    display: flex;
+    gap: 20px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.review-card .words .word,
+.review-card .phrases .phrase {
     font-size: 2rem;
     border: 2px solid #121212;
     padding: 10px 20px;
@@ -919,7 +928,6 @@ button.options {
 .phrases .phrase .phrase-ruby {
     font-size: 1.6rem;
 }
-
 
 
 .example-text form {
