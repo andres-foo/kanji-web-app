@@ -164,40 +164,37 @@ $totalKnown = $stmt->fetchColumn();
                     <?php endif; ?>
                 </div>
                 <?php
-                $sql =
-                    "SELECT * FROM examples WHERE kanji != '' AND kanji LIKE ? AND (jlpt IS NOT NULL OR freq_wiki IS NOT NULL OR added = 1) ORDER BY CASE WHEN added = 1 THEN 1 WHEN jlpt IS NOT NULL THEN 2 WHEN freq_wiki IS NOT NULL THEN 3 ELSE 4 END, jlpt DESC, freq_wiki ASC";
+                $sql = "SELECT * FROM examples WHERE kanji != '' AND kanji LIKE ? AND added = 1 ORDER BY CASE WHEN jlpt IS NOT NULL THEN 1 WHEN freq_wiki IS NOT NULL THEN 2 ELSE 3 END";
+                //"SELECT * FROM examples WHERE kanji != '' AND kanji LIKE ? AND added = 1 ORDER BY CASE WHEN jlpt IS NOT NULL THEN 1 WHEN freq_wiki IS NOT NULL THEN 2 ELSE 3 END, jlpt DESC, freq_wiki ASC";
                 $stmt = $myPDO->prepare($sql);
                 $stmt->execute(["%" . $entry["literal"] . "%"]);
-                $examples = $stmt->fetchAll();
+                $my_examples = $stmt->fetchAll();
 
                 $sql =
-                    "SELECT * FROM examples WHERE kanji != '' AND kanji LIKE ? AND (jlpt IS NULL AND freq_wiki IS NULL AND added != 1)";
+                    "SELECT * FROM examples WHERE kanji != '' AND kanji LIKE ? AND (added = 0 OR added IS NULL) ORDER BY CASE WHEN jlpt IS NOT NULL THEN 1 WHEN freq_wiki IS NOT NULL THEN 2 ELSE 3 END, jlpt DESC, freq_wiki ASC";
+
+                //$sql = "SELECT * FROM examples WHERE kanji != '' AND kanji LIKE ? AND (jlpt IS NULL AND freq_wiki IS NULL AND added != 1)";
                 $stmt = $myPDO->prepare($sql);
                 $stmt->execute(["%" . $entry["literal"] . "%"]);
                 $more_examples = $stmt->fetchAll();
 
-                $sql =
-                    "SELECT * FROM phrases WHERE phrase LIKE ?";
+                $sql = "SELECT * FROM phrases WHERE phrase LIKE ?";
                 $stmt = $myPDO->prepare($sql);
                 $stmt->execute(["%" . $entry["literal"] . "%"]);
                 $phrases = $stmt->fetchAll();
 
 
-                $sql =
-                    "SELECT * FROM kanjis WHERE components LIKE ? ORDER BY added DESC";
+                $sql = "SELECT * FROM kanjis WHERE components LIKE ? ORDER BY added DESC";
                 $stmt = $myPDO->prepare($sql);
                 $stmt->execute(["%" . $entry["literal"] . "%"]);
                 $contained_in_kanjis = $stmt->fetchAll();
                 ?>
-                <?php if (!empty($examples)): ?>
+                <?php if (!empty($my_examples)): ?>
+                    <div class="title">My words</div>
                     <div class="words">
-                        <div class="title">Examples</div>
-
                         <!-- priority examples -->
-                        <?php foreach ($examples as $example): ?>
-                            <?php $added =
-                                $example["added"] == 1 ? " added " : ""; ?>
-                            <div class="word<?= $added ?>">
+                        <?php foreach ($my_examples as $example): ?>
+                            <div class="word added">
                                 <?php if (
                                     $example["jlpt"] != 0
                                 ): ?><span class="word-meta">N<?php echo $example["jlpt"]; ?></span><?php endif; ?>
@@ -242,16 +239,39 @@ $totalKnown = $stmt->fetchColumn();
                             </div>
                         <?php endforeach; ?>
 
+                    </div><!-- /words -->
+                <?php endif; ?><!-- /my_examples -->
+
+                <?php if (!empty($phrases)): ?>
+                    <div class="title">Phrases</div>
+                    <div class="phrases">
+                        <?php foreach ($phrases as $phrase): ?>
+                            <div class="phrase">
+                                <div class="phrase-ruby">
+                                    <a href="search.php?query=<?= $phrase["phrase"] ?>"><?= $phrase["phrase_ruby"] ?></a>
+                                </div>
+                                <div class="phrase-translation">
+                                    <?= $phrase["translation"] ?>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?><!-- /phrases -->
+
+                <?php if (!empty($more_examples)): ?>
+                    <div class="words">
                         <?php if (!empty($more_examples)): ?>
-                            <p><a href="#" id="more-word-examples-toggle">toggle more examples ...</a></p>
+                            <p><a href="#" id="more-word-examples-toggle">toggle examples ...</a></p>
                             <!-- more examples -->
                             <div id="more-word-examples">
                                 <?php foreach ($more_examples as $example): ?>
-                                    <?php $added =
-                                        $example["added"] == 1
-                                        ? " added "
-                                        : ""; ?>
-                                    <div class="word<?= $added ?>">
+                                    <div class="word">
+                                        <?php if (
+                                            $example["jlpt"] != 0
+                                        ): ?><span class="word-meta">N<?php echo $example["jlpt"]; ?></span><?php endif; ?>
+                                        <?php if (
+                                            $example["freq_wiki"] != 0
+                                        ): ?><span class="word-meta">F<?php echo $example["freq_wiki"]; ?></span><?php endif; ?>
                                         <a href="search.php?query=<?php echo $example["kanji"]; ?>" class="example-kanji"><?php echo formatKanjis(
                                                                                                                                 $example["kanji"],
                                                                                                                             ); ?></a>
@@ -291,30 +311,12 @@ $totalKnown = $stmt->fetchColumn();
                                 <?php endforeach; ?>
                             </div>
                         <?php endif; ?>
-
-                    </div><!-- words -->
-
-                <?php endif; ?>
-
-                <?php if (!empty($phrases)): ?>
-                    <div class="title">Phrases</div>
-                    <div class="phrases">
-                        <?php foreach ($phrases as $phrase): ?>
-                            <div class="phrase">
-                                <div class="phrase-ruby">
-                                    <a href="search.php?query=<?= $phrase["phrase"] ?>"><?= $phrase["phrase_ruby"] ?></a>
-                                </div>
-                                <div class="phrase-translation">
-                                    <?= $phrase["translation"] ?>
-                                </div>
-                            </div>
-                        <?php endforeach; ?>
-                    </div>
-                <?php endif; ?>
+                    </div><!-- /words -->
+                <?php endif; ?><!-- more_examples -->
 
                 <?php if (!empty($contained_in_kanjis)): ?>
+                    <div class="title">Kanjis that contain this component</div>
                     <div class="words">
-                        <div class="title">Kanjis that contain this component</div>
                         <?php foreach ($contained_in_kanjis as $example): ?>
                             <?php
                             $added = $example["added"] == 1 ? " added " : "";
