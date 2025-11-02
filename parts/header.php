@@ -47,7 +47,7 @@ session_start();
                     </div>
                 </div>
                 <a href="components.php">COMPONENTS</a>
-                <a href="../actions/export_kanji.php" class="export">&#8595; KANJIS</a>
+                <a href="../actions/export_kanji.php" class="export">&#8595; KANJIS (done)</a>
                 <a href="../actions/export_words.php" class="export">&#8595; WORDS</a>
                 <a href="../pages/history.php" class="export">HISTORY</a>
                 <a href="../pages/print.php" target="_blank" class="export">TO PRINT</a>
