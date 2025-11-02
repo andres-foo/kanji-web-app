@@ -837,6 +837,22 @@ button.options {
 }
 */
 
+/* PREVIEW */
+
+.phrase-preview {
+    display: none;
+    flex-direction: column;
+    gap: 2px;
+    background-color: #121212;
+    border-radius: 4px;
+    padding: 15px 20px;
+
+    & .phrase-preview-ruby,
+    .phrase-preview-normal {
+        font-size: 2rem;
+    }
+}
+
 /* PRINT */
 .print-body {
     color: #000;
@@ -926,7 +942,7 @@ button.options {
 }
 
 .phrases .phrase .phrase-ruby {
-    font-size: 1.6rem;
+    font-size: 2rem;
 }
 
 
