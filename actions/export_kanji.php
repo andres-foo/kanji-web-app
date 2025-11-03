@@ -26,7 +26,7 @@ $sql = "SELECT
   ON
     e.kanji LIKE concat('%', k.literal, '%') AND e.added = 1
   WHERE
-    k.added = 1 AND k.unfinished IS NULL";
+    k.added = 1";
 $stmt = $myPDO->prepare($sql);
 $results = $stmt->execute();
 $entries = $stmt->fetchAll();
