@@ -9,7 +9,6 @@
 
     <div class="add-example">
         <form action="../actions/add-phrase.php" method="POST">
-
             <p>Phrase</p>
             <input type="text" name="phrase" placeholder="りんご以外はいりません。">
             <p>Phrase with ruby</p>
@@ -17,6 +16,8 @@
             <div id="preview"></div>
             <p>Translation</p>
             <input type="text" name="translation" placeholder="I don’t need anything except apples.">
+            <p>Source</p>
+            <input type="text" name="source" placeholder="Game / Anime / Manga">
             <p><button type="submit">Add phrase</button></p>
 
 

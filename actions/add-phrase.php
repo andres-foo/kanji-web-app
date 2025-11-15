@@ -21,10 +21,10 @@ if ($entry) {
     die("An entry with that phrase already exists");
 }
 
-$sql = "INSERT INTO phrases (phrase, phrase_ruby, translation) VALUES(?, ?, ?)";
+$sql = "INSERT INTO phrases (phrase, phrase_ruby, translation, source) VALUES(?, ?, ?, ?)";
 $stmt = $myPDO->prepare($sql);
 
-$results = $stmt->execute([$_POST['phrase'], $_POST['phrase_ruby'], $_POST['translation']]);
+$results = $stmt->execute([$_POST['phrase'], $_POST['phrase_ruby'], $_POST['translation'], $_POST['source']]);
 
 header("Location: ../pages/add-phrase.php?state=success");
 exit;
