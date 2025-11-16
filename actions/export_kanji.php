@@ -79,16 +79,7 @@ foreach ($kanjis as $literal => $kanji) {
     if (empty($kanji['story'])) {
         $doc .= ";";
     } else {
-        $pattern = '/#(.+?)#/';
-        $story = preg_replace($pattern, '<span class="link">$1</span>', $kanji['story']);
-        // emphasis
-        $pattern = '/\_(.+?)\_/';
-        $story = preg_replace($pattern, '<span class="em">$1</span>', $story);
-        // todo
-        $pattern = '/\?(.+?)\?/';
-        $story = preg_replace($pattern, '<span class="todo">TODO: $1</span>', $story);
-
-        $doc .= $story . ";";
+        $doc .= parse_story($kanji['story'], true) . ";";
     }
 
     // examples

@@ -196,19 +196,27 @@ function toKatakana($text = '')
     return $text;
 }
 
-function parse_story($story)
+function parse_story($story, $for_export = false)
 {
-    // todo
+    // note ??
     $pattern = '/\?(.+?)\?/';
-    $story = preg_replace($pattern, '<em>TODO: $1</em>', $story);
+    $story = preg_replace($pattern, '<span class="story-note">$1</span>', $story);
 
-    // links
-    $pattern = '/#(.+?)#/';
-    $story = preg_replace($pattern, '<a href="kanji.php?literal=$1">$1</a>', $story);
+    // result ==
+    $pattern = '/=(.+?)=/';
+    $story = preg_replace($pattern, '<span class="story-result">$1</span>', $story);
 
-    // emphasis
+    // component __
     $pattern = '/\_(.+?)\_/';
-    $story = preg_replace($pattern, '<span>$1</span>', $story);
+    $story = preg_replace($pattern, '<span class="story-component">$1</span>', $story);
+
+    // links ##
+    $pattern = '/#(.+?)#/';
+    if ($for_export) {
+        $story = preg_replace($pattern, '<span class="story-link">$1</span>', $story);
+    } else {
+        $story = preg_replace($pattern, '<a href="kanji.php?literal=$1">$1</a>', $story);
+    }
 
     return $story;
 }

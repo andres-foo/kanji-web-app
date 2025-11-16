@@ -726,13 +726,31 @@ hr {
     box-shadow: 3px 4px 8px 7px rgb(36 34 67 / 61%);
 }
 
-.story span,
+.story .story-component {
+    color: #0ab9ff;
+}
+
+.story .story-result {
+    color: #FFF;
+    background-color: #262626;
+    padding: 0 8px;
+    border-radius: 5px;
+}
+
+.story .story-note {
+    font-style: italic;
+    color: #7670a3;
+    border: 1px dashed #7670a3;
+    padding: 0 8px;
+    font-size: 1rem;
+    border-radius: 5px;
+}
+
 .component-story span {
     color: #e4e4e4;
     border-bottom: 2px solid #16cc2e;
 }
 
-.story>em,
 .component-story em {
     font-style: normal;
     padding: 0 4px;

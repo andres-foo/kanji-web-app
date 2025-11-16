@@ -340,7 +340,7 @@ $totalKnown = $stmt->fetchColumn();
                         <input type="text" name="otherForms" value="<?php echo $entry["other_forms"]; ?>" placeholder="亻;人">
                         <span>See also</span>
                         <input type="text" name="related" value="<?php echo $entry["related"]; ?>" placeholder="亻;人">
-                        <span>Story (#query# to create a search, _day_ for emphasis and ?msg? for TODO)</span>
+                        <span>Story (#link# &nbsp;&nbsp; _component_ &nbsp;&nbsp; =result= &nbsp;&nbsp; ?note?)</span>
                         <textarea rows="4" name="story"><?php echo $entry["story"]; ?></textarea>
                         <p><input id="unfinished" type="checkbox" <?= $entry["unfinished"] == 1
                                                                         ? "checked"
