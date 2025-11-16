@@ -12,6 +12,7 @@ $sql = "SELECT
     k.literal AS kliteral,
     k.meanings AS kmeanings,
     k.components AS kcomponents,
+    k.keyword AS kkeyword,
     k.onReadings AS konReadings,
     k.kunReadings AS kkunReadings,
     k.story AS kstory,
@@ -55,6 +56,7 @@ foreach ($entries as $row) {
         $kanjis[$row["kliteral"]] = [
             "literal" => $row["kliteral"],
             "meanings" => $row['kmeanings'],
+            "keyword" => $row['kkeyword'],
             "components" => $row['kcomponents'],
             "onReadings" => $row['konReadings'],
             "kunReadings" => $row['kkunReadings'],
@@ -70,6 +72,7 @@ foreach ($kanjis as $literal => $kanji) {
     // basics
     $doc .= $literal . ";";
     $doc .= str_replace(";", ", ", $kanji['meanings']) . ";";
+    $doc .= $kanji['keyword'] . ";";
     $doc .= str_replace(";", ", ", $kanji['components']) . ";";
 
     $doc .= (!is_null($kanji['onReadings']) ? str_replace(";", " / ", $kanji['onReadings']) : '') . ";";

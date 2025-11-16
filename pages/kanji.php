@@ -125,6 +125,12 @@ $totalKnown = $stmt->fetchColumn();
                     <?php echo str_replace(";", ", ", $entry["meanings"]); ?>
                 </div><!-- meanings -->
 
+                <?php if (!empty($entry['keyword'])): ?>
+                    <div class="keyword">
+                        <?= $entry['keyword'] ?>
+                    </div>
+                <?php endif; ?>
+
                 <?php if (
                     !empty($entry["onReadings"]) or
                     !empty($entry["kunReadings"])
@@ -334,6 +340,8 @@ $totalKnown = $stmt->fetchColumn();
                 <div class="edit" id="edit-area">
                     <form action="../actions/update_kanji.php" enctype="multipart/form-data" method="POST">
                         <input type="hidden" name="literal" value="<?php echo $entry["literal"]; ?>">
+                        <span>Keyword</span>
+                        <input type=" text" name="keyword" value="<?php echo $entry["keyword"]; ?>" placeholder="">
                         <span>Components</span>
                         <input type=" text" name="components" value="<?php echo $entry["components"]; ?>" placeholder="𠂇;口">
                         <span>Other forms</span>
