@@ -751,6 +751,7 @@ hr {
     padding: 0 8px;
     font-size: 1rem;
     border-radius: 5px;
+    text-wrap-mode: nowrap;
 }
 
 .component-story span {
