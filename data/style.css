@@ -191,6 +191,12 @@ body {
     border-radius: 3px;
 }
 
+.card .right .keyword .separator {
+    color: #2e2e2e;
+    padding: 0 8px;
+    font-weight: bold;
+}
+
 .card .right .extras {
     position: absolute;
     top: 0px;

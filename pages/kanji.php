@@ -127,7 +127,7 @@ $totalKnown = $stmt->fetchColumn();
 
                 <?php if (!empty($entry['keyword'])): ?>
                     <div class="keyword">
-                        <?= $entry['keyword'] ?>
+                        <?= implode("<span class='separator'>/</span>", explode(";", $entry['keyword'])) ?>
                     </div>
                 <?php endif; ?>
 
