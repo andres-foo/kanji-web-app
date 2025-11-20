@@ -200,7 +200,7 @@ function parse_story($story, $for_export = false)
 {
     // note ??
     $pattern = '/\?(.+?)\?/';
-    $story = preg_replace($pattern, '<span class="story-note">$1</span>', $story);
+    $story = preg_replace($pattern, '<div class="story-note">$1</div>', $story);
 
     // result ==
     $pattern = '/=(.+?)=/';

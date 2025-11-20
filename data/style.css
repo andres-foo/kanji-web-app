@@ -751,13 +751,13 @@ hr {
 }
 
 .story .story-note {
+    margin-top: 5px;
     font-style: italic;
-    color: #7670a3;
-    border: 1px dashed #7670a3;
-    padding: 0 8px;
-    font-size: 1rem;
     border-radius: 5px;
-    text-wrap-mode: nowrap;
+    background-color: #262626;
+    line-height: normal;
+    padding: 5px;
+    font-size: 1rem;
 }
 
 .component-story span {
