@@ -25,7 +25,19 @@ $myPDO = new PDO('sqlite:../data/kanjis.db');
         <?php endif; ?>
     </div>
 
+    <?php
+    $sql = "SELECT count(*) FROM kanjis WHERE added = 1";
+    $stmt = $myPDO->query($sql);
+    $total = $stmt->fetch()[0];
+
+    $sql = "SELECT count(*) FROM kanjis WHERE added = 1 AND unfinished = 1";
+    $stmt = $myPDO->query($sql);
+    $red = $stmt->fetch()[0];
+
+    $green = $total - $red;
+    ?>
     <h1>MY STUDY LIST</h1>
+    <div class="subtitle"><?= $total ?> characters ( <span class="finished"><?= $green ?></span> / <span class="unfinished"><?= $red ?></span> )</div>
 
     <?php if ($order == "date"): ?>
         <div>
@@ -34,7 +46,7 @@ $myPDO = new PDO('sqlite:../data/kanjis.db');
             $stmt = $myPDO->query($sql);
             $entries = $stmt->fetchAll();
             ?>
-            <div class="title">kanjis by date added (<?= count($entries) ?> characters):</div>
+            <div class="title">kanjis by date added:</div>
             <?php if (count($entries) == 0) : ?>
                 <p>You haven't added any kanjis yet! To do so click on the "<strong>Add</strong>" button on the top right of the page when viewing a kanji.</p>
             <?php else : ?>
@@ -59,7 +71,7 @@ $myPDO = new PDO('sqlite:../data/kanjis.db');
             $stmt = $myPDO->query($sql);
             $entries = $stmt->fetchAll();
             ?>
-            <div class="title">kanjis by score (<?= count($entries) ?> characters):</div>
+            <div class="title">kanjis by score:</div>
             <?php if (count($entries) == 0) : ?>
                 <p>You haven't added any kanjis yet! To do so click on the "<strong>Add</strong>" button on the top right of the page when viewing a kanji.</p>
             <?php else : ?>
