@@ -72,7 +72,7 @@ foreach ($kanjis as $literal => $kanji) {
     // basics
     $doc .= $literal . ";";
     $doc .= str_replace(";", ", ", $kanji['meanings']) . ";";
-    $doc .= $kanji['keyword'] . ";";
+    $doc .= (!is_null($kanji['keyword']) ? str_replace(";", ", ", $kanji['keyword']) : '') . ";";
     $doc .= str_replace(";", ", ", $kanji['components']) . ";";
 
     $doc .= (!is_null($kanji['onReadings']) ? str_replace(";", " / ", $kanji['onReadings']) : '') . ";";
