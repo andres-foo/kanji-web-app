@@ -357,7 +357,8 @@ $totalKnown = $stmt->fetchColumn();
                                                                         ? "checked"
                                                                         : "" ?> name="is_component"><label for="is_component">is a basic component</label></p>
                         <span>Image</span>
-                        <input type="file" name="image">
+                        <input type="file" name="image" id="imageInput">
+                        <p id="imageError">Image can be a maximum of 3 mb</p>
                         <p><button type="submit">Save changes</button></p>
                     </form>
                 </div>
@@ -395,4 +396,17 @@ $totalKnown = $stmt->fetchColumn();
             moreExamples.style.display = "block";
         }
     });
+
+
+    document.getElementById('imageInput').onchange = function() {
+        const file = this.files[0];
+        const maxSize = 3 * 1024 * 1024; // 3MB in bytes
+
+        if (file && file.size > maxSize) {
+            document.getElementById('imageError').style.display = 'block';
+            this.value = ""; // Clear the input so they can't submit it
+        } else {
+            document.getElementById('imageError').style.display = 'none';
+        }
+    };
 </script>
