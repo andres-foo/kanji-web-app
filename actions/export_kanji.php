@@ -97,7 +97,7 @@ foreach ($kanjis as $literal => $kanji) {
     $example_text = '';
     foreach ($kanji["examples"] as $example) {
         // remove meta in parethesis 亜米利加(ateji)(rK) -> 亜米利加
-        $example_text .= '<span class="tag">' . preg_replace('/\(.*\z/', '', $example['kanji']) . '</span>';
+        $example_text .= '<span>' . preg_replace('/\(.*\z/', '', $example['kanji']) . '</span>';
     }
     $doc .= $example_text . ";";
 
