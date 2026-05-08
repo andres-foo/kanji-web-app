@@ -15,15 +15,16 @@ if (isset($_GET["query"])) {
     if (empty($_GET["query"])) {
         $error = "Don't leave the search empty.";
     } else {
+        $query = trim($_GET["query"]);
         // verify search is not same as last one
         $sql = "SELECT query FROM search_history ORDER BY id DESC LIMIT 1";
         $stmt = $myPDO->prepare($sql);
         $last_search = $stmt->execute() ? $stmt->fetch()["query"] : null;
         // save new search
-        if ($last_search !== $_GET["query"]) {
+        if ($last_search !== $query) {
             $sql = "INSERT INTO search_history (query) VALUES (?)";
             $stmt = $myPDO->prepare($sql);
-            $result = $stmt->execute([$_GET["query"]]);
+            $result = $stmt->execute([$query]);
         }
         // delete old history entries if over limit
         $countStmt = $myPDO->query("SELECT COUNT(*) FROM search_history");
@@ -37,9 +38,9 @@ if (isset($_GET["query"])) {
         }
 
         //if japanese
-        if (itHasJapanese($_GET["query"])) {
-            if (itHasKanji($_GET["query"])) {
-                $kanjis = obtainKanjis($_GET["query"])[0];
+        if (itHasJapanese($query)) {
+            if (itHasKanji($query)) {
+                $kanjis = obtainKanjis($query)[0];
                 $qty = count($kanjis);
                 $i = 0;
                 $str = "";
@@ -59,12 +60,12 @@ if (isset($_GET["query"])) {
                 $sql =
                     "SELECT * FROM examples WHERE kanji LIKE ? ORDER BY JLPT DESC, LENGTH(kanji) ASC";
                 $stmt = $myPDO->prepare($sql);
-                $results = $stmt->execute(["%" . $_GET["query"] . "%"]);
+                $results = $stmt->execute(["%" . $query . "%"]);
                 $examples = $stmt->fetchAll();
             } else {
-                if (isOnlyHiragana($_GET["query"])) {
-                    $hiragana = $_GET["query"];
-                    $katakana = toKatakana($_GET["query"]);
+                if (isOnlyHiragana($query)) {
+                    $hiragana = $query;
+                    $katakana = toKatakana($query);
                     $sql =
                         "SELECT * FROM kanjis WHERE onReadings LIKE ? OR kunReadings LIKE ?";
                     $stmt = $myPDO->prepare($sql);
@@ -78,11 +79,11 @@ if (isset($_GET["query"])) {
                     $sql =
                         "SELECT * FROM examples WHERE kana LIKE ? ORDER BY JLPT DESC, LENGTH(kanji) ASC";
                     $stmt = $myPDO->prepare($sql);
-                    $results = $stmt->execute(["%" . $_GET["query"] . "%"]);
+                    $results = $stmt->execute(["%" . $query . "%"]);
                     $examples = $stmt->fetchAll();
-                } elseif (isOnlyKatakana($_GET["query"])) {
-                    $hiragana = toHiragana($_GET["query"]);
-                    $katakana = $_GET["query"];
+                } elseif (isOnlyKatakana($query)) {
+                    $hiragana = toHiragana($query);
+                    $katakana = $query;
                     $sql =
                         "SELECT * FROM kanjis WHERE onReadings LIKE ? OR kunReadings LIKE ?";
                     $stmt = $myPDO->prepare($sql);
@@ -95,7 +96,7 @@ if (isset($_GET["query"])) {
                     $sql =
                         "SELECT * FROM examples WHERE kana LIKE ?  ORDER BY JLPT DESC, LENGTH(kanji) ASC";
                     $stmt = $myPDO->prepare($sql);
-                    $results = $stmt->execute(["%" . $_GET["query"] . "%"]);
+                    $results = $stmt->execute(["%" . $query . "%"]);
                     $examples = $stmt->fetchAll();
                 } else {
                     $error =
@@ -103,7 +104,7 @@ if (isset($_GET["query"])) {
                 }
             }
         } else {
-            if (strlen($_GET["query"]) <= 2) {
+            if (strlen($query) <= 2) {
                 $error = "The query must be 3 characters minimum for English.";
             } else {
                 $sql = <<<SQL
@@ -127,23 +128,23 @@ if (isset($_GET["query"])) {
                 SQL;
                 $stmt = $myPDO->prepare($sql);
                 $results = $stmt->execute([
-                    $_GET["query"],
-                    $_GET["query"] . ";%",
-                    "%;" . $_GET["query"],
-                    "%;" . $_GET["query"] . ";%",
-                    "%" . $_GET["query"] . "%",
-                    $_GET["query"],
-                    $_GET["query"] . ";%",
-                    "%;" . $_GET["query"],
-                    "%;" . $_GET["query"] . ";%",
-                    "%" . $_GET["query"] . "%",
+                    $query,
+                    $query . ";%",
+                    "%;" . $query,
+                    "%;" . $query . ";%",
+                    "%" . $query . "%",
+                    $query,
+                    $query . ";%",
+                    "%;" . $query,
+                    "%;" . $query . ";%",
+                    "%" . $query . "%",
                 ]);
                 $kanjis = $stmt->fetchAll();
 
                 // examples
                 $sql = "SELECT * FROM examples WHERE meanings LIKE ?";
                 $stmt = $myPDO->prepare($sql);
-                $results = $stmt->execute(["%" . $_GET["query"] . "%"]);
+                $results = $stmt->execute(["%" . $query . "%"]);
                 $examples = $stmt->fetchAll();
             }
         }
@@ -158,7 +159,9 @@ if (isset($_GET["query"])) {
         <?php echo $error; ?>
     </div>
 
-<?php elseif (isset($_GET["query"])): ?>
+<?php //echo str_replace(";", ", ", $example["meanings"]);
+    //echo str_replace(";", ", ", $example["meanings"]);
+    elseif (isset($_GET["query"])): ?>
     <?php if (!$kanjis): ?>
         <div class="card empty">
             No kanjis found.
@@ -173,10 +176,12 @@ if (isset($_GET["query"])) {
             <?php foreach ($kanjis as $entry): ?>
 
                 <div class="card search<?php if ($entry["added"] == 1) {
-                                            echo " added";
-                                        } ?>">
+                    echo " added";
+                } ?>">
                     <div class="left">
-                        <div class="kanji"><a href="kanji.php?literal=<?php echo $entry["literal"]; ?>"><?php echo $entry["literal"]; ?></a></div>
+                        <div class="kanji"><a href="kanji.php?literal=<?php echo $entry[
+                            "literal"
+                        ]; ?>"><?php echo $entry["literal"]; ?></a></div>
                     </div><!-- left -->
                     <div class="right">
                         <div class="meanings">
@@ -194,12 +199,14 @@ if (isset($_GET["query"])) {
 
     <?php if (!empty($examples)): ?>
         <div class="title">
-            <?php echo count(
-                $examples,
-            ); ?> examples found
+            <?php echo count($examples); ?> examples found
         </div>
         <?php foreach ($examples as $example): ?>
-            <div class="card search flex-column search-word<?= ($example["added"] == 1) ? " added" : "" ?>">
+            <div class="card search flex-column search-word<?= $example[
+                "added"
+            ] == 1
+                ? " added"
+                : "" ?>">
                 <span>
                     <a href="search.php?query=<?= $example["kanji"] ?>">
                         <?= $example["kanji"] ?>
@@ -208,8 +215,9 @@ if (isset($_GET["query"])) {
                 </span>
                 <span>
                     <?= formatMeanings($example["meanings"]) ?>
-                    <?php //echo str_replace(";", ", ", $example["meanings"]); 
-                    ?>
+                    <?php
+            //echo str_replace(";", ", ", $example["meanings"]);
+            ?>
                 </span>
             </div>
         <?php endforeach; ?>
