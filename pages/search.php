@@ -188,7 +188,7 @@ elseif (isset($_GET["query"])): ?>
                     <div class="right right-search">
                         <?php if ($entry["keyword"]): ?>
                             <div class="keyword">
-                                <?= $entry["keyword"] ?>
+                                <?= str_replace(";", " / ", $entry["keyword"]) ?>
                             </div>
                         <?php endif; ?>
                         <div class="meanings">
