@@ -112,6 +112,7 @@ if (isset($_GET["query"])) {
                     *
                 FROM kanjis
                 WHERE
+                    keyword LIKE ? OR
                     meanings = ? OR
                     meanings LIKE ? OR
                     meanings LIKE ? OR
@@ -119,19 +120,22 @@ if (isset($_GET["query"])) {
                     meanings LIKE ?
                 ORDER BY added DESC,
                 CASE
-                    WHEN meanings = ? THEN 1
-                    WHEN meanings LIKE ? THEN 2
+                    WHEN keyword LIKE ? THEN 1
+                    WHEN meanings = ? THEN 2
                     WHEN meanings LIKE ? THEN 3
                     WHEN meanings LIKE ? THEN 4
                     WHEN meanings LIKE ? THEN 5
+                    WHEN meanings LIKE ? THEN 6
                 END ASC
                 SQL;
                 $stmt = $myPDO->prepare($sql);
                 $results = $stmt->execute([
+                    "%" . $query . "%",
                     $query,
                     $query . ";%",
                     "%;" . $query,
                     "%;" . $query . ";%",
+                    "%" . $query . "%",
                     "%" . $query . "%",
                     $query,
                     $query . ";%",
@@ -160,8 +164,8 @@ if (isset($_GET["query"])) {
     </div>
 
 <?php //echo str_replace(";", ", ", $example["meanings"]);
-    //echo str_replace(";", ", ", $example["meanings"]);
-    elseif (isset($_GET["query"])): ?>
+//echo str_replace(";", ", ", $example["meanings"]);
+elseif (isset($_GET["query"])): ?>
     <?php if (!$kanjis): ?>
         <div class="card empty">
             No kanjis found.
@@ -176,12 +180,10 @@ if (isset($_GET["query"])) {
             <?php foreach ($kanjis as $entry): ?>
 
                 <div class="card search<?php if ($entry["added"] == 1) {
-                    echo " added";
-                } ?>">
+                                            echo " added";
+                                        } ?>">
                     <div class="left">
-                        <div class="kanji"><a href="kanji.php?literal=<?php echo $entry[
-                            "literal"
-                        ]; ?>"><?php echo $entry["literal"]; ?></a></div>
+                        <div class="kanji"><a href="kanji.php?literal=<?php echo $entry["literal"]; ?>"><?php echo $entry["literal"]; ?></a></div>
                     </div><!-- left -->
                     <div class="right">
                         <div class="meanings">
@@ -202,11 +204,9 @@ if (isset($_GET["query"])) {
             <?php echo count($examples); ?> examples found
         </div>
         <?php foreach ($examples as $example): ?>
-            <div class="card search flex-column search-word<?= $example[
-                "added"
-            ] == 1
-                ? " added"
-                : "" ?>">
+            <div class="card search flex-column search-word<?= $example["added"] == 1
+                                                                ? " added"
+                                                                : "" ?>">
                 <span>
                     <a href="search.php?query=<?= $example["kanji"] ?>">
                         <?= $example["kanji"] ?>
@@ -216,8 +216,8 @@ if (isset($_GET["query"])) {
                 <span>
                     <?= formatMeanings($example["meanings"]) ?>
                     <?php
-            //echo str_replace(";", ", ", $example["meanings"]);
-            ?>
+                    //echo str_replace(";", ", ", $example["meanings"]);
+                    ?>
                 </span>
             </div>
         <?php endforeach; ?>
