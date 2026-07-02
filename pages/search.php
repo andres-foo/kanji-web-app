@@ -185,7 +185,12 @@ elseif (isset($_GET["query"])): ?>
                     <div class="left">
                         <div class="kanji"><a href="kanji.php?literal=<?php echo $entry["literal"]; ?>"><?php echo $entry["literal"]; ?></a></div>
                     </div><!-- left -->
-                    <div class="right">
+                    <div class="right right-search">
+                        <?php if ($entry["keyword"]): ?>
+                            <div class="keyword">
+                                <?= $entry["keyword"] ?>
+                            </div>
+                        <?php endif; ?>
                         <div class="meanings">
                             <?php echo str_replace(
                                 ";",
