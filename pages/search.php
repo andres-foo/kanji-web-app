@@ -191,6 +191,32 @@ elseif (isset($_GET["query"])): ?>
                                 <?= str_replace(";", " / ", $entry["keyword"]) ?>
                             </div>
                         <?php endif; ?>
+                        <!-- tag -->
+                        <?php if (!empty($entry["jlpt"]) || !empty($entry["grade"])): ?>
+                            <?php
+                            $sql = "SELECT COUNT(*) FROM kanjis WHERE added = 1 AND is_component IS NULL";
+                            $stmt = $myPDO->prepare($sql);
+                            $stmt->execute();
+                            $totalKnown = $stmt->fetchColumn();
+                            ?>
+                            <div class="tags">
+                                <?php if (!empty($entry["jlpt"])): ?>
+                                    <div class="kanji-tag <?= getImportanceJLPT(
+                                                                $entry["jlpt"],
+                                                                $totalKnown,
+                                                            ) ?>">N<?= $entry["jlpt"] ?></div>
+                                <?php endif; ?><!-- jlpt -->
+
+                                <?php if (!empty($entry["kanken"])): ?>
+                                    <div class="kanji-tag <?= getImportanceKANKEN(
+                                                                $entry["kanken"],
+                                                                $totalKnown,
+                                                            ) ?>">K<?= $entry["kanken"] ?></div>
+                                <?php endif; ?><!-- kanken -->
+                            </div>
+                        <?php endif; ?>
+
+                        <!-- tag -->
                         <div class="meanings">
                             <?php echo str_replace(
                                 ";",

@@ -152,22 +152,38 @@ h1:has(+ .subtitle) {
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
 }
 
-.card .right .extras div.high {
+.tags {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    margin-top: 3px;
+}
+
+.tags .kanji-tag {
+    padding: 1px 3px;
+    border-radius: 2px;
+}
+
+.card .right .extras div.high,
+.card .right .tags div.high {
     background-color: #50a15b;
     color: #ffffff;
 }
 
-.card .right .extras div.medium {
+.card .right .extras div.medium,
+.card .right .tags div.medium {
     background-color: orange;
     color: #ffffff;
 }
 
-.card .right .extras div.low {
+.card .right .extras div.low,
+.card .right .tags div.low {
     color: #fff;
     background-color: rgb(218, 52, 52);
 }
 
-.card .right .extras div.zero {
+.card .right .extras div.zero,
+.card .right .tags div.zero {
     background-color: gray;
     color: #fff;
 }
