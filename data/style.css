@@ -220,11 +220,10 @@ h1:has(+ .subtitle) {
 }
 
 .card .right .keyword {
-    font-size: 1rem;
+    font-size: 1.1rem;
     text-transform: uppercase;
-    background-color: #121212;
     color: rgb(234, 0, 255);
-    padding: 4px 8px;
+    padding: 4px 0;
     border-radius: 3px;
 }
 
@@ -319,6 +318,15 @@ h1:has(+ .subtitle) {
     padding: 15px;
     vertical-align: middle;
     font-size: 1.3em;
+}
+
+.search-toggle-word {
+    display: flex;
+    justify-content: end;
+}
+
+.search-toggle-word button {
+    font-size: small;
 }
 
 /* FORM STUFF */

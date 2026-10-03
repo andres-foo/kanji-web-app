@@ -238,6 +238,17 @@ elseif (isset($_GET["query"])): ?>
             <div class="card search flex-column search-word<?= $example["added"] == 1
                                                                 ? " added"
                                                                 : "" ?>">
+                <div class="search-toggle-word">
+                    <form action="../actions/toggle_example_study.php" method="POST">
+                        <input type="hidden" name="id" value="<?php echo $example["id"]; ?>">
+                        <input type="hidden" name="query" value="<?php echo $_GET["query"]; ?>">
+                        <button type="submit">
+                            <?= $example["added"] == 1
+                                ? "remove"
+                                : "add" ?>
+                        </button>
+                    </form>
+                </div>
                 <span>
                     <a href="search.php?query=<?= $example["kanji"] ?>">
                         <?= $example["kanji"] ?>
